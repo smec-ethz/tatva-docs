@@ -41,18 +41,22 @@ theme:
   logo: "assets/favicon.png"
   icon:
     repo: fontawesome/brands/github # GitHub logo in top right
+  font:
+    text: Inter # Clean, modern, very readable
+    code: JetBrains Mono # The gold standard for code readability
 
 extra_javascript:
   # The below two make MathJax work, see https://squidfunk.github.io/mkdocs-material/reference/mathjax/
-  - _static/mathjax.js
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://unpkg.com/vtk.js
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - javascripts/carousel.js
 
 extra_css:
-  - "_static/custom_css.css"
-  - "_static/mkdocstrings.css"
+  - "stylesheets/custom_css.css"
+  - "stylesheets/mkdocstrings.css"
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
   - stylesheets/carousel.css
 

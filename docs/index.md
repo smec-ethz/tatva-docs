@@ -13,7 +13,7 @@
 True to its name, ``tatva`` provides fundamental Lego-like building blocks
 (elements) which can be used to construct complex finite element method (FEM)
 simulations. ``tatva`` is a pure Python library for FEM simulations and is
-built on top of JAX and Equinox, making it easy to use FEM in a differentiable
+built on top of JAX ecosystem, making it easy to use FEM in a differentiable
 way.
 
 <div class="swiper">
@@ -41,19 +41,21 @@ way.
   <div class="swiper-button-next"></div>
 </div>
 
-## License
 
-`tatva` is distributed under the GNU Lesser General Public License v3.0 or later. See `COPYING` and `COPYING.LESSER` for the complete terms. © 2025 ETH Zurich (SMEC).
-
-
-
-## Features
-
--  Energy-based formulation of FEM operators with automatic differentiation via JAX.
--  Capability to handle coupled-PDE systems with multi-field variables, KKT conditions, and constraints.
--  Element library covering line, surface, and volume primitives (Line2, Tri3, Quad4, Tet4, Hex8) with consistent JAX-compatible APIs.
--  Mesh and Operator abstractions that map, integrate, differentiate, and interpolate fields on arbitrary meshes.
--  Automatic handling of stacked multi-field variables through the tatva.compound utilities while preserving sparsity patterns.
+<div class="grid-cards">
+  <div class="card">
+    <h3>🔥 Monolithic Solver</h3>
+    <p>Energy-based formulation of FEM operators with automatic differentiation via JAX. Fully differentiable and fully composable.</p>
+  </div>
+  <div class="card">
+    <h3>🤖 Versitality</h3>
+    <p> Operator abstractions that map, integrate, differentiate on arbitrary meshes. Capability to handle mixed-dimension coupling, multi-point constaints, and more. </p>
+  </div>
+  <div class="card">
+    <h3>⚡ High Performance</h3>
+    <p>Built-in sparse differentiation via coloring and matrix-free assembly tailored for mordern architecture. </p>
+  </div>
+</div>
 
 ## Installation
 
@@ -79,22 +81,26 @@ Create a mesh, pick an element type, and let Operator perform the heavy lifting 
 
 
 ```bash
-    import jax.numpy as jnp
-    from tatva.element import Tri3
-    from tatva.mesh import Mesh
-    from tatva.operator import Operator
+import jax.numpy as jnp
+from tatva.element import Tri3
+from tatva.mesh import Mesh
+from tatva.operator import Operator
 
-    coords = jnp.array([[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]])
-    elements = jnp.array([[0, 1, 2], [0, 2, 3]])
+coords = jnp.array([[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]])
+elements = jnp.array([[0, 1, 2], [0, 2, 3]])
 
-    mesh = Mesh(coords, elements)
+mesh = Mesh(coords, elements)
 
-    op = Operator(mesh, Tri3())
-    nodal_values = jnp.arange(coords.shape[0], dtype=jnp.float64)
+op = Operator(mesh, Tri3())
+nodal_values = jnp.arange(coords.shape[0], dtype=jnp.float64)
 
-    # Integrate a nodal field over the mesh
-    total = op.integrate(nodal_values)
+# Integrate a nodal field over the mesh
+total = op.integrate(nodal_values)
 
-    # Evaluate gradients at all quadrature points
-    gradients = op.grad(nodal_values)
+# Evaluate gradients at all quadrature points
+gradients = op.grad(nodal_values)
 ```
+
+## License
+
+`tatva` is distributed under the GNU Lesser General Public License v3.0 or later. See `COPYING` and `COPYING.LESSER` for the complete terms. © 2025 ETH Zurich (SMEC).
