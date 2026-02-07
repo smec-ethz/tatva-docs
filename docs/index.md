@@ -1,8 +1,8 @@
-#  
+#  Getting Started
 
 <div align="center">
 
-<img src="assets/logo.png" alt="drawing" width="400" height="100"/>
+<img src="assets/logo-small.png" alt="drawing" width="300" height="60"/>
 
 <h3 align="center">tatva: Lego-like building blocks for differentiable FEM</h3>
 
@@ -16,6 +16,30 @@ simulations. ``tatva`` is a pure Python library for FEM simulations and is
 built on top of JAX and Equinox, making it easy to use FEM in a differentiable
 way.
 
+<div class="swiper">
+  <div class="swiper-wrapper">
+    
+    <div class="swiper-slide">
+      <img src="assets/images/surface_advection_diffusion.gif" alt="Surface Advection Diffusion">
+      <div class="slide-caption">
+        <h3>Surface Advection Diffusion</h3>
+      </div>
+    </div>
+
+    <div class="swiper-slide">
+      <img src="assets/images/cohesive_fracture.gif" alt="Cohesive Fracture">
+      <div class="slide-caption">
+        <h3>Cohesive Fracture</h3>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="swiper-pagination"></div>
+
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
 
 ## License
 
