@@ -118,9 +118,7 @@ plugins:
   - ipynb:
 
 nav:
-  - Overview: index.md
-  - Installation: installation.md
-  - License: license.md
+  - Getting Started: "index.md"
   - Examples:
       - Cohesive Element:
           - "examples/fracture_quasistatic_3d.ipynb"

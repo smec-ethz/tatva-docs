@@ -4,7 +4,7 @@
 
 <img src="assets/logo.png" alt="drawing" width="400" height="100"/>
 
-<h3 align="center">tatva: Lego-like building blocks for FEM</h3>
+<h3 align="center">tatva: Lego-like building blocks for differentiable FEM</h3>
 
 </div>
 
@@ -17,6 +17,12 @@ built on top of JAX and Equinox, making it easy to use FEM in a differentiable
 way.
 
 
+## License
+
+`tatva` is distributed under the GNU Lesser General Public License v3.0 or later. See `COPYING` and `COPYING.LESSER` for the complete terms. © 2025 ETH Zurich (SMEC).
+
+
+
 ## Features
 
 -  Energy-based formulation of FEM operators with automatic differentiation via JAX.
@@ -24,6 +30,23 @@ way.
 -  Element library covering line, surface, and volume primitives (Line2, Tri3, Quad4, Tet4, Hex8) with consistent JAX-compatible APIs.
 -  Mesh and Operator abstractions that map, integrate, differentiate, and interpolate fields on arbitrary meshes.
 -  Automatic handling of stacked multi-field variables through the tatva.compound utilities while preserving sparsity patterns.
+
+## Installation
+
+Install the current release from PyPI:
+
+```bash
+pip install tatva
+```
+
+For development work, clone the repository and install it in editable mode (use your preferred virtual environment tool such as ``uv`` or ``venv``):
+
+```bash
+git clone https://github.com/smec-ethz/tatva.git
+cd tatva
+pip install -e .
+```
+
 
 
 ## Quick Example
