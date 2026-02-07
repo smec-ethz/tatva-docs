@@ -8,13 +8,12 @@ def on_page_markdown(markdown, page, config, files):
 
     # --- 1. COLAB LINK LOGIC ---
     tag = os.environ.get("LIB_TAG", "main")
-    # Remove leading slash to avoid double slashes in URL
     clean_path = page.file.src_uri.lstrip("/")
-    base_url = f"[https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/](https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/){tag}/docs/"
+    base_url = f"https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/{tag}/docs/"
     colab_url = f"{base_url}{clean_path}"
-    badge_md = f"[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]({colab_url})\n\n"
 
-    markdown = badge_md + markdown
+    badge_html = f'<a href="{colab_url}" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>\n\n'
+    markdown = badge_html + markdown
 
     # --- 2. ROBUST REGEX ---
     # This regex looks for the Python block and optionally the content following it.
