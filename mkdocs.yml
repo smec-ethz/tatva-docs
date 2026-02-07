@@ -1,0 +1,132 @@
+site_name: tatva
+site_description: The documentation for the tatva software package
+
+repo_url: https://github.com/smec-ethz/tatva
+repo_name: smec-ethz/tatva
+
+copyright: Copyright &copy; 2026 ETH Zurich (SMEC)
+
+theme:
+  name: material
+  features:
+    - navigation.sections # sections are included in the left
+    - header-autohide # header disappears when scrolling down
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.tooltips
+    - navigation.footer
+    - navigation.instant.preview
+    - navigation.path
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - toc.follow
+  palette:
+    - scheme: default
+      primary: white
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: black
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  favicon: "assets/favicon.png"
+  logo: "assets/favicon.png"
+  icon:
+    repo: fontawesome/brands/github # GitHub logo in top right
+
+extra_javascript:
+  # The below two make MathJax work, see https://squidfunk.github.io/mkdocs-material/reference/mathjax/
+  - _static/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://unpkg.com/vtk.js
+
+extra_css:
+  - "_static/style.css"
+  - "_static/material.css"
+  - "_static/mkdocstrings.css"
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - footnotes
+  - md_in_html
+  - pymdownx.arithmatex: # Render LaTeX via MathJax
+      generic: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      pygments_lang_class: true
+  - pymdownx.magiclink
+  - pymdownx.superfences # Seems to enable syntax highlighting when used with the Material theme.
+  - pymdownx.details # Allowing hidden expandable regions denoted by ???
+  - pymdownx.snippets: # Include one Markdown file into another
+      base_path: docs
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - toc:
+      toc_depth: 4
+
+hooks:
+  - docs/_hooks/tag_notebook_colab.py
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+  - autorefs
+  - section-index
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [tatva]
+          options:
+            backlinks: tree
+            docstring_options:
+              ignore_init_summary: true
+            docstring_section_style: list
+            filters: ["!^_"]
+            force_inspection: true
+            heading_level: 3
+            inherited_members: true
+            merge_init_into_class: true
+            parameter_headings: true
+            separate_signature: true
+            members_order: source
+            show_bases: false
+            show_if_no_docstring: true
+            show_overloads: false
+            show_root_heading: true
+            show_signature_annotations: true
+            show_source: false
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            summary: true
+  - ipynb:
+
+nav:
+  - Home:
+      - Overview: index.md
+      - Installation: installation.md
+      - License: license.md
+  - Examples:
+      - Cohesive Element:
+          - "examples/fracture_quasistatic_3d.ipynb"
+  - API reference:
+      - "api/tatva.md"
