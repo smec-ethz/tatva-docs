@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "gmsh>=4.15.0",
+    "meshio>=5.3.5",
     "mkdocs>=1.6.1",
     "mkdocs-autorefs>=1.4.3",
     "mkdocs-callouts>=1.16.0",
