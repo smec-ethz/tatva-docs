@@ -17,16 +17,13 @@ theme:
     - content.code.annotate
     - content.code.copy
     - content.tooltips
-    - navigation.footer
     - navigation.instant.preview
     - navigation.path
     - navigation.sections
-    - navigation.tabs
     - navigation.tabs.sticky
-    - navigation.top
     - search.highlight
     - search.suggest
-    - toc.follow
+    - toc.integrate
   palette:
     - scheme: default
       primary: white
@@ -52,8 +49,7 @@ extra_javascript:
   - https://unpkg.com/vtk.js
 
 extra_css:
-  - "_static/style.css"
-  - "_static/material.css"
+  - "_static/custom_css.css"
   - "_static/mkdocstrings.css"
 
 markdown_extensions:
@@ -121,10 +117,9 @@ plugins:
   - ipynb:
 
 nav:
-  - Home:
-      - Overview: index.md
-      - Installation: installation.md
-      - License: license.md
+  - Overview: index.md
+  - Installation: installation.md
+  - License: license.md
   - Examples:
       - Cohesive Element:
           - "examples/fracture_quasistatic_3d.ipynb"
