@@ -59,6 +59,7 @@ extra_css:
   - "stylesheets/mkdocstrings.css"
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
   - stylesheets/carousel.css
+  - stylesheets/extra.css
 
 markdown_extensions:
   - attr_list
@@ -91,6 +92,7 @@ markdown_extensions:
 
 hooks:
   - docs/_hooks/tag_notebook_colab.py
+  - docs/_hooks/notebook_tags.py
 
 plugins:
   - search:
@@ -128,7 +130,11 @@ plugins:
 nav:
   - Getting Started: "index.md"
   - Examples:
-      - Cohesive Element:
-          - "examples/fracture_quasistatic_3d.ipynb"
+      - Mixed-Dimensional Coupling:
+          - Cohesive Fracture:
+            - "examples/fracture_quasistatic_3d.ipynb"
+      - Data-Driven Modeling:
+          - Neural Constitutive Modeling:
+            - "examples/ncm_metamaterial.ipynb"
   - API reference:
       - "api/tatva.md"

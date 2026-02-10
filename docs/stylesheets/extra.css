@@ -9,3 +9,35 @@
 .jp-OutputArea-prompt {
   display: none !important;
 }
+
+/* Container for the tags */
+.nb-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px; /* Space between tags and Colab badge */
+}
+
+/* The Tag Badge */
+.nb-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  
+  /* Modern, subtle coloring */
+  background-color: var(--md-default-fg-color--lightest); 
+  color: var(--md-default-fg-color);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Optional: Make tags colorful on hover */
+.nb-tag:hover {
+  border-color: var(--md-accent-fg-color);
+  color: var(--md-accent-fg-color);
+  cursor: default;
+}
