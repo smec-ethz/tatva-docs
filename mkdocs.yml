@@ -132,6 +132,9 @@ nav:
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.ipynb"
+      - Multi-point Constraints:
+          - Rigid Body Constraints:
+              - "examples/nonlinear_hole_plate.ipynb"
       - Mixed-Dimensional Coupling:
           - Cohesive Fracture:
               - "examples/fracture_quasistatic_3d.ipynb"
@@ -140,5 +143,7 @@ nav:
       - Data-Driven Modeling:
           - Neural Constitutive Modeling:
               - "examples/ncm_metamaterial.ipynb"
+          - Neural Operator Element Method:
+              - "examples/neural_operator_method_3d.ipynb"
   - API reference:
       - "api/tatva.md"
