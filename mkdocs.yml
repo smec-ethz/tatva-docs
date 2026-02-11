@@ -130,6 +130,8 @@ plugins:
 nav:
   - Getting Started: "index.md"
   - Examples:
+      - Elasticity:
+          - "examples/linear_elasticity.ipynb"
       - Mixed-Dimensional Coupling:
           - Cohesive Fracture:
               - "examples/fracture_quasistatic_3d.ipynb"
