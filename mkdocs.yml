@@ -132,9 +132,11 @@ nav:
   - Examples:
       - Mixed-Dimensional Coupling:
           - Cohesive Fracture:
-            - "examples/fracture_quasistatic_3d.ipynb"
+              - "examples/fracture_quasistatic_3d.ipynb"
+      - Non-Variational Formulations:
+          - "examples/advection_diffusion_surface.ipynb"
       - Data-Driven Modeling:
           - Neural Constitutive Modeling:
-            - "examples/ncm_metamaterial.ipynb"
+              - "examples/ncm_metamaterial.ipynb"
   - API reference:
       - "api/tatva.md"
