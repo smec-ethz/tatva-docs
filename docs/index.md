@@ -1,4 +1,4 @@
-#  Getting Started
+# Getting Started
 
 <div align="center">
 
@@ -8,11 +8,10 @@
 
 </div>
 
-
-``tatva`` (तत्त्व) is a Sanskrit word meaning *principle* or *elements of reality*.
-True to its name, ``tatva`` provides fundamental Lego-like building blocks
+`tatva` (तत्त्व) is a Sanskrit word meaning _principle_ or _elements of reality_.
+True to its name, `tatva` provides fundamental Lego-like building blocks
 (elements) which can be used to construct complex finite element method (FEM)
-simulations. ``tatva`` is a pure Python library for FEM simulations and is
+simulations. `tatva` is a pure Python library for FEM simulations and is
 built on top of JAX ecosystem, making it easy to use FEM in a differentiable
 way.
 
@@ -33,6 +32,13 @@ way.
       </div>
     </div>
 
+    <div class="swiper-slide">
+      <img src="assets/images/contact_animation.gif" alt="Hertzian Contact">
+      <div class="slide-caption">
+        <h3>Hertzian Contact</h3>
+      </div>
+    </div>
+
   </div>
 
   <div class="swiper-pagination"></div>
@@ -40,7 +46,6 @@ way.
   <div class="swiper-button-prev"></div>
   <div class="swiper-button-next"></div>
 </div>
-
 
 <div class="grid-cards">
   <div class="card">
@@ -65,7 +70,7 @@ Install the current release from PyPI:
 pip install tatva
 ```
 
-For development work, clone the repository and install it in editable mode (use your preferred virtual environment tool such as ``uv`` or ``venv``):
+For development work, clone the repository and install it in editable mode (use your preferred virtual environment tool such as `uv` or `venv`):
 
 ```bash
 git clone https://github.com/smec-ethz/tatva.git
@@ -73,12 +78,9 @@ cd tatva
 pip install -e .
 ```
 
-
-
 ## Quick Example
 
 Create a mesh, pick an element type, and let Operator perform the heavy lifting with JAX arrays:
-
 
 ```bash
 import jax.numpy as jnp
