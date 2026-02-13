@@ -129,6 +129,8 @@ plugins:
 
 nav:
   - Getting Started: "index.md"
+  - Compound: "compound.ipynb"
+  - Lifter: "lifter.ipynb"
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.ipynb"
