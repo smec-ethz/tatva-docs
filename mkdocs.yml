@@ -146,6 +146,9 @@ nav:
               - "examples/fracture_quasistatic_3d.ipynb"
           - Embedded 1D Fibres:
               - "examples/soft_hydrogel.ipynb"
+      - Multiphysics Coupling:
+          - Thermal-Shock Fracture:
+              - "examples/thermal_shock_fracture.ipynb"
       - Non-Variational Formulations:
           - "examples/advection_diffusion_surface.ipynb"
       - Data-Driven Modeling:
