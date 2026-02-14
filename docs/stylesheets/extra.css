@@ -43,7 +43,17 @@
 }
 
 .md-grid {
+  max-width: 1300px; /* Default is ~1220px */
+}
+/*
+.md-grid {
   max-width: 96%;
   margin-right: auto;
   margin-left: auto;
+}*/
+
+/* Center images that are the ONLY thing in the paragraph */
+.md-typeset p > img:only-child {
+  display: block;      /* Make it a block element so margins work */
+  margin: 0 auto;      /* Auto margins on left/right centers it */
 }
