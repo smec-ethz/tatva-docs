@@ -41,3 +41,9 @@
   color: var(--md-accent-fg-color);
   cursor: default;
 }
+
+.md-grid {
+  max-width: 96%;
+  margin-right: auto;
+  margin-left: auto;
+}

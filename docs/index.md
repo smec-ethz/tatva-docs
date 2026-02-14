@@ -11,13 +11,20 @@
 `tatva` (तत्त्व) is a Sanskrit word meaning _principle_ or _elements of reality_.
 True to its name, `tatva` provides fundamental Lego-like building blocks
 (elements) which can be used to construct complex finite element method (FEM)
-simulations. `tatva` is a pure Python library for FEM simulations and is
+simulations as energy functionals. `tatva` is a pure Python library for FEM simulations and is
 built on top of JAX ecosystem, making it easy to use FEM in a differentiable
 way.
 
 <div class="swiper">
   <div class="swiper-wrapper">
-    
+
+    <div class="swiper-slide">
+      <img src="assets/images/contact_animation.gif" alt="Hertzian Contact">
+      <div class="slide-caption">
+        <h3>Hertzian Contact</h3>
+      </div>
+    </div>
+
     <div class="swiper-slide">
       <img src="assets/images/surface_advection_diffusion.gif" alt="Surface Advection Diffusion">
       <div class="slide-caption">
@@ -32,13 +39,6 @@ way.
       </div>
     </div>
 
-    <div class="swiper-slide">
-      <img src="assets/images/contact_animation.gif" alt="Hertzian Contact">
-      <div class="slide-caption">
-        <h3>Hertzian Contact</h3>
-      </div>
-    </div>
-
   </div>
 
   <div class="swiper-pagination"></div>
@@ -49,16 +49,16 @@ way.
 
 <div class="grid-cards">
   <div class="card">
-    <h3>🔥 Monolithic Solver</h3>
-    <p>Energy-based formulation of FEM operators with automatic differentiation via JAX. Fully differentiable and fully composable.</p>
+    <h3>Energy-Centric Solver</h3>
+    <p>Energy-based formulation of FEM operators with automatic differentiation via JAX. Just write energy and differentiate it directly.</p>
   </div>
   <div class="card">
-    <h3>🤖 Versitality</h3>
+    <h3>Versitality</h3>
     <p> Operator abstractions that map, integrate, differentiate on arbitrary meshes. Capability to handle mixed-dimension coupling, multi-point constaints, and more. </p>
   </div>
   <div class="card">
-    <h3>⚡ High Performance</h3>
-    <p>Built-in sparse differentiation via coloring and matrix-free assembly tailored for mordern architecture. </p>
+    <h3>High Performance</h3>
+    <p>Built-in sparse differentiation via coloring and matrix-free assembly tailored for mordern architecture such as GPUs. </p>
   </div>
 </div>
 

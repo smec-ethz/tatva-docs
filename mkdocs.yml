@@ -23,7 +23,7 @@ theme:
     - navigation.tabs.sticky
     - search.highlight
     - search.suggest
-    - toc.integrate
+    #- toc.integrate
   palette:
     - scheme: default
       primary: white
@@ -129,7 +129,7 @@ plugins:
 
 nav:
   - Getting Started: "index.md"
-  - Basis of tatva:
+  - Basics of tatva:
     - Operator: "operator.ipynb"
     - Compound: "compound.ipynb"
     - Lifter: "lifter.ipynb"
