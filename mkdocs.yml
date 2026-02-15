@@ -137,6 +137,8 @@ nav:
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.ipynb"
+          - Periodic Homogenization:
+              - "examples/homogenization_periodic.ipynb"
       - Multi-point Constraints:
           - Rigid Body Constraints:
               - "examples/nonlinear_hole_plate.ipynb"
