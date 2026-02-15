@@ -131,6 +131,7 @@ nav:
   - Getting Started: "index.md"
   - Basics of tatva:
     - Operator: "operator.ipynb"
+    - Sparse Differentiation: "sparse.ipynb"
     - Compound: "compound.ipynb"
     - Lifter: "lifter.ipynb"
   - Examples:
@@ -157,4 +158,9 @@ nav:
           - Neural Operator Element Method:
               - "examples/neural_operator_method_3d.ipynb"
   - API reference:
-      - "api/tatva.md"
+      - Operator: "api/tatva.operator.md"
+      - Mesh: "api/tatva.mesh.md"
+      - Element: "api/tatva.element.md"
+      - Sparse: "api/tatva.sparse.md"
+      - Compound: "api/tatva.compound.md"
+      - Lifter: "api/tatva.lifter.md"
