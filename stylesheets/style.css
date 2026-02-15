@@ -1,0 +1,69 @@
+/* Increase logo size */
+.md-header__button.md-logo {
+    padding-bottom: 0.2rem;
+    padding-right: 0;
+}
+.md-header__button.md-logo img {
+    height: 1.5rem;
+}
+
+/* Mark external links as such (also in nav) */
+a.external:hover::after,
+a.md-nav__link[href^="https:"]:hover::after {
+    /* https://primer.style/octicons/link-external-16 */
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="rgb(233, 235, 252)" d="M10.604 1h4.146a.25.25 0 01.25.25v4.146a.25.25 0 01-.427.177L13.03 4.03 9.28 7.78a.75.75 0 01-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0110.604 1zM3.75 2A1.75 1.75 0 002 3.75v8.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 12.25v-3.5a.75.75 0 00-1.5 0v3.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-8.5a.25.25 0 01.25-.25h3.5a.75.75 0 000-1.5h-3.5z"></path></svg>');
+    height: 0.8em;
+    width: 0.8em;
+    margin-left: 0.2em;
+    content: " ";
+    display: inline-block;
+}
+
+/* More space at the bottom of the page */
+.md-main__inner {
+    margin-bottom: 1.5rem;
+}
+
+/* Change default colours for <a> tags */
+
+[data-md-color-scheme="default"] {
+    --md-typeset-a-color: #722092 !important;
+}
+[data-md-color-scheme="slate"] {
+    --md-typeset-a-color: rgb(0, 189, 164) !important;
+}
+
+/* Highlight functions, classes etc. type signatures. Really helps to make clear where
+   one item ends and another begins. */
+
+[data-md-color-scheme="default"] {
+    --doc-heading-color: #ddd;
+    --doc-heading-border-color: #ccc;
+    --doc-heading-color-alt: #f0f0f0;
+}
+[data-md-color-scheme="slate"] {
+    --doc-heading-color: rgb(25, 25, 33);
+    --doc-heading-border-color: rgb(25, 25, 33);
+    --doc-heading-color-alt: rgb(33, 33, 44);
+    --md-code-bg-color: rgb(38, 38, 50);
+}
+
+h4.doc-heading {
+    /* NOT var(--md-code-bg-color) as that's not visually distinct from other code blocks.*/
+    background-color: var(--doc-heading-color);
+    border: solid var(--doc-heading-border-color);
+    border-width: 1.5pt;
+    border-radius: 2pt;
+    padding: 0pt 5pt 2pt 5pt;
+}
+h5.doc-heading,
+h6.heading {
+    background-color: var(--doc-heading-color-alt);
+    border-radius: 2pt;
+    padding: 0pt 5pt 2pt 5pt;
+}
+
+/* Make errors in notebooks have scrolling */
+.output_error > pre {
+    overflow: auto;
+}
