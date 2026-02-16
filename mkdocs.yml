@@ -142,7 +142,7 @@ nav:
               - "examples/nonlinear_hole_plate.ipynb"
       - Contact Mechanics:
           - "examples/contact_3d.ipynb"
-      - Lagrange Multipliers (Periodic BCs):
+      - Periodic BCs (Lagrange Multipliers):
           - "examples/homogenization_periodic.ipynb"
       - Mixed-Dimensional Coupling:
           - Cohesive Fracture:
