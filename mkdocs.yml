@@ -137,13 +137,13 @@ nav:
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.ipynb"
-          - Periodic Homogenization:
-              - "examples/homogenization_periodic.ipynb"
       - Multi-point Constraints:
           - Rigid Body Constraints:
               - "examples/nonlinear_hole_plate.ipynb"
       - Contact Mechanics:
           - "examples/contact_3d.ipynb"
+      - Lagrange Multipliers (Periodic BCs):
+          - "examples/homogenization_periodic.ipynb"
       - Mixed-Dimensional Coupling:
           - Cohesive Fracture:
               - "examples/fracture_quasistatic_3d.ipynb"
