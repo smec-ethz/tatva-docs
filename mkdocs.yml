@@ -166,7 +166,10 @@ nav:
       - SciPy:
           - "external_solvers/linear_elasticity_scipy.ipynb"
       - PETSc:
-          - "external_solvers/linear_elasticity_petsc4py.ipynb"
+          - Sparse Solver:
+            - "external_solvers/linear_elasticity_petsc4py.ipynb"
+          - Matrix-Free Solver:
+            - "external_solvers/linear_elasticity_petsc4py_mf.ipynb"
   - API reference:
       - Operator: "api/tatva.operator.md"
       - Mesh: "api/tatva.mesh.md"
