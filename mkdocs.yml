@@ -23,6 +23,8 @@ theme:
     - navigation.tabs.sticky
     - search.highlight
     - search.suggest
+    - content.footnote.tooltips
+
     #- toc.integrate
   palette:
     - scheme: default
@@ -89,6 +91,7 @@ markdown_extensions:
   - toc:
       permalink: "¤" # Adds a clickable permalink to each section heading
       toc_depth: 4
+  - footnotes
 
 hooks:
   - docs/_hooks/tag_notebook_colab.py

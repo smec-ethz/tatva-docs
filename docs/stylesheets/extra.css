@@ -42,16 +42,17 @@
   cursor: default;
 }
 
-/*.md-grid {
-  max-width: 1300px; 
-}*/
-/* Default is ~1220px */
-
 .md-grid {
-  max-width: 85%;
+  max-width: 1300px; 
+}
+/* Default is ~1220px */
+/*
+.md-grid {
+  max-width: 96%;
   margin-right: auto;
   margin-left: auto;
 }
+  */
 
 /* Center images that are the ONLY thing in the paragraph */
 .md-typeset p > img:only-child {
