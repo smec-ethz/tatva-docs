@@ -162,6 +162,11 @@ nav:
               - "examples/ncm_metamaterial.ipynb"
           - Neural Operator Element Method:
               - "examples/neural_operator_method_3d.ipynb"
+  - Using External Solvers:
+      - SciPy:
+          - "external_solvers/linear_elasticity_scipy.ipynb"
+      - PETSc:
+          - "external_solvers/linear_elasticity_petsc4py.ipynb"
   - API reference:
       - Operator: "api/tatva.operator.md"
       - Mesh: "api/tatva.mesh.md"
