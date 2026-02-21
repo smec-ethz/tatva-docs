@@ -1,0 +1,3024 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The documentation for the tatva software package">
+      
+      
+      
+      
+        <link rel="prev" href="../advection_diffusion_surface/">
+      
+      
+        <link rel="next" href="../neural_operator_method_3d/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Neural Constitutive Modeling - tatva</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/custom_css.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/mkdocstrings.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/carousel.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#neural-constitutive-modeling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="tatva" class="md-header__button md-logo" aria-label="tatva" data-md-component="logo">
+      
+  <img src="../../assets/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            tatva
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Neural Constitutive Modeling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/smec-ethz/tatva" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    smec-ethz/tatva
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="tatva" class="md-nav__button md-logo" aria-label="tatva" data-md-component="logo">
+      
+  <img src="../../assets/favicon.png" alt="logo">
+
+    </a>
+    tatva
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/smec-ethz/tatva" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    smec-ethz/tatva
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Basics of tatva
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Basics of tatva
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sparse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Stiffness Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compound/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lifter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lifter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear_elasticity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Elasticity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-point Constraints
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multi-point Constraints
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nonlinear_hole_plate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rigid Body Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contact_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact Mechanics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../homogenization_periodic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Periodic BCs (Lagrange Multipliers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mixed-Dimensional Coupling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mixed-Dimensional Coupling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fracture_quasistatic_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cohesive Fracture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../soft_hydrogel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded 1D Fibres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multiphysics Coupling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multiphysics Coupling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../thermal_shock_fracture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thermal-Shock Fracture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advection_diffusion_surface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Non-Variational Formulations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data-Driven Modeling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data-Driven Modeling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Constitutive Modeling
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Constitutive Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-the-neural-constitutive-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the Neural Constitutive Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-boundary-conditions-and-loads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Boundary Conditions and Loads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-coloring-to-compute-sparse-hessians" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Coloring to compute Sparse Hessians
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-newton-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining Newton Solver
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solving-the-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solving the System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../neural_operator_method_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Operator Element Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using External Solvers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using External Solvers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../external_solvers/linear_elasticity_scipy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SciPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PETSc
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PETSc
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../external_solvers/linear_elasticity_petsc4py/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sparse Solver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../external_solvers/linear_elasticity_petsc4py_mf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matrix-Free Solver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.mesh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mesh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.element/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Element
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.sparse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sparse
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.compound/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.lifter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lifter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-the-neural-constitutive-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the Neural Constitutive Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-boundary-conditions-and-loads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Boundary Conditions and Loads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-coloring-to-compute-sparse-hessians" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Coloring to compute Sparse Hessians
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-newton-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining Newton Solver
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solving-the-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solving the System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../linear_elasticity/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Examples
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="./" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Data-Driven Modeling
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/docs/examples/ncm_metamaterial.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></p>
+<h1 id="neural-constitutive-modeling">Neural Constitutive Modeling<a class="headerlink" href="#neural-constitutive-modeling" title="Permanent link">¤</a></h1>
+<details class="example">
+<summary>Colab Setup (Install Dependencies)</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="c1"># Only run this if we are in Google Colab</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">get_ipython</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Installing dependencies from pyproject.toml...&quot;</span><span class="p">)</span>
+    <span class="c1"># This installs the repo itself (and its dependencies)</span>
+    <span class="err">!</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">gmsh</span> 
+    <span class="err">!</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">qq</span> <span class="n">xvfb</span> <span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">glx</span>
+    <span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyvista</span> <span class="o">-</span><span class="n">qq</span>
+    <span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">q</span> <span class="s2">&quot;git+https://github.com/smec-ethz/tatva-docs.git&quot;</span>
+
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
+
+    <span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">jupyter_backend</span> <span class="o">=</span> <span class="s1">&#39;static&#39;</span>
+    <span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">notebook</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">pv</span><span class="o">.</span><span class="n">start_xvfb</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Installation complete!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
+    <span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">jupyter_backend</span> <span class="o">=</span> <span class="s1">&#39;client&#39;</span>
+</code></pre></div>
+</details>
+<p>In this example, we will implement a neural constitutive model. A neural constitutive model uses neural networks to represent the relationship between stress and strain in materials. This approach allows for more flexible and accurate modeling of complex material behaviors compared to traditional constitutive models.</p>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_persistent_cache_min_compile_time_secs&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.experimental.sparse</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jsp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">Array</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax_autovmap</span><span class="w"> </span><span class="kn">import</span> <span class="n">autovmap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tatva</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mesh</span><span class="p">,</span> <span class="n">Operator</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">sparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tatva_coloring</span><span class="w"> </span><span class="kn">import</span> <span class="n">distance2_color_and_seeds</span>
+</code></pre></div>
+<h2 id="mesh">Mesh<a class="headerlink" href="#mesh" title="Permanent link">¤</a></h2>
+<p>We start by defining the mesh and material properties for our simulation.</p>
+<details class="example">
+<summary>Gmsh Geometry Creation and Mesh object creation</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">gmsh</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">meshio</span>
+
+<span class="n">cells_x</span> <span class="o">=</span> <span class="mi">4</span>          
+<span class="n">cells_y</span> <span class="o">=</span> <span class="mi">5</span>          
+<span class="n">side_length</span> <span class="o">=</span> <span class="mf">1.0</span>   
+<span class="n">wall_thickness</span> <span class="o">=</span> <span class="mf">0.15</span> 
+<span class="n">height</span> <span class="o">=</span> <span class="mf">1.0</span>         
+<span class="n">lc</span> <span class="o">=</span> <span class="mf">0.2</span>         
+<span class="n">fillet_radius</span> <span class="o">=</span> <span class="mf">0.6</span>  <span class="c1"># New: Radius for rounding the corners</span>
+
+<span class="n">gmsh</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+<span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;solid_honeycomb&quot;</span><span class="p">)</span>
+<span class="n">occ</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">occ</span>
+
+<span class="n">h_hex</span> <span class="o">=</span> <span class="n">side_length</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> 
+
+<span class="n">dx</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">side_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">wall_thickness</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="n">h_hex</span> <span class="o">+</span> <span class="n">wall_thickness</span>
+
+<span class="n">total_w</span> <span class="o">=</span> <span class="p">(</span><span class="n">cells_x</span><span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">side_length</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">wall_thickness</span>
+<span class="n">total_h</span> <span class="o">=</span> <span class="p">(</span><span class="n">cells_y</span><span class="p">)</span> <span class="o">*</span> <span class="n">dy</span> <span class="o">+</span> <span class="n">wall_thickness</span>
+
+<span class="c1"># Create the main block</span>
+<span class="n">block</span> <span class="o">=</span> <span class="n">occ</span><span class="o">.</span><span class="n">addBox</span><span class="p">(</span><span class="mf">0.1</span><span class="o">*</span><span class="n">total_w</span><span class="p">,</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">total_h</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">total_w</span><span class="p">,</span> <span class="n">total_h</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+
+<span class="n">punches</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cells_x</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cells_y</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">cx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">side_length</span> <span class="o">+</span> <span class="n">wall_thickness</span>
+        <span class="n">offset_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">dy</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">cy</span> <span class="o">=</span> <span class="n">j</span> <span class="o">*</span> <span class="n">dy</span> <span class="o">+</span> <span class="p">(</span><span class="n">h_hex</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">wall_thickness</span> <span class="o">-</span> <span class="n">offset_y</span>
+
+        <span class="n">pts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">60</span><span class="p">):</span>
+            <span class="n">rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+            <span class="n">pts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">occ</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="n">cx</span> <span class="o">+</span> <span class="n">side_length</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rad</span><span class="p">),</span> 
+                                    <span class="n">cy</span> <span class="o">+</span> <span class="n">side_length</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rad</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">lc</span><span class="p">))</span>
+
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">occ</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="n">pts</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">pts</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">6</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)]</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">occ</span><span class="o">.</span><span class="n">addCurveLoop</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+        <span class="n">surf</span> <span class="o">=</span> <span class="n">occ</span><span class="o">.</span><span class="n">addPlaneSurface</span><span class="p">([</span><span class="n">loop</span><span class="p">])</span>
+
+        <span class="c1"># 2. Extrude to create the prism (Punch)</span>
+        <span class="c1"># extrude returns list of (dim, tag)</span>
+        <span class="n">prism</span> <span class="o">=</span> <span class="n">occ</span><span class="o">.</span><span class="n">extrude</span><span class="p">([(</span><span class="mi">2</span><span class="p">,</span> <span class="n">surf</span><span class="p">)],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="n">vol_tag</span> <span class="o">=</span> <span class="n">prism</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># Get the tag of the 3D volume</span>
+
+        <span class="c1"># --- FILLET LOGIC START ---</span>
+        <span class="c1"># We need to find the 6 vertical edges of this new prism to fillet them.</span>
+        <span class="n">occ</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span> <span class="c1"># Must sync to query the new volume&#39;s edges</span>
+
+        <span class="c1"># Get all curves (edges) associated with the volume</span>
+        <span class="c1"># getBoundary returns list of (dim, tag)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">getBoundary</span><span class="p">([(</span><span class="mi">3</span><span class="p">,</span> <span class="n">vol_tag</span><span class="p">)],</span> <span class="n">combined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">oriented</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">vertical_edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+            <span class="n">dim</span><span class="p">,</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">e</span>
+            <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Ensure it is a curve</span>
+                <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">zmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">zmax</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">getBoundingBox</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+
+                <span class="c1"># Check if edge is vertical (aligned with Z)</span>
+                <span class="n">z_len</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">zmax</span> <span class="o">-</span> <span class="n">zmin</span><span class="p">)</span>
+                <span class="n">x_len</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span><span class="p">)</span>
+                <span class="n">y_len</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">z_len</span> <span class="o">&gt;</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">height</span> <span class="ow">and</span> <span class="n">x_len</span> <span class="o">&lt;</span> <span class="mf">1e-4</span> <span class="ow">and</span> <span class="n">y_len</span> <span class="o">&lt;</span> <span class="mf">1e-4</span><span class="p">:</span>
+                    <span class="n">vertical_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">vertical_edges</span><span class="p">:</span>
+            <span class="n">filleted_punches</span> <span class="o">=</span> <span class="n">occ</span><span class="o">.</span><span class="n">fillet</span><span class="p">([</span><span class="n">vol_tag</span><span class="p">],</span> <span class="n">vertical_edges</span><span class="p">,</span> <span class="n">fillet_radius</span><span class="p">)</span>
+
+            <span class="n">punches</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="n">filleted_punches</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">punches</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="n">vol_tag</span><span class="p">))</span>
+
+<span class="n">occ</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+<span class="n">out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">occ</span><span class="o">.</span><span class="n">cut</span><span class="p">([(</span><span class="mi">3</span><span class="p">,</span> <span class="n">block</span><span class="p">)],</span> <span class="n">punches</span><span class="p">,</span> <span class="n">removeTool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">occ</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">out</span><span class="p">:</span>
+    <span class="n">final_vols</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">out</span><span class="p">]</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">addPhysicalGroup</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">final_vols</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Lattice_Material&quot;</span><span class="p">)</span>
+
+<span class="n">gmsh</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="s2">&quot;Mesh.Algorithm3D&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Delaunay</span>
+<span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">getEntities</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">lc</span><span class="p">)</span>
+<span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">gmsh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;../meshes/honeycomb.msh&quot;</span><span class="p">)</span>
+<span class="n">gmsh</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+
+<span class="n">_mesh</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;../meshes/honeycomb.msh&quot;</span><span class="p">)</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">_mesh</span><span class="o">.</span><span class="n">points</span>
+<span class="n">z_points</span> <span class="o">=</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Store z-coordinates</span>
+<span class="n">y_points</span> <span class="o">=</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Store y-coordinates</span>
+<span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">z_points</span> 
+<span class="n">points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_points</span>
+
+<span class="k">if</span> <span class="s2">&quot;tetra&quot;</span> <span class="ow">in</span> <span class="n">_mesh</span><span class="o">.</span><span class="n">cells_dict</span><span class="p">:</span>
+    <span class="n">tetra_elements</span> <span class="o">=</span> <span class="n">_mesh</span><span class="o">.</span><span class="n">cells_dict</span><span class="p">[</span><span class="s2">&quot;tetra&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tetra_elements</span><span class="p">)</span><span class="si">}</span><span class="s2"> tetrahedrons.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No tetrahedrons found. Ensure gmsh.model.mesh.generate(3) was called.&quot;</span><span class="p">)</span>
+
+
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="n">points</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">tetra_elements</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<details class="info">
+<summary>Output</summary>
+<div class="language-text highlight"><pre><span></span><code>Info    : Meshing 1D...ence                                                                                  
+Info    : [  0%] Meshing curve 13 (Line)
+Info    : [ 10%] Meshing curve 19 (Line)
+Info    : [ 10%] Meshing curve 20 (Line)
+Info    : [ 10%] Meshing curve 21 (Line)
+Info    : [ 10%] Meshing curve 31 (Line)
+Info    : [ 10%] Meshing curve 36 (Line)
+Info    : [ 10%] Meshing curve 37 (Line)
+Info    : [ 10%] Meshing curve 38 (Line)
+Info    : [ 10%] Meshing curve 39 (Line)
+Info    : [ 10%] Meshing curve 46 (Line)
+Info    : [ 10%] Meshing curve 48 (Line)
+Info    : [ 10%] Meshing curve 49 (Line)
+Info    : [ 10%] Meshing curve 54 (Line)
+Info    : [ 10%] Meshing curve 55 (Line)
+Info    : [ 10%] Meshing curve 56 (Line)
+Info    : [ 10%] Meshing curve 57 (Line)
+Info    : [ 10%] Meshing curve 64 (Line)
+Info    : [ 10%] Meshing curve 66 (Line)
+Info    : [ 10%] Meshing curve 67 (Line)
+Info    : [ 10%] Meshing curve 72 (Line)
+Info    : [ 10%] Meshing curve 73 (Line)
+Info    : [ 10%] Meshing curve 74 (Line)
+Info    : [ 10%] Meshing curve 75 (Line)
+Info    : [ 10%] Meshing curve 82 (Line)
+Info    : [ 10%] Meshing curve 84 (Line)
+Info    : [ 10%] Meshing curve 85 (Line)
+Info    : [ 10%] Meshing curve 90 (Line)
+Info    : [ 10%] Meshing curve 91 (Line)
+Info    : [ 10%] Meshing curve 92 (Line)
+Info    : [ 10%] Meshing curve 93 (Line)
+Info    : [ 10%] Meshing curve 100 (Line)
+Info    : [ 10%] Meshing curve 102 (Line)
+Info    : [ 10%] Meshing curve 108 (Line)
+Info    : [ 10%] Meshing curve 109 (Line)
+Info    : [ 10%] Meshing curve 118 (Line)
+Info    : [ 10%] Meshing curve 120 (Line)
+Info    : [ 10%] Meshing curve 139 (Line)
+Info    : [ 10%] Meshing curve 140 (Line)
+Info    : [ 10%] Meshing curve 141 (Line)
+Info    : [ 10%] Meshing curve 142 (Line)
+Info    : [ 10%] Meshing curve 143 (Line)
+Info    : [ 10%] Meshing curve 144 (Line)
+Info    : [ 10%] Meshing curve 145 (Line)
+Info    : [ 10%] Meshing curve 146 (Line)
+Info    : [ 10%] Meshing curve 147 (Line)
+Info    : [ 10%] Meshing curve 148 (Line)
+Info    : [ 20%] Meshing curve 149 (Line)
+Info    : [ 20%] Meshing curve 150 (Line)
+Info    : [ 20%] Meshing curve 151 (Line)
+Info    : [ 20%] Meshing curve 152 (Line)
+Info    : [ 20%] Meshing curve 153 (Line)
+Info    : [ 20%] Meshing curve 154 (Line)
+Info    : [ 20%] Meshing curve 155 (Line)
+Info    : [ 20%] Meshing curve 156 (Line)
+Info    : [ 20%] Meshing curve 157 (Line)
+Info    : [ 20%] Meshing curve 158 (Line)
+Info    : [ 20%] Meshing curve 159 (Line)
+Info    : [ 20%] Meshing curve 160 (Line)
+Info    : [ 20%] Meshing curve 161 (Line)
+Info    : [ 20%] Meshing curve 162 (Line)
+Info    : [ 20%] Meshing curve 163 (Line)
+Info    : [ 20%] Meshing curve 164 (Line)
+Info    : [ 20%] Meshing curve 165 (Line)
+Info    : [ 20%] Meshing curve 166 (Line)
+Info    : [ 20%] Meshing curve 167 (Line)
+Info    : [ 20%] Meshing curve 168 (Line)
+Info    : [ 20%] Meshing curve 169 (Line)
+Info    : [ 20%] Meshing curve 170 (Line)
+Info    : [ 20%] Meshing curve 171 (Line)
+Info    : [ 20%] Meshing curve 172 (Line)
+Info    : [ 20%] Meshing curve 173 (Line)
+Info    : [ 20%] Meshing curve 174 (Line)
+Info    : [ 20%] Meshing curve 175 (Line)
+Info    : [ 20%] Meshing curve 176 (Line)
+Info    : [ 20%] Meshing curve 177 (Line)
+Info    : [ 20%] Meshing curve 178 (Line)
+Info    : [ 20%] Meshing curve 179 (Line)
+Info    : [ 20%] Meshing curve 180 (Line)
+Info    : [ 20%] Meshing curve 181 (Line)
+Info    : [ 20%] Meshing curve 182 (Line)
+Info    : [ 20%] Meshing curve 183 (Line)
+Info    : [ 20%] Meshing curve 184 (Line)
+Info    : [ 20%] Meshing curve 185 (Line)
+Info    : [ 20%] Meshing curve 186 (Line)
+Info    : [ 20%] Meshing curve 187 (Line)
+Info    : [ 20%] Meshing curve 188 (Line)
+Info    : [ 20%] Meshing curve 189 (Line)
+Info    : [ 20%] Meshing curve 190 (Line)
+Info    : [ 20%] Meshing curve 191 (Line)
+Info    : [ 20%] Meshing curve 192 (Line)
+Info    : [ 20%] Meshing curve 193 (Line)
+Info    : [ 20%] Meshing curve 194 (Line)
+Info    : [ 30%] Meshing curve 195 (Line)
+Info    : [ 30%] Meshing curve 196 (Line)
+Info    : [ 30%] Meshing curve 197 (Line)
+Info    : [ 30%] Meshing curve 198 (Line)
+Info    : [ 30%] Meshing curve 199 (Line)
+Info    : [ 30%] Meshing curve 200 (Line)
+Info    : [ 30%] Meshing curve 201 (Line)
+Info    : [ 30%] Meshing curve 202 (Line)
+Info    : [ 30%] Meshing curve 203 (Line)
+Info    : [ 30%] Meshing curve 204 (Line)
+Info    : [ 30%] Meshing curve 205 (Line)
+Info    : [ 30%] Meshing curve 206 (Line)
+Info    : [ 30%] Meshing curve 207 (Line)
+Info    : [ 30%] Meshing curve 208 (Line)
+Info    : [ 30%] Meshing curve 209 (Line)
+Info    : [ 30%] Meshing curve 210 (Line)
+Info    : [ 30%] Meshing curve 211 (Line)
+Info    : [ 30%] Meshing curve 212 (Line)
+Info    : [ 30%] Meshing curve 213 (Line)
+Info    : [ 30%] Meshing curve 214 (Line)
+Info    : [ 30%] Meshing curve 215 (Line)
+Info    : [ 30%] Meshing curve 216 (Line)
+Info    : [ 30%] Meshing curve 217 (Line)
+Info    : [ 30%] Meshing curve 218 (Line)
+Info    : [ 30%] Meshing curve 219 (Line)
+Info    : [ 30%] Meshing curve 220 (Line)
+Info    : [ 30%] Meshing curve 221 (Line)
+Info    : [ 30%] Meshing curve 222 (Line)
+Info    : [ 30%] Meshing curve 223 (Line)
+Info    : [ 30%] Meshing curve 224 (Line)
+Info    : [ 30%] Meshing curve 225 (Line)
+Info    : [ 30%] Meshing curve 226 (Line)
+Info    : [ 30%] Meshing curve 227 (Line)
+Info    : [ 30%] Meshing curve 228 (Line)
+Info    : [ 30%] Meshing curve 229 (Line)
+Info    : [ 30%] Meshing curve 230 (Line)
+Info    : [ 30%] Meshing curve 231 (Line)
+Info    : [ 30%] Meshing curve 235 (Line)
+Info    : [ 30%] Meshing curve 236 (Line)
+Info    : [ 30%] Meshing curve 237 (Line)
+Info    : [ 30%] Meshing curve 238 (Line)
+Info    : [ 30%] Meshing curve 239 (Line)
+Info    : [ 30%] Meshing curve 240 (Line)
+Info    : [ 30%] Meshing curve 241 (Line)
+Info    : [ 30%] Meshing curve 247 (Line)
+Info    : [ 40%] Meshing curve 248 (Line)
+Info    : [ 40%] Meshing curve 249 (Line)
+Info    : [ 40%] Meshing curve 250 (Line)
+Info    : [ 40%] Meshing curve 251 (Line)
+Info    : [ 40%] Meshing curve 252 (Line)
+Info    : [ 40%] Meshing curve 253 (Line)
+Info    : [ 40%] Meshing curve 254 (Line)
+Info    : [ 40%] Meshing curve 255 (Line)
+Info    : [ 40%] Meshing curve 256 (Line)
+Info    : [ 40%] Meshing curve 257 (Line)
+Info    : [ 40%] Meshing curve 258 (Line)
+Info    : [ 40%] Meshing curve 259 (Line)
+Info    : [ 40%] Meshing curve 260 (Line)
+Info    : [ 40%] Meshing curve 261 (Line)
+Info    : [ 40%] Meshing curve 262 (Line)
+Info    : [ 40%] Meshing curve 263 (Line)
+Info    : [ 40%] Meshing curve 264 (Line)
+Info    : [ 40%] Meshing curve 265 (Line)
+Info    : [ 40%] Meshing curve 266 (Line)
+Info    : [ 40%] Meshing curve 267 (Line)
+Info    : [ 40%] Meshing curve 268 (Line)
+Info    : [ 40%] Meshing curve 269 (Line)
+Info    : [ 40%] Meshing curve 270 (Line)
+Info    : [ 40%] Meshing curve 271 (Line)
+Info    : [ 40%] Meshing curve 272 (Line)
+Info    : [ 40%] Meshing curve 273 (Line)
+Info    : [ 40%] Meshing curve 274 (Line)
+Info    : [ 40%] Meshing curve 275 (Line)
+Info    : [ 40%] Meshing curve 276 (Line)
+Info    : [ 40%] Meshing curve 277 (Line)
+Info    : [ 40%] Meshing curve 278 (Line)
+Info    : [ 40%] Meshing curve 279 (Line)
+Info    : [ 40%] Meshing curve 280 (Line)
+Info    : [ 40%] Meshing curve 281 (Line)
+Info    : [ 40%] Meshing curve 282 (Line)
+Info    : [ 40%] Meshing curve 283 (Line)
+Info    : [ 40%] Meshing curve 284 (Line)
+Info    : [ 40%] Meshing curve 285 (Line)
+Info    : [ 40%] Meshing curve 286 (Line)
+Info    : [ 40%] Meshing curve 287 (Line)
+Info    : [ 40%] Meshing curve 288 (Line)
+Info    : [ 40%] Meshing curve 289 (Line)
+Info    : [ 40%] Meshing curve 290 (Line)
+Info    : [ 40%] Meshing curve 291 (Line)
+Info    : [ 40%] Meshing curve 292 (Line)
+Info    : [ 40%] Meshing curve 293 (Line)
+Info    : [ 50%] Meshing curve 294 (Line)
+Info    : [ 50%] Meshing curve 295 (Line)
+Info    : [ 50%] Meshing curve 296 (Line)
+Info    : [ 50%] Meshing curve 297 (Line)
+Info    : [ 50%] Meshing curve 298 (Line)
+Info    : [ 50%] Meshing curve 299 (Line)
+Info    : [ 50%] Meshing curve 300 (Line)
+Info    : [ 50%] Meshing curve 301 (Line)
+Info    : [ 50%] Meshing curve 302 (Line)
+Info    : [ 50%] Meshing curve 303 (Line)
+Info    : [ 50%] Meshing curve 304 (Line)
+Info    : [ 50%] Meshing curve 305 (Line)
+Info    : [ 50%] Meshing curve 306 (Line)
+Info    : [ 50%] Meshing curve 307 (Line)
+Info    : [ 50%] Meshing curve 308 (Line)
+Info    : [ 50%] Meshing curve 309 (Line)
+Info    : [ 50%] Meshing curve 310 (Line)
+Info    : [ 50%] Meshing curve 311 (Line)
+Info    : [ 50%] Meshing curve 312 (Line)
+Info    : [ 50%] Meshing curve 313 (Line)
+Info    : [ 50%] Meshing curve 314 (Line)
+Info    : [ 50%] Meshing curve 315 (Line)
+Info    : [ 50%] Meshing curve 316 (Line)
+Info    : [ 50%] Meshing curve 317 (Line)
+Info    : [ 50%] Meshing curve 318 (Line)
+Info    : [ 50%] Meshing curve 322 (Line)
+Info    : [ 50%] Meshing curve 323 (Line)
+Info    : [ 50%] Meshing curve 324 (Line)
+Info    : [ 50%] Meshing curve 325 (Line)
+Info    : [ 50%] Meshing curve 330 (Line)
+Info    : [ 50%] Meshing curve 332 (Line)
+Info    : [ 50%] Meshing curve 333 (Line)
+Info    : [ 50%] Meshing curve 334 (Line)
+Info    : [ 50%] Meshing curve 335 (Line)
+Info    : [ 50%] Meshing curve 336 (Line)
+Info    : [ 50%] Meshing curve 355 (Line)
+Info    : [ 50%] Meshing curve 356 (Line)
+Info    : [ 50%] Meshing curve 357 (Line)
+Info    : [ 50%] Meshing curve 358 (Line)
+Info    : [ 50%] Meshing curve 359 (Line)
+Info    : [ 50%] Meshing curve 360 (Line)
+Info    : [ 50%] Meshing curve 361 (Line)
+Info    : [ 50%] Meshing curve 362 (Line)
+Info    : [ 50%] Meshing curve 363 (Line)
+Info    : [ 50%] Meshing curve 364 (Line)
+Info    : [ 60%] Meshing curve 365 (Line)
+Info    : [ 60%] Meshing curve 366 (Line)
+Info    : [ 60%] Meshing curve 367 (Line)
+Info    : [ 60%] Meshing curve 368 (Line)
+Info    : [ 60%] Meshing curve 369 (Line)
+Info    : [ 60%] Meshing curve 370 (Line)
+Info    : [ 60%] Meshing curve 371 (Line)
+Info    : [ 60%] Meshing curve 372 (Line)
+Info    : [ 60%] Meshing curve 373 (Line)
+Info    : [ 60%] Meshing curve 374 (Line)
+Info    : [ 60%] Meshing curve 375 (Line)
+Info    : [ 60%] Meshing curve 376 (Line)
+Info    : [ 60%] Meshing curve 377 (Line)
+Info    : [ 60%] Meshing curve 378 (Line)
+Info    : [ 60%] Meshing curve 379 (Line)
+Info    : [ 60%] Meshing curve 380 (Line)
+Info    : [ 60%] Meshing curve 381 (Line)
+Info    : [ 60%] Meshing curve 382 (Line)
+Info    : [ 60%] Meshing curve 383 (Line)
+Info    : [ 60%] Meshing curve 384 (Line)
+Info    : [ 60%] Meshing curve 385 (Line)
+Info    : [ 60%] Meshing curve 386 (Line)
+Info    : [ 60%] Meshing curve 387 (Line)
+Info    : [ 60%] Meshing curve 388 (Line)
+Info    : [ 60%] Meshing curve 389 (Line)
+Info    : [ 60%] Meshing curve 390 (Line)
+Info    : [ 60%] Meshing curve 391 (Line)
+Info    : [ 60%] Meshing curve 392 (Line)
+Info    : [ 60%] Meshing curve 393 (Line)
+Info    : [ 60%] Meshing curve 394 (Line)
+Info    : [ 60%] Meshing curve 395 (Line)
+Info    : [ 60%] Meshing curve 396 (Line)
+Info    : [ 60%] Meshing curve 397 (Line)
+Info    : [ 60%] Meshing curve 398 (Line)
+Info    : [ 60%] Meshing curve 399 (Line)
+Info    : [ 60%] Meshing curve 400 (Line)
+Info    : [ 60%] Meshing curve 401 (Line)
+Info    : [ 60%] Meshing curve 402 (Line)
+Info    : [ 60%] Meshing curve 403 (Line)
+Info    : [ 60%] Meshing curve 404 (Line)
+Info    : [ 60%] Meshing curve 405 (Line)
+Info    : [ 60%] Meshing curve 406 (Line)
+Info    : [ 60%] Meshing curve 407 (Line)
+Info    : [ 60%] Meshing curve 408 (Line)
+Info    : [ 60%] Meshing curve 409 (Line)
+Info    : [ 60%] Meshing curve 410 (Line)
+Info    : [ 70%] Meshing curve 411 (Line)
+Info    : [ 70%] Meshing curve 412 (Line)
+Info    : [ 70%] Meshing curve 413 (Line)
+Info    : [ 70%] Meshing curve 414 (Line)
+Info    : [ 70%] Meshing curve 415 (Line)
+Info    : [ 70%] Meshing curve 416 (Line)
+Info    : [ 70%] Meshing curve 417 (Line)
+Info    : [ 70%] Meshing curve 418 (Line)
+Info    : [ 70%] Meshing curve 419 (Line)
+Info    : [ 70%] Meshing curve 420 (Line)
+Info    : [ 70%] Meshing curve 421 (Line)
+Info    : [ 70%] Meshing curve 422 (Line)
+Info    : [ 70%] Meshing curve 423 (Line)
+Info    : [ 70%] Meshing curve 424 (Line)
+Info    : [ 70%] Meshing curve 425 (Line)
+Info    : [ 70%] Meshing curve 426 (Line)
+Info    : [ 70%] Meshing curve 427 (Line)
+Info    : [ 70%] Meshing curve 428 (Line)
+Info    : [ 70%] Meshing curve 429 (Line)
+Info    : [ 70%] Meshing curve 430 (Line)
+Info    : [ 70%] Meshing curve 431 (Line)
+Info    : [ 70%] Meshing curve 432 (Line)
+Info    : [ 70%] Meshing curve 433 (Line)
+Info    : [ 70%] Meshing curve 434 (Line)
+Info    : [ 70%] Meshing curve 435 (Line)
+Info    : [ 70%] Meshing curve 436 (Line)
+Info    : [ 70%] Meshing curve 437 (Line)
+Info    : [ 70%] Meshing curve 438 (Line)
+Info    : [ 70%] Meshing curve 439 (Line)
+Info    : [ 70%] Meshing curve 440 (Line)
+Info    : [ 70%] Meshing curve 441 (Line)
+Info    : [ 70%] Meshing curve 442 (Line)
+Info    : [ 70%] Meshing curve 443 (Line)
+Info    : [ 70%] Meshing curve 444 (Line)
+Info    : [ 70%] Meshing curve 447 (Line)
+Info    : [ 70%] Meshing curve 454 (Line)
+Info    : [ 70%] Meshing curve 456 (Line)
+Info    : [ 70%] Meshing curve 457 (Line)
+Info    : [ 70%] Meshing curve 465 (Line)
+Info    : [ 70%] Meshing curve 466 (Line)
+Info    : [ 70%] Meshing curve 472 (Line)
+Info    : [ 70%] Meshing curve 474 (Line)
+Info    : [ 70%] Meshing curve 475 (Line)
+Info    : [ 70%] Meshing curve 476 (Line)
+Info    : [ 70%] Meshing curve 477 (Line)
+Info    : [ 70%] Meshing curve 483 (Line)
+Info    : [ 80%] Meshing curve 484 (Line)
+Info    : [ 80%] Meshing curve 490 (Line)
+Info    : [ 80%] Meshing curve 492 (Line)
+Info    : [ 80%] Meshing curve 493 (Line)
+Info    : [ 80%] Meshing curve 494 (Line)
+Info    : [ 80%] Meshing curve 495 (Line)
+Info    : [ 80%] Meshing curve 501 (Line)
+Info    : [ 80%] Meshing curve 502 (Line)
+Info    : [ 80%] Meshing curve 508 (Line)
+Info    : [ 80%] Meshing curve 510 (Line)
+Info    : [ 80%] Meshing curve 511 (Line)
+Info    : [ 80%] Meshing curve 512 (Line)
+Info    : [ 80%] Meshing curve 513 (Line)
+Info    : [ 80%] Meshing curve 519 (Line)
+Info    : [ 80%] Meshing curve 520 (Line)
+Info    : [ 80%] Meshing curve 526 (Line)
+Info    : [ 80%] Meshing curve 528 (Line)
+Info    : [ 80%] Meshing curve 529 (Line)
+Info    : [ 80%] Meshing curve 530 (Line)
+Info    : [ 80%] Meshing curve 531 (Line)
+Info    : [ 80%] Meshing curve 538 (Line)
+Info    : [ 80%] Meshing curve 546 (Line)
+Info    : [ 80%] Meshing curve 548 (Line)
+Info    : [ 80%] Meshing curve 549 (Line)
+Info    : [ 80%] Meshing curve 550 (Line)
+Info    : [ 80%] Meshing curve 551 (Line)
+Info    : [ 80%] Meshing curve 552 (Line)
+Info    : [ 80%] Meshing curve 553 (Line)
+Info    : [ 80%] Meshing curve 554 (Line)
+Info    : [ 80%] Meshing curve 555 (Line)
+Info    : [ 80%] Meshing curve 556 (Line)
+Info    : [ 80%] Meshing curve 557 (Line)
+Info    : [ 80%] Meshing curve 558 (Line)
+Info    : [ 80%] Meshing curve 559 (Line)
+Info    : [ 80%] Meshing curve 560 (Line)
+Info    : [ 80%] Meshing curve 561 (Line)
+Info    : [ 80%] Meshing curve 562 (Line)
+Info    : [ 80%] Meshing curve 563 (Line)
+Info    : [ 80%] Meshing curve 564 (Line)
+Info    : [ 80%] Meshing curve 565 (Line)
+Info    : [ 80%] Meshing curve 566 (Line)
+Info    : [ 80%] Meshing curve 567 (Line)
+Info    : [ 80%] Meshing curve 568 (Line)
+Info    : [ 80%] Meshing curve 569 (Line)
+Info    : [ 80%] Meshing curve 570 (Line)
+Info    : [ 90%] Meshing curve 571 (Line)
+Info    : [ 90%] Meshing curve 572 (Line)
+Info    : [ 90%] Meshing curve 573 (Line)
+Info    : [ 90%] Meshing curve 574 (Line)
+Info    : [ 90%] Meshing curve 575 (Line)
+Info    : [ 90%] Meshing curve 576 (Line)
+Info    : [ 90%] Meshing curve 577 (Line)
+Info    : [ 90%] Meshing curve 578 (Line)
+Info    : [ 90%] Meshing curve 579 (Line)
+Info    : [ 90%] Meshing curve 580 (Line)
+Info    : [ 90%] Meshing curve 581 (Line)
+Info    : [ 90%] Meshing curve 582 (Line)
+Info    : [ 90%] Meshing curve 583 (Line)
+Info    : [ 90%] Meshing curve 584 (Line)
+Info    : [ 90%] Meshing curve 585 (Line)
+Info    : [ 90%] Meshing curve 586 (Line)
+Info    : [ 90%] Meshing curve 587 (Line)
+Info    : [ 90%] Meshing curve 588 (Line)
+Info    : [ 90%] Meshing curve 589 (Line)
+Info    : [ 90%] Meshing curve 590 (Line)
+Info    : [ 90%] Meshing curve 591 (Line)
+Info    : [ 90%] Meshing curve 592 (Line)
+Info    : [ 90%] Meshing curve 593 (Line)
+Info    : [ 90%] Meshing curve 594 (Line)
+Info    : [ 90%] Meshing curve 595 (Line)
+Info    : [ 90%] Meshing curve 596 (Line)
+Info    : [ 90%] Meshing curve 597 (Line)
+Info    : [ 90%] Meshing curve 598 (Line)
+Info    : [ 90%] Meshing curve 599 (Line)
+Info    : [ 90%] Meshing curve 600 (Line)
+Info    : [ 90%] Meshing curve 601 (Line)
+Info    : [ 90%] Meshing curve 602 (Line)
+Info    : [ 90%] Meshing curve 603 (Line)
+Info    : [ 90%] Meshing curve 604 (Line)
+Info    : [ 90%] Meshing curve 605 (Line)
+Info    : [ 90%] Meshing curve 606 (Line)
+Info    : [ 90%] Meshing curve 607 (Line)
+Info    : [ 90%] Meshing curve 608 (Line)
+Info    : [ 90%] Meshing curve 609 (Line)
+Info    : [ 90%] Meshing curve 610 (Line)
+Info    : [ 90%] Meshing curve 611 (Line)
+Info    : [ 90%] Meshing curve 612 (Line)
+Info    : [ 90%] Meshing curve 613 (Line)
+Info    : [ 90%] Meshing curve 614 (Line)
+Info    : [ 90%] Meshing curve 615 (Line)
+Info    : [ 90%] Meshing curve 616 (Line)
+Info    : [100%] Meshing curve 617 (Line)
+Info    : [100%] Meshing curve 618 (Line)
+Info    : [100%] Meshing curve 619 (Line)
+Info    : [100%] Meshing curve 620 (Line)
+Info    : [100%] Meshing curve 621 (Line)
+Info    : [100%] Meshing curve 622 (Line)
+Info    : [100%] Meshing curve 623 (Line)
+Info    : [100%] Meshing curve 624 (Line)
+Info    : [100%] Meshing curve 625 (Line)
+Info    : [100%] Meshing curve 626 (Line)
+Info    : [100%] Meshing curve 627 (Line)
+Info    : [100%] Meshing curve 628 (Line)
+Info    : [100%] Meshing curve 629 (Line)
+Info    : [100%] Meshing curve 630 (Line)
+Info    : [100%] Meshing curve 631 (Line)
+Info    : [100%] Meshing curve 632 (Line)
+Info    : [100%] Meshing curve 633 (Line)
+Info    : [100%] Meshing curve 634 (Line)
+Info    : [100%] Meshing curve 635 (Line)
+Info    : [100%] Meshing curve 636 (Line)
+Info    : [100%] Meshing curve 637 (Line)
+Info    : [100%] Meshing curve 638 (Line)
+Info    : [100%] Meshing curve 639 (Line)
+Info    : [100%] Meshing curve 640 (Line)
+Info    : [100%] Meshing curve 641 (Line)
+Info    : [100%] Meshing curve 642 (Line)
+Info    : [100%] Meshing curve 643 (Line)
+Info    : [100%] Meshing curve 644 (Line)
+Info    : [100%] Meshing curve 645 (Line)
+Info    : [100%] Meshing curve 646 (Line)
+Info    : [100%] Meshing curve 647 (Line)
+Info    : [100%] Meshing curve 648 (Line)
+Info    : [100%] Meshing curve 649 (Line)
+Info    : [100%] Meshing curve 650 (Line)
+Info    : [100%] Meshing curve 651 (Line)
+Info    : [100%] Meshing curve 652 (Line)
+Info    : [100%] Meshing curve 653 (Line)
+Info    : [100%] Meshing curve 654 (Line)
+Info    : [100%] Meshing curve 655 (Line)
+Info    : [100%] Meshing curve 656 (Line)
+Info    : [100%] Meshing curve 657 (Line)
+Info    : [100%] Meshing curve 658 (Line)
+Info    : [100%] Meshing curve 659 (Line)
+Info    : [100%] Meshing curve 660 (Line)
+Info    : [100%] Meshing curve 661 (Line)
+Info    : Done meshing 1D (Wall 0.0319324s, CPU 0.036256s)
+Info    : Meshing 2D...
+Info    : [  0%] Meshing surface 8 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 16 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 21 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 24 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 29 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 32 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 37 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 40 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 45 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 53 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 64 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 65 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 66 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 67 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 68 (Plane, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 69 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 72 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 73 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 74 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 75 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 76 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 77 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 80 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 81 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 82 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 83 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 84 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 85 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 88 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 89 (Plane, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 90 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 91 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 92 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 93 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 96 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 97 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 98 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 99 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 100 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 101 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 104 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 105 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 106 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 112 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 113 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 114 (Plane, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 115 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 116 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 117 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 120 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 121 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 122 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 123 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 124 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 125 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 128 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 129 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 130 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 131 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 132 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 133 (Plane, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 136 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 137 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 138 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 139 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 140 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 141 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 147 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 148 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 149 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 160 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 161 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 162 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 163 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 164 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 165 (Plane, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 168 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 169 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 170 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 171 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 172 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 173 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 176 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 177 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 178 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 179 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 180 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 181 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 184 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 185 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 186 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 187 (Plane, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 188 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 189 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 192 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 193 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 194 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 195 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 196 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 197 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 202 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 210 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 211 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 218 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 219 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 226 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 227 (Plane, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 234 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 235 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 243 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 244 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 245 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 246 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 247 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 248 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 249 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 250 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 251 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 252 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 253 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 254 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 255 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 256 (Plane, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 257 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 258 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 259 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 260 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 261 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 262 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 263 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 264 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 265 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 266 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 267 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 268 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 269 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 270 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 271 (Plane, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 272 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 273 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 274 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 275 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 276 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 277 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 278 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 279 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 280 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 281 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 282 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 283 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 284 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 285 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 286 (Plane, Frontal-Delaunay)
+Info    : [100%] Meshing surface 287 (Plane, Frontal-Delaunay)
+Info    : Done meshing 2D (Wall 0.219264s, CPU 0.223517s)
+Info    : Meshing 3D...
+Info    : 3D Meshing 1 volume with 1 connected component
+Info    : Tetrahedrizing 5922 nodes...
+Info    : Done tetrahedrizing 5930 nodes (Wall 0.0745989s, CPU 0.069584s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    :  - Added 1 Steiner point
+Info    : Done reconstructing mesh (Wall 0.187552s, CPU 0.172506s)
+Info    : Found volume 1
+Info    : It. 0 - 0 nodes created - worst tet radius 0.912402 (nodes removed 0 0)
+Info    : 3D refinement terminated (5923 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 0 nodes could not be inserted
+Info    :  - 17362 tetrahedra created in 0.00118334 sec. (14672030 tets/s)
+Info    : 0 node relocations
+Info    : Done meshing 3D (Wall 0.389538s, CPU 0.375124s)
+Info    : Optimizing mesh...
+Info    : Optimizing volume 1
+Info    : Optimization starts (volume = 10.2837) with worst = 0.000838874 / average = 0.719092:
+Info    : 0.00 &lt; quality &lt; 0.10 :       342 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :       190 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :       150 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :       149 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :       485 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :      1345 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :      3180 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :      5742 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :      4856 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :       923 elements
+Info    : 628 edge swaps, 0 node relocations (volume = 10.2837): worst = 0.000838874 / average = 0.738579 (Wall 0.0114649s, CPU 0.011584s)
+Info    : 663 edge swaps, 0 node relocations (volume = 10.2837): worst = 0.000838874 / average = 0.73902 (Wall 0.0141874s, CPU 0.014421s)
+Info    : 0.00 &lt; quality &lt; 0.10 :        44 elements
+Info    : 0.10 &lt; quality &lt; 0.20 :         8 elements
+Info    : 0.20 &lt; quality &lt; 0.30 :         6 elements
+Info    : 0.30 &lt; quality &lt; 0.40 :       150 elements
+Info    : 0.40 &lt; quality &lt; 0.50 :       520 elements
+Info    : 0.50 &lt; quality &lt; 0.60 :      1307 elements
+Info    : 0.60 &lt; quality &lt; 0.70 :      3155 elements
+Info    : 0.70 &lt; quality &lt; 0.80 :      6040 elements
+Info    : 0.80 &lt; quality &lt; 0.90 :      4704 elements
+Info    : 0.90 &lt; quality &lt; 1.00 :       857 elements
+Info    : Done optimizing mesh (Wall 0.0339558s, CPU 0.034895s)
+Info    : 5923 nodes 31149 elements
+Info    : Writing &#39;../meshes/honeycomb.msh&#39;...
+Info    : Done writing &#39;../meshes/honeycomb.msh&#39;
+
+Successfully loaded 16817 tetrahedrons.
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>Warning : 1 ill-shaped tets are still in the mesh
+Warning : ------------------------------
+Warning : Mesh generation error summary
+Warning :     1 warning
+Warning :     0 errors
+Warning : Check the full log for details
+Warning : ------------------------------
+</code></pre></div>
+</details>
+<div class="language-python highlight"><pre><span></span><code><span class="n">grid</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">UnstructuredGrid</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span> <span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pv</span><span class="o">.</span><span class="n">CellType</span><span class="o">.</span><span class="n">TETRA</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">pl</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plotter</span><span class="p">()</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span>  <span class="n">smooth_shading</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">view_isometric</span><span class="p">()</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>Widget(value=&#39;&lt;iframe src=&quot;http://localhost:46257/index.html?ui=P_0x7614b44687a0_0&amp;reconnect=auto&quot; class=&quot;pyvi…
+</code></pre></div>
+<p><img alt="Geometry and Mesh" src="../../assets/plots/honeycomb_mesh.png" /></p>
+<p>We use <code>Tetrahedral</code> elements for the mesh and below we define the <code>Operator</code> object.</p>
+<div class="language-python highlight"><pre><span></span><code><span class="n">tet</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">Tetrahedron4</span><span class="p">()</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">tet</span><span class="p">)</span>
+
+
+<span class="n">n_dofs_per_node</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_dofs</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_dofs_per_node</span>
+</code></pre></div>
+<h2 id="defining-the-neural-constitutive-model">Defining the Neural Constitutive Model<a class="headerlink" href="#defining-the-neural-constitutive-model" title="Permanent link">¤</a></h2>
+<p>The specific architecture employed for the neural strain energy density was a feed-forward Multi-Layer Perceptron (MLP). The network consisted of an input layer accepting the two scalar invariants <span class="arithmatex">\((I_1, J)\)</span>, followed by two hidden layers with 16 neurons each, and a final output layer producing the scalar energy value. To ensure that the second-order derivatives (Hessian) remained continuous and numerically stable, a \texttt{softplus} activation function was utilized across all hidden layers. This choice is critical as standard piecewise linear activations, such as \texttt{ReLU}, yield zero second derivatives almost everywhere, leading to immediate solver divergence.</p>
+<div class="arithmatex">\[
+\psi_{\text{total}}(I_1, J) = \underbrace{\left[ \text{NN}(I_1, J; \theta) - \text{NN}(3, 1; \theta) \right]}_{\text{Shifted Neural Potential}} + \underbrace{\Psi_{\text{base}}(I_1, J)}_{\text{Stiffness Prior}}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note we use an untrained neural network and for actual purpose this should be replaced by a trained neural network</p>
+</div>
+<div class="language-python highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NeuralMaterial</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span>
+    <span class="n">mu_init</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">lmbda_init</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">lmbda</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu_init</span> <span class="o">=</span> <span class="n">mu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lmbda_init</span> <span class="o">=</span> <span class="n">lmbda</span>
+
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">eqx</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softplus</span><span class="p">,</span>
+            <span class="n">eqx</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softplus</span><span class="p">,</span>
+            <span class="n">eqx</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">keys</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+        <span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">psi_nn</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">ref_invariants</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">y_ref</span> <span class="o">=</span> <span class="n">ref_invariants</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="n">y_ref</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">y_ref</span><span class="p">)</span>
+        <span class="n">psi_0</span> <span class="o">=</span> <span class="n">y_ref</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">I1</span><span class="p">,</span> <span class="n">J</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">psi_base</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu_init</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">I1</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu_init</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+            <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lmbda_init</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Total Energy = (NN - Offset) + Base</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">psi_nn</span> <span class="o">-</span> <span class="n">psi_0</span><span class="p">)</span> <span class="o">+</span> <span class="n">psi_base</span>
+</code></pre></div>
+<p>Now, we define the neural network architecture and the total strain energy density function based on the neural network defined above.</p>
+<div class="language-python highlight"><pre><span></span><code><span class="n">key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">E</span> <span class="o">=</span> <span class="mf">1e4</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">E</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span><span class="p">)</span>
+<span class="n">lmbda</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span><span class="p">)</span>
+
+<span class="n">nn_material</span> <span class="o">=</span> <span class="n">NeuralMaterial</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">lmbda</span><span class="o">=</span><span class="n">lmbda</span><span class="p">)</span>
+
+
+<span class="nd">@autovmap</span><span class="p">(</span><span class="n">grad_u</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">neural_strain_energy</span><span class="p">(</span><span class="n">grad_u</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">I</span> <span class="o">+</span> <span class="n">grad_u</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">F</span>
+
+    <span class="n">I1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+
+    <span class="n">invariants</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">I1</span><span class="p">,</span> <span class="n">J</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">invariants</span><span class="p">)</span>
+
+
+<span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">total_neural_energy</span><span class="p">(</span><span class="n">u_flat</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)</span>
+    <span class="n">u_grad</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">energy_density</span> <span class="o">=</span> <span class="n">neural_strain_energy</span><span class="p">(</span><span class="n">u_grad</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">energy_density</span><span class="p">)</span>
+</code></pre></div>
+<p>To check if the total energy at 0 deformation is zero, we can evaluate the total strain energy density function at the reference configuration where <span class="arithmatex">\(I_1 = 3\)</span> and <span class="arithmatex">\(J = 1\)</span>. This ensures that the neural network's contribution is shifted appropriately, and the stiffness prior is also evaluated at this point.</p>
+<h2 id="applying-boundary-conditions-and-loads">Applying Boundary Conditions and Loads<a class="headerlink" href="#applying-boundary-conditions-and-loads" title="Permanent link">¤</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span class="n">z_min</span><span class="p">,</span> <span class="n">z_max</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+
+
+<span class="n">top_nodes</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">z_max</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">bottom_nodes</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">z_min</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">zero_dofs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="mi">3</span> <span class="o">*</span> <span class="n">bottom_nodes</span><span class="p">,</span>
+        <span class="mi">3</span> <span class="o">*</span> <span class="n">bottom_nodes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="mi">3</span> <span class="o">*</span> <span class="n">bottom_nodes</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="mi">3</span> <span class="o">*</span> <span class="n">top_nodes</span><span class="p">,</span>
+        <span class="mi">3</span> <span class="o">*</span> <span class="n">top_nodes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">applied_dofs</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">top_nodes</span> <span class="o">+</span> <span class="mi">2</span>  <span class="c1"># Apply displacement in z-direction</span>
+
+<span class="n">fixed_dofs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">applied_dofs</span><span class="p">,</span> <span class="n">zero_dofs</span><span class="p">])</span>
+
+<span class="n">prescribed_values</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dofs</span><span class="p">)</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">applied_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="using-coloring-to-compute-sparse-hessians">Using Coloring to compute Sparse Hessians<a class="headerlink" href="#using-coloring-to-compute-sparse-hessians" title="Permanent link">¤</a></h2>
+<p>We will solve the problem using direct linear solver. To this end, we will need to perform sparse differentiation using the <code>sparse</code> module of <code>tatva</code> and coloring approach from <code>tatva_coloring.</code></p>
+<div class="language-python highlight"><pre><span></span><code><span class="n">sparsity_pattern</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">create_sparsity_pattern</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="o">=</span><span class="n">n_dofs_per_node</span><span class="p">)</span>
+<span class="n">sparsity_pattern_csr</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span>
+    <span class="p">(</span>
+        <span class="n">sparsity_pattern</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">sparsity_pattern</span><span class="o">.</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sparsity_pattern</span><span class="o">.</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">indptr</span> <span class="o">=</span> <span class="n">sparsity_pattern_csr</span><span class="o">.</span><span class="n">indptr</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">sparsity_pattern_csr</span><span class="o">.</span><span class="n">indices</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">distance2_color_and_seeds</span><span class="p">(</span>
+    <span class="n">row_ptr</span><span class="o">=</span><span class="n">sparsity_pattern_csr</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span>
+    <span class="n">col_idx</span><span class="o">=</span><span class="n">sparsity_pattern_csr</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span>
+    <span class="n">n_dofs</span><span class="o">=</span><span class="n">n_dofs</span><span class="p">,</span>
+<span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">energy_fn</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Partial</span><span class="p">(</span><span class="n">total_neural_energy</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">nn_material</span><span class="p">)</span>
+<span class="n">gradient_fn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacrev</span><span class="p">(</span><span class="n">energy_fn</span><span class="p">)</span>
+
+<span class="n">K_sparse_fn</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span>
+    <span class="n">gradient</span><span class="o">=</span><span class="n">gradient_fn</span><span class="p">,</span>
+    <span class="n">row_ptr</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sparsity_pattern_csr</span><span class="o">.</span><span class="n">indptr</span><span class="p">),</span>
+    <span class="n">col_indices</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sparsity_pattern_csr</span><span class="o">.</span><span class="n">indices</span><span class="p">),</span>
+    <span class="n">colors</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">colors</span><span class="p">),</span>
+    <span class="n">color_batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">zero_indices</span><span class="p">,</span> <span class="n">one_indices</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">get_bc_indices</span><span class="p">(</span><span class="n">sparsity_pattern</span><span class="p">,</span> <span class="n">fixed_dofs</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>One can use the matrix-free solver by computing the Jacobian-vector product by simply using <code>jax.jvp</code> on the <code>gradient_fn</code>.</p>
+</div>
+<h2 id="defining-newton-solver">Defining Newton Solver<a class="headerlink" href="#defining-newton-solver" title="Permanent link">¤</a></h2>
+<p>We will use a newton sparse solver</p>
+<details class="example">
+<summary>Newton Solver with Sparse Linear Solve</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">newton_sparse_solver</span><span class="p">(</span>
+    <span class="n">u</span><span class="p">,</span>
+    <span class="n">fext</span><span class="p">,</span>
+    <span class="n">gradient</span><span class="p">,</span>
+    <span class="n">hessian_sparse</span><span class="p">,</span>
+    <span class="n">fixed_dofs</span><span class="p">,</span>
+    <span class="n">zero_indices</span><span class="p">,</span>
+    <span class="n">one_indices</span><span class="p">,</span>
+    <span class="n">indptr</span><span class="p">,</span>
+    <span class="n">indices</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">fint</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+    <span class="n">norm_res</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+    <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-8</span>
+    <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">solver</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">true_func</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+            <span class="n">fint</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+            <span class="n">residual</span> <span class="o">=</span> <span class="n">fext</span> <span class="o">-</span> <span class="n">fint</span>
+            <span class="n">residual</span> <span class="o">=</span> <span class="n">residual</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+            <span class="n">K_sparse</span> <span class="o">=</span> <span class="n">hessian_sparse</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+            <span class="n">K_data_lifted</span> <span class="o">=</span> <span class="n">K_sparse</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">zero_indices</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">K_data_lifted</span> <span class="o">=</span> <span class="n">K_data_lifted</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">one_indices</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">du</span> <span class="o">=</span> <span class="n">jsp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">spsolve</span><span class="p">(</span>
+                <span class="n">K_data_lifted</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="o">=</span><span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">residual</span>
+            <span class="p">)</span>
+
+            <span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">at</span><span class="p">[:]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">du</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">u</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">false_func</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">u</span>
+
+        <span class="n">fint</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="n">residual</span> <span class="o">=</span> <span class="n">fext</span> <span class="o">-</span> <span class="n">fint</span>
+        <span class="n">residual</span> <span class="o">=</span> <span class="n">residual</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">norm_res</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">residual</span><span class="p">)</span>
+
+        <span class="n">jax</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;residual=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">norm_res</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">norm_res</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">,</span> <span class="n">true_func</span><span class="p">,</span> <span class="n">false_func</span><span class="p">,</span> <span class="n">u</span><span class="p">),</span> <span class="n">n</span>
+
+    <span class="n">u</span><span class="p">,</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">xs</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">))</span>
+
+    <span class="n">fint</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">residual</span> <span class="o">=</span> <span class="n">fext</span> <span class="o">-</span> <span class="n">fint</span>
+    <span class="n">residual</span> <span class="o">=</span> <span class="n">residual</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">norm_res</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">residual</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">norm_res</span>
+</code></pre></div>
+</details>
+<h2 id="solving-the-system">Solving the System<a class="headerlink" href="#solving-the-system" title="Permanent link">¤</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span class="n">fext</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dofs</span><span class="p">)</span>
+
+<span class="n">n_steps</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">applied_displacement</span> <span class="o">=</span> <span class="n">prescribed_values</span> <span class="o">/</span> <span class="n">n_steps</span>  <span class="c1"># displacement increment</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+    <span class="n">u_prev</span> <span class="o">=</span> <span class="n">u_prev</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">applied_displacement</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">])</span>
+
+    <span class="n">u_new</span><span class="p">,</span> <span class="n">rnorm</span> <span class="o">=</span> <span class="n">newton_sparse_solver</span><span class="p">(</span>
+        <span class="n">u_prev</span><span class="p">,</span>
+        <span class="n">fext</span><span class="p">,</span>
+        <span class="n">gradient_fn</span><span class="p">,</span>
+        <span class="n">K_sparse_fn</span><span class="p">,</span>
+        <span class="n">fixed_dofs</span><span class="p">,</span>
+        <span class="n">zero_indices</span><span class="p">,</span>
+        <span class="n">one_indices</span><span class="p">,</span>
+        <span class="n">indptr</span><span class="p">,</span>
+        <span class="n">indices</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">u_prev</span> <span class="o">=</span> <span class="n">u_new</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Iteration </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Residual Norm = </span><span class="si">{</span><span class="n">rnorm</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">u_sol</span> <span class="o">=</span> <span class="n">u_prev</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)</span>
+</code></pre></div>
+<details class="info">
+<summary>Output</summary>
+<div class="language-text highlight"><pre><span></span><code>residual=1371.570589894706
+residual=1402.269075102642
+residual=516.3211491024834
+residual=167.34643670888568
+residual=26.774625960499975
+residual=0.9441458517834568
+residual=0.0013813731895300958
+residual=3.1511744323539518e-09
+residual=3.1511744323539518e-09
+residual=3.1511744323539518e-09
+Iteration 0: Residual Norm = 3.1512e-09
+residual=1371.0780886756154
+residual=1375.7943623328404
+residual=501.66823707292286
+residual=160.38678791964037
+residual=24.923278457678418
+residual=0.827860417393414
+residual=0.0010720930028342405
+residual=1.9273171080981712e-09
+residual=1.9273171080981712e-09
+residual=1.9273171080981712e-09
+Iteration 1: Residual Norm = 1.9273e-09
+residual=1370.550620706396
+residual=1349.8788478066601
+residual=487.2624762079414
+residual=153.58816016433408
+residual=23.16588771120084
+residual=0.7238842678099198
+residual=0.0008293137478007945
+residual=1.1781167225397521e-09
+residual=1.1781167225397521e-09
+residual=1.1781167225397521e-09
+Iteration 2: Residual Norm = 1.1781e-09
+residual=1369.9899481741083
+residual=1324.5185506340106
+residual=473.1014648963445
+residual=146.94885917842316
+residual=21.497995708642627
+residual=0.6310382481266316
+residual=0.0006388297473102514
+residual=7.167711051384289e-10
+residual=7.167711051384289e-10
+residual=7.167711051384289e-10
+Iteration 3: Residual Norm = 7.1677e-10
+residual=1369.393738883142
+residual=1299.7020849297282
+residual=459.1809042580567
+residual=140.4662771051909
+residual=19.91534601710452
+residual=0.5482549150482866
+residual=0.0004895203968808261
+residual=4.316696382420045e-10
+residual=4.316696382420045e-10
+residual=4.316696382420045e-10
+Iteration 4: Residual Norm = 4.3167e-10
+</code></pre></div>
+</details>
+<div class="language-python highlight"><pre><span></span><code>
+</code></pre></div>
+<h2 id="visualization">Visualization<a class="headerlink" href="#visualization" title="Permanent link">¤</a></h2>
+<p>We will now visualize the deformation of metamaterial.</p>
+<details class="example">
+<summary>Visualization of Deformed Configuration</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="n">sargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Displacement Magnitude&quot;</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mf">0.08</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">vertical</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">position_x</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">position_y</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">title_font_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">label_font_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">font_family</span><span class="o">=</span><span class="s2">&quot;arial&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">pl</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plotter</span><span class="p">()</span>
+<span class="n">grid</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u_sol</span><span class="p">)</span>
+<span class="n">warped</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">warp_by_vector</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">4.0</span><span class="p">)</span>
+<span class="n">warped</span> <span class="o">=</span> <span class="n">warped</span><span class="o">.</span><span class="n">cell_data_to_point_data</span><span class="p">()</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
+    <span class="n">warped</span><span class="p">,</span>
+    <span class="n">show_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">scalars</span><span class="o">=</span><span class="s2">&quot;u&quot;</span><span class="p">,</span>
+    <span class="n">component</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;managua&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">scalar_bar_args</span><span class="o">=</span><span class="n">sargs</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">view_vector</span><span class="p">([</span><span class="o">-</span><span class="mf">0.55</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<p><img alt="Deformed Honeycomb" src="../../assets/plots/neural_constitutive_deformed.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 ETH Zurich (SMEC)
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "header-autohide", "announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.instant.preview", "navigation.path", "navigation.sections", "navigation.tabs.sticky", "search.highlight", "search.suggest", "content.footnote.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/vtk.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+      
+        <script src="../../javascripts/carousel.js"></script>
+      
+    
+  </body>
+</html>

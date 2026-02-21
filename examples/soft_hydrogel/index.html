@@ -1,0 +1,3110 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The documentation for the tatva software package">
+      
+      
+      
+      
+        <link rel="prev" href="../fracture_quasistatic_3d/">
+      
+      
+        <link rel="next" href="../thermal_shock_fracture/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Embedded 1D Fibres - tatva</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/custom_css.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/mkdocstrings.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/carousel.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#embedded-1d-fibers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="tatva" class="md-header__button md-logo" aria-label="tatva" data-md-component="logo">
+      
+  <img src="../../assets/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            tatva
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Embedded 1D Fibres
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/smec-ethz/tatva" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    smec-ethz/tatva
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="tatva" class="md-nav__button md-logo" aria-label="tatva" data-md-component="logo">
+      
+  <img src="../../assets/favicon.png" alt="logo">
+
+    </a>
+    tatva
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/smec-ethz/tatva" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    smec-ethz/tatva
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Basics of tatva
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Basics of tatva
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sparse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Stiffness Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compound/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lifter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lifter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear_elasticity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Elasticity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-point Constraints
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multi-point Constraints
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nonlinear_hole_plate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rigid Body Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contact_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact Mechanics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../homogenization_periodic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Periodic BCs (Lagrange Multipliers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mixed-Dimensional Coupling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mixed-Dimensional Coupling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fracture_quasistatic_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cohesive Fracture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded 1D Fibres
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded 1D Fibres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#defining-the-energy-for-the-bulk-material" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the energy for the bulk material
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-energy-for-the-fiber-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining energy for the fiber network
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coupling-the-energies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coupling the energies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying boundary conditions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matrix-free-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix-free approach
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multiphysics Coupling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multiphysics Coupling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../thermal_shock_fracture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thermal-Shock Fracture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advection_diffusion_surface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Non-Variational Formulations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data-Driven Modeling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data-Driven Modeling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ncm_metamaterial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Constitutive Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../neural_operator_method_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Operator Element Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using External Solvers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using External Solvers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../external_solvers/linear_elasticity_scipy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SciPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PETSc
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PETSc
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../external_solvers/linear_elasticity_petsc4py/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sparse Solver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../external_solvers/linear_elasticity_petsc4py_mf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matrix-Free Solver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.mesh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mesh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.element/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Element
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.sparse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sparse
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.compound/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.lifter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lifter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#defining-the-energy-for-the-bulk-material" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the energy for the bulk material
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-energy-for-the-fiber-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining energy for the fiber network
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coupling-the-energies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coupling the energies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying boundary conditions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matrix-free-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix-free approach
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../linear_elasticity/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Examples
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../fracture_quasistatic_3d/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Mixed-Dimensional Coupling
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/docs/examples/soft_hydrogel.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></p>
+<h1 id="embedded-1d-fibers">Embedded 1D Fibers<a class="headerlink" href="#embedded-1d-fibers" title="Permanent link">¤</a></h1>
+<details class="example">
+<summary>Colab Setup (Install Dependencies)</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="c1"># Only run this if we are in Google Colab</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">get_ipython</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Installing dependencies from pyproject.toml...&quot;</span><span class="p">)</span>
+    <span class="c1"># This installs the repo itself (and its dependencies)</span>
+    <span class="err">!</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">gmsh</span> 
+    <span class="err">!</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">qq</span> <span class="n">xvfb</span> <span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">glx</span>
+    <span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyvista</span> <span class="o">-</span><span class="n">qq</span>
+    <span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">q</span> <span class="s2">&quot;git+https://github.com/smec-ethz/tatva-docs.git&quot;</span>    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Installation complete!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
+</code></pre></div>
+</details>
+<p>we consider a fiber-reinforced composite in which stiff 1D fibers are embedded in a soft 2D soft material. A central difficulty in such problems is that the fiber geometry typically does not align with the bulk mesh. The fibers may intersect bulk elements at arbitrary positions and orientations. In this example, we use an embedded-element approach formulated entirely at the level of the total potential energy.</p>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># use double-precision</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NamedTuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">Array</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax_autovmap</span><span class="w"> </span><span class="kn">import</span> <span class="n">autovmap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tatva</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mesh</span><span class="p">,</span> <span class="n">Operator</span><span class="p">,</span> <span class="n">element</span>
+</code></pre></div>
+<details class="example">
+<summary>Mesh Generation</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">gmsh</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">meshio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_plate_mesh</span><span class="p">(</span>
+    <span class="n">Lx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Ly</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mesh_size</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">work_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mesh</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a 2D unstructured triangular mesh for a rectangular plate.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Lx (float): Length of the plate in the x-direction.</span>
+<span class="sd">        Ly (float): Length of the plate in the y-direction.</span>
+<span class="sd">        mesh_size (float): Target mesh size for the mesh generation.</span>
+<span class="sd">        work_dir (str): Directory to store temporary mesh files.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Mesh: The generated plate mesh.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">work_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">work_dir</span><span class="p">)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">work_dir</span><span class="p">,</span> <span class="s2">&quot;plate_2d.msh&quot;</span><span class="p">)</span>
+
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;plate&quot;</span><span class="p">)</span>
+
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mesh_size</span><span class="p">)</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="n">Lx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mesh_size</span><span class="p">)</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mesh_size</span><span class="p">)</span>
+    <span class="n">p4</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mesh_size</span><span class="p">)</span>
+
+    <span class="n">l1</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+    <span class="n">l2</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span>
+    <span class="n">l3</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">)</span>
+    <span class="n">l4</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="n">p4</span><span class="p">,</span> <span class="n">p1</span><span class="p">)</span>
+
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addCurveLoop</span><span class="p">([</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">l3</span><span class="p">,</span> <span class="n">l4</span><span class="p">])</span>
+    <span class="n">surface</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">addPlaneSurface</span><span class="p">([</span><span class="n">loop</span><span class="p">])</span>
+
+    <span class="c1"># 2. Mesh Generation</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+
+    <span class="c1"># 3. Read back with meshio</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="n">points</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">points</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># Drop z-coordinate for 2D</span>
+    <span class="n">triangles</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">cells_dict</span><span class="p">[</span><span class="s2">&quot;triangle&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">Mesh</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">triangles</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_honeycomb_mesh</span><span class="p">(</span>
+    <span class="n">start_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">start_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">n_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">n_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">side_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">segments_per_side</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mesh</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a 2D honeycomb mesh (hexagonal grid) with specified parameters.</span>
+<span class="sd">    Each hexagon side can be subdivided into smaller segments.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        start_x (float): Starting x-coordinate of the honeycomb grid.</span>
+<span class="sd">        start_y (float): Starting y-coordinate of the honeycomb grid.</span>
+<span class="sd">        n_x (int): Number of hexagons along the x-direction.</span>
+<span class="sd">        n_y (int): Number of hexagons along the y-direction.</span>
+<span class="sd">        side_length (float): Length of each side of the hexagon.</span>
+<span class="sd">        segments_per_side (int): Number of subdivisions per hexagon side.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Mesh: The generated honeycomb mesh.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">side_length</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">side_length</span>
+    <span class="n">row_offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">side_length</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+    <span class="n">node_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">coords_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">lines_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">edge_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_or_create_node</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">node_map</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords_list</span><span class="p">)</span>
+            <span class="n">coords_list</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+            <span class="n">node_map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+            <span class="k">return</span> <span class="n">idx</span>
+        <span class="k">return</span> <span class="n">node_map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">([</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span> <span class="mi">270</span><span class="p">,</span> <span class="mi">330</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_y</span><span class="p">):</span>
+        <span class="n">cols_in_this_row</span> <span class="o">=</span> <span class="n">n_x</span> <span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">n_x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">current_offset</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">else</span> <span class="n">row_offset</span>
+
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols_in_this_row</span><span class="p">):</span>
+            <span class="n">cx</span> <span class="o">=</span> <span class="n">start_x</span> <span class="o">+</span> <span class="p">(</span><span class="n">col</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span> <span class="o">+</span> <span class="n">current_offset</span>
+            <span class="n">cy</span> <span class="o">=</span> <span class="n">start_y</span> <span class="o">+</span> <span class="p">(</span><span class="n">row</span> <span class="o">*</span> <span class="n">dy</span><span class="p">)</span>
+
+            <span class="n">corners</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
+                <span class="n">vx</span> <span class="o">=</span> <span class="n">cx</span> <span class="o">+</span> <span class="n">side_length</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                <span class="n">vy</span> <span class="o">=</span> <span class="n">cy</span> <span class="o">+</span> <span class="n">side_length</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                <span class="n">corners</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+                <span class="c1"># Start and End coordinates of the current side</span>
+                <span class="n">start_pt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">corners</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+                <span class="n">end_pt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">corners</span><span class="p">[(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">6</span><span class="p">])</span>
+
+                <span class="c1"># Get the Node Index for the start of the side</span>
+                <span class="n">current_node_idx</span> <span class="o">=</span> <span class="n">get_or_create_node</span><span class="p">(</span><span class="n">start_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+                <span class="c1"># Vector along the side</span>
+                <span class="n">side_vector</span> <span class="o">=</span> <span class="n">end_pt</span> <span class="o">-</span> <span class="n">start_pt</span>
+
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">segments_per_side</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="c1"># Calculate fraction of distance (e.g., 1/3, 2/3, 3/3)</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">segments_per_side</span>
+
+                    <span class="c1"># Calculate next coordinate</span>
+                    <span class="n">next_pt</span> <span class="o">=</span> <span class="n">start_pt</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">side_vector</span>
+
+                    <span class="c1"># Get index for this new point</span>
+                    <span class="n">next_node_idx</span> <span class="o">=</span> <span class="n">get_or_create_node</span><span class="p">(</span><span class="n">next_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">next_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+                    <span class="c1"># Create the small segment</span>
+                    <span class="n">edge_key</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">((</span><span class="n">current_node_idx</span><span class="p">,</span> <span class="n">next_node_idx</span><span class="p">)))</span>
+                    <span class="k">if</span> <span class="n">edge_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">edge_set</span><span class="p">:</span>
+                        <span class="n">edge_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">edge_key</span><span class="p">)</span>
+                        <span class="n">lines_list</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">current_node_idx</span><span class="p">,</span> <span class="n">next_node_idx</span><span class="p">])</span>
+
+                    <span class="c1"># Move forward</span>
+                    <span class="n">current_node_idx</span> <span class="o">=</span> <span class="n">next_node_idx</span>
+
+    <span class="k">return</span> <span class="n">Mesh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coords_list</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lines_list</span><span class="p">))</span>
+</code></pre></div>
+</details>
+<div class="language-python highlight"><pre><span></span><code><span class="n">plate_mesh</span> <span class="o">=</span> <span class="n">generate_plate_mesh</span><span class="p">(</span><span class="n">Lx</span><span class="o">=</span><span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="o">=</span><span class="n">Ly</span><span class="p">,</span> <span class="n">mesh_size</span><span class="o">=</span><span class="mf">0.04</span><span class="p">)</span>
+<span class="n">n_nodes</span> <span class="o">=</span> <span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">n_dofs_per_node</span> <span class="o">=</span> <span class="mi">2</span>  
+<span class="n">n_dofs</span> <span class="o">=</span> <span class="n">n_nodes</span> <span class="o">*</span> <span class="n">n_dofs_per_node</span>
+
+<span class="n">fiber_mesh</span> <span class="o">=</span> <span class="n">generate_honeycomb_mesh</span><span class="p">(</span>
+    <span class="n">start_x</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">start_y</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">n_x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_y</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">side_length</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">segments_per_side</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+</code></pre></div>
+<details class="info">
+<summary>Output</summary>
+<div class="language-text highlight"><pre><span></span><code>Info    : Meshing 1D...
+Info    : [  0%] Meshing curve 1 (Line)
+Info    : [ 30%] Meshing curve 2 (Line)
+Info    : [ 60%] Meshing curve 3 (Line)
+Info    : [ 80%] Meshing curve 4 (Line)
+Info    : Done meshing 1D (Wall 0.000440115s, CPU 0.00057s)
+Info    : Meshing 2D...
+Info    : Meshing surface 1 (Plane, Frontal-Delaunay)
+Info    : Done meshing 2D (Wall 0.103935s, CPU 0.103244s)
+Info    : 3013 nodes 6028 elements
+Info    : Writing &#39;./plate_2d.msh&#39;...
+Info    : Done writing &#39;./plate_2d.msh&#39;
+</code></pre></div>
+</details>
+<details class="example">
+<summary>Visualize Meshes</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">tripcolor</span><span class="p">(</span>
+    <span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">plate_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span>
+    <span class="n">facecolors</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;managua&quot;</span><span class="p">,</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">el</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fiber_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">):</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">fiber_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">el</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">fiber_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">el</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">p0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+        <span class="p">[</span><span class="n">p0</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="s2">&quot;k-&quot;</span><span class="p">,</span>
+        <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<p><img alt="img" src="../_data/273004b5803148d2b9540d4be1d54c83.png" /></p>
+<p>We now find the bulk material elements that contain the nodes of each fiber and then map these nodes tot he quadrature points of that element.</p>
+<details class="example">
+<summary>Barycentric Coordinate Computation and Embedding Logic</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compute_barycentric</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes local coordinates (xi, eta) of point p in triangle abc.</span>
+<span class="sd">    Returns (xi, eta) and a boolean &#39;is_inside&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">v0</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="n">a</span>
+    <span class="n">v1</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-</span> <span class="n">a</span>
+
+    <span class="n">dot00</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+    <span class="n">dot01</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
+    <span class="n">dot02</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+    <span class="n">dot11</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
+    <span class="n">dot12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+
+    <span class="n">invDenom</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">dot00</span> <span class="o">*</span> <span class="n">dot11</span> <span class="o">-</span> <span class="n">dot01</span> <span class="o">*</span> <span class="n">dot01</span><span class="p">)</span>
+    <span class="n">eta</span> <span class="o">=</span> <span class="p">(</span><span class="n">dot11</span> <span class="o">*</span> <span class="n">dot02</span> <span class="o">-</span> <span class="n">dot01</span> <span class="o">*</span> <span class="n">dot12</span><span class="p">)</span> <span class="o">*</span> <span class="n">invDenom</span>
+    <span class="n">xi</span> <span class="o">=</span> <span class="p">(</span><span class="n">dot00</span> <span class="o">*</span> <span class="n">dot12</span> <span class="o">-</span> <span class="n">dot01</span> <span class="o">*</span> <span class="n">dot02</span><span class="p">)</span> <span class="o">*</span> <span class="n">invDenom</span>
+
+    <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-10</span>
+    <span class="n">is_inside</span> <span class="o">=</span> <span class="p">(</span><span class="n">xi</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">tol</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">eta</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">tol</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">eta</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">tol</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">xi</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">is_inside</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">embed_fiber_into_plate</span><span class="p">(</span><span class="n">host_mesh</span><span class="p">,</span> <span class="n">fiber_mesh</span><span class="p">):</span>
+
+    <span class="n">fiber_nodes</span> <span class="o">=</span> <span class="n">fiber_mesh</span><span class="o">.</span><span class="n">coords</span>
+    <span class="n">n_nodes</span> <span class="o">=</span> <span class="n">fiber_nodes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">n_triangles</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">host_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span>
+
+    <span class="n">host_elem_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">local_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_nodes</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># (xi, eta)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Embedding </span><span class="si">{</span><span class="n">n_nodes</span><span class="si">}</span><span class="s2"> fiber nodes into </span><span class="si">{</span><span class="n">n_triangles</span><span class="si">}</span><span class="s2"> triangles...&quot;</span><span class="p">)</span>
+
+    <span class="n">tri_coords</span> <span class="o">=</span> <span class="n">host_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">host_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">]</span>  <span class="c1"># (N_tri, 3, 2)</span>
+    <span class="n">tri_min</span> <span class="o">=</span> <span class="n">tri_coords</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">tri_max</span> <span class="o">=</span> <span class="n">tri_coords</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fiber_nodes</span><span class="p">):</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">tri_min</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">tri_max</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">tri_min</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">tri_max</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">tri_idx</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">tri_coords</span><span class="p">[</span><span class="n">tri_idx</span><span class="p">]</span>
+
+            <span class="n">xi</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">is_inside</span> <span class="o">=</span> <span class="n">compute_barycentric</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_inside</span><span class="p">:</span>
+                <span class="n">host_elem_indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">tri_idx</span>
+                <span class="n">local_coords</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">xi</span><span class="p">,</span> <span class="n">eta</span><span class="p">]</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Fiber segment </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> at </span><span class="si">{</span><span class="n">pt</span><span class="si">}</span><span class="s2"> is outside the mesh domain!&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;host_elem_indices&quot;</span><span class="p">:</span> <span class="n">host_elem_indices</span><span class="p">,</span>
+        <span class="s2">&quot;local_coords&quot;</span><span class="p">:</span> <span class="n">local_coords</span><span class="p">,</span>  <span class="c1"># (xi, eta)</span>
+    <span class="p">}</span>
+</code></pre></div>
+</details>
+<div class="language-python highlight"><pre><span></span><code><span class="n">embedding_data</span> <span class="o">=</span> <span class="n">embed_fiber_into_plate</span><span class="p">(</span><span class="n">plate_mesh</span><span class="p">,</span> <span class="n">fiber_mesh</span><span class="p">)</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>Embedding 98 fiber nodes into 5824 triangles...
+</code></pre></div>
+<p>We define two operator one for the bulk material which consists of <code>Tri3</code> elements and one for fibers which are 1D elements emebeded in 2D space. For this we define a new elemenr <code>Line2in3D</code> which takes the displacements defined in 2D or 3D space and then project this displacement along its tangent vector.</p>
+<details class="example">
+<summary>Define Custom Line Element in 3D for Fiber Representation</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Line2In3D</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">Element</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A 2-node linear element embedded in 3D space.</span>
+<span class="sd">    Reference domain: [-1, 1]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">quad_points</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">]])</span>
+    <span class="n">quad_weights</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">shape_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xi</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">xi</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">shape_function_derivative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xi</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xi</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">nodal_coords</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        nodal_coords: (2, 3) -&gt; Two nodes in 3D space</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dN_dxi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape_function_derivative</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+
+        <span class="n">J_vec</span> <span class="o">=</span> <span class="n">dN_dxi</span> <span class="o">@</span> <span class="n">nodal_coords</span>  <span class="c1"># (1, 2) @ (2, 3) -&gt; (1, 3)</span>
+
+        <span class="n">detJ</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">J_vec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">J_vec</span><span class="p">,</span> <span class="n">detJ</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xi</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">nodal_values</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">nodal_coords</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the 3D Gradient vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">J_vec</span><span class="p">,</span> <span class="n">detJ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_jacobian</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">nodal_coords</span><span class="p">)</span>
+        <span class="n">dN_dxi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape_function_derivative</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+        <span class="n">du_dxi</span> <span class="o">=</span> <span class="n">dN_dxi</span> <span class="o">@</span> <span class="n">nodal_values</span>
+
+        <span class="n">du_ds</span> <span class="o">=</span> <span class="n">du_dxi</span> <span class="o">/</span> <span class="n">detJ</span>
+
+        <span class="n">tangent</span> <span class="o">=</span> <span class="n">J_vec</span> <span class="o">/</span> <span class="n">detJ</span>
+        <span class="n">grad_u_3d</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">du_ds</span><span class="p">,</span> <span class="n">tangent</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">grad_u_3d</span>
+</code></pre></div>
+</details>
+<div class="language-python highlight"><pre><span></span><code><span class="n">op_plate</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">(</span><span class="n">plate_mesh</span><span class="p">,</span> <span class="n">element</span><span class="o">.</span><span class="n">Tri3</span><span class="p">())</span>
+<span class="n">op_line</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">(</span><span class="n">fiber_mesh</span><span class="p">,</span> <span class="n">Line2In3D</span><span class="p">())</span>
+</code></pre></div>
+<h2 id="defining-the-energy-for-the-bulk-material">Defining the energy for the bulk material<a class="headerlink" href="#defining-the-energy-for-the-bulk-material" title="Permanent link">¤</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span class="nd">@autovmap</span><span class="p">(</span><span class="n">grad_u</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_deformation_gradient</span><span class="p">(</span><span class="n">grad_u</span><span class="p">):</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">I</span> <span class="o">+</span> <span class="n">grad_u</span>
+    <span class="k">return</span> <span class="n">F</span>
+
+
+<span class="nd">@autovmap</span><span class="p">(</span><span class="n">F</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lmbda</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">strain_energy</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">):</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">F</span>
+    <span class="n">I1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+    <span class="c1"># return mu / 2 * (I1 - 3) - lmbda * jnp.log(J) + (lmbda / 2) * (jnp.log(J)) ** 2</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="n">I1</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">lmbda</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+
+
+<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">total_material_energy</span><span class="p">(</span><span class="n">u_flat</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)</span>
+    <span class="n">u_grad</span> <span class="o">=</span> <span class="n">op_plate</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">compute_deformation_gradient</span><span class="p">(</span><span class="n">u_grad</span><span class="p">)</span>
+    <span class="n">energy_density</span> <span class="o">=</span> <span class="n">strain_energy</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">mat</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="n">mat</span><span class="o">.</span><span class="n">lmbda</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">op_plate</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">energy_density</span><span class="p">)</span>
+
+
+<span class="nd">@autovmap</span><span class="p">(</span><span class="n">grad_u</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_fiber_energy</span><span class="p">(</span><span class="n">grad_u</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">E_fiber</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">grad_u</span><span class="p">,</span> <span class="n">grad_u</span><span class="p">)</span> <span class="o">*</span> <span class="n">Area_fiber</span>
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Material</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Material properties for the elasticity operator.&quot;&quot;&quot;</span>
+
+    <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> 
+    <span class="n">lmbda</span><span class="p">:</span> <span class="nb">float</span>  
+
+
+<span class="n">mat</span> <span class="o">=</span> <span class="n">Material</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lmbda</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
+
+<span class="n">E</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">mat</span><span class="o">.</span><span class="n">lmbda</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">mat</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">lmbda</span> <span class="o">+</span> <span class="n">mat</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Effective Young&#39;s Modulus of the Plate: E = </span><span class="si">{</span><span class="n">E</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>Effective Young&#39;s Modulus of the Plate: E = 2.91
+</code></pre></div>
+<h2 id="defining-energy-for-the-fiber-network">Defining energy for the fiber network<a class="headerlink" href="#defining-energy-for-the-fiber-network" title="Permanent link">¤</a></h2>
+<p>We now compute the energy of the fibe network which defined as </p>
+<div class="arithmatex">\[
+\psi_\text{fiber}(\varepsilon_\text{fiber}) = \frac{1}{2}E_\text{fiber}A_\text{fiber} \varepsilon_\text{fiber}^2
+\]</div>
+<div class="language-python highlight"><pre><span></span><code><span class="n">E_fiber</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">E</span>  <span class="c1"># Much stiffer than bulk</span>
+<span class="n">Area_fiber</span> <span class="o">=</span> <span class="mf">0.01</span>
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span class="n">p0</span> <span class="o">=</span> <span class="n">fiber_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">fiber_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">fiber_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">fiber_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">vecs</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span>
+<span class="n">lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vecs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">tangents</span> <span class="o">=</span> <span class="n">vecs</span> <span class="o">/</span> <span class="n">lengths</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>  <span class="c1"># Unit vectors (N_seg, 2)</span>
+
+<span class="n">host_indices</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">embedding_data</span><span class="p">[</span><span class="s2">&quot;host_elem_indices&quot;</span><span class="p">])</span>
+<span class="n">local_coords</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">embedding_data</span><span class="p">[</span><span class="s2">&quot;local_coords&quot;</span><span class="p">])</span>
+<span class="n">fiber_L0</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+<span class="n">fiber_tangents</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tangents</span><span class="p">)</span>
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_u_fiber</span><span class="p">(</span><span class="n">u_flat</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">host_indices</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">local_coords</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)</span>
+
+    <span class="n">xi</span> <span class="o">=</span> <span class="n">local_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">eta</span> <span class="o">=</span> <span class="n">local_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">N1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xi</span> <span class="o">-</span> <span class="n">eta</span>
+    <span class="n">N2</span> <span class="o">=</span> <span class="n">xi</span>
+    <span class="n">N3</span> <span class="o">=</span> <span class="n">eta</span>
+
+    <span class="n">u1</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">host_elems</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>  <span class="c1"># (N_seg, 2)</span>
+    <span class="n">u2</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">host_elems</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>  <span class="c1"># (N_seg, 2)</span>
+    <span class="n">u3</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">host_elems</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>  <span class="c1"># (N_seg, 2)</span>
+
+    <span class="n">u_fiber</span> <span class="o">=</span> <span class="n">N1</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">u1</span> <span class="o">+</span> <span class="n">N2</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">u2</span> <span class="o">+</span> <span class="n">N3</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">u3</span>  <span class="c1"># (N_seg, 2)</span>
+
+    <span class="k">return</span> <span class="n">u_fiber</span>
+
+
+<span class="nd">@autovmap</span><span class="p">(</span><span class="n">u_elem</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">local_coords</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_u_at_fiber</span><span class="p">(</span><span class="n">u_elem</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">local_coords</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">Tri3</span><span class="p">()</span><span class="o">.</span><span class="n">shape_function</span><span class="p">(</span><span class="n">local_coords</span><span class="p">)</span>  <span class="c1"># (3,)</span>
+    <span class="n">u_quad</span> <span class="o">=</span> <span class="n">N</span> <span class="o">@</span> <span class="n">u_elem</span>  <span class="c1"># (2,)</span>
+    <span class="k">return</span> <span class="n">u_quad</span>
+
+
+<span class="nd">@autovmap</span><span class="p">(</span><span class="n">host_elem</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">local_coord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_fiber_stretch</span><span class="p">(</span><span class="n">host_elem</span><span class="p">,</span> <span class="n">local_coord</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+    <span class="n">u_elem</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">host_elem</span><span class="p">]</span>  <span class="c1"># (3, 2)</span>
+    <span class="n">u_at_a</span> <span class="o">=</span> <span class="n">compute_u_at_fiber</span><span class="p">(</span><span class="n">u_elem</span><span class="p">,</span> <span class="n">local_coord</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">u_at_b</span> <span class="o">=</span> <span class="n">compute_u_at_fiber</span><span class="p">(</span><span class="n">u_elem</span><span class="p">,</span> <span class="n">local_coord</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">strain</span> <span class="o">=</span> <span class="p">(</span><span class="n">u_at_b</span> <span class="o">-</span> <span class="n">u_at_a</span><span class="p">)</span> <span class="o">/</span> <span class="n">fiber_L0</span>
+
+    <span class="k">return</span> <span class="n">strain</span>
+
+
+<span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fiber_strain_energy</span><span class="p">(</span>
+    <span class="n">u_flat</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="n">host_elems</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="n">local_coords</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)</span>
+    <span class="n">u_elem</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">host_elems</span><span class="p">]</span>  <span class="c1"># (N_seg, 3, 2)</span>
+    <span class="n">u_at_nodes</span> <span class="o">=</span> <span class="n">compute_u_at_fiber</span><span class="p">(</span><span class="n">u_elem</span><span class="p">,</span> <span class="n">local_coords</span><span class="p">)</span>
+    <span class="n">u_grad</span> <span class="o">=</span> <span class="n">op_line</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u_at_nodes</span><span class="p">)</span>  <span class="c1"># (N_seg, 1, 2)</span>
+    <span class="n">energy_density</span> <span class="o">=</span> <span class="n">compute_fiber_energy</span><span class="p">(</span><span class="n">u_grad</span><span class="p">)</span>  <span class="c1"># (N_seg,)</span>
+    <span class="k">return</span> <span class="n">op_line</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">energy_density</span><span class="p">)</span>
+
+
+<span class="n">host_elems</span> <span class="o">=</span> <span class="n">plate_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">host_indices</span><span class="p">]</span>
+<span class="n">total_fiber_energy</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span>
+    <span class="n">partial</span><span class="p">(</span>
+        <span class="n">fiber_strain_energy</span><span class="p">,</span>
+        <span class="n">host_elems</span><span class="o">=</span><span class="n">host_elems</span><span class="p">,</span>
+        <span class="n">local_coords</span><span class="o">=</span><span class="n">local_coords</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="coupling-the-energies">Coupling the energies<a class="headerlink" href="#coupling-the-energies" title="Permanent link">¤</a></h2>
+<div class="arithmatex">\[
+\Psi(\boldsymbol{u}) = \underbrace{\int_{\Omega_{\text{bulk}}} \psi_\varepsilon(\nabla \boldsymbol{u}) ~\mathrm{d\Omega}}_{\Psi_\mathrm{bulk}} + \underbrace{\int_{\Gamma_{\text{fiber}}} \psi_{\text{fiber}}(\epsilon_{\text{fiber}})~ \mathrm{dS}}_{\Psi_{\text{fiber}}}
+\]</div>
+<div class="language-python highlight"><pre><span></span><code><span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">total_energy</span><span class="p">(</span><span class="n">u_flat</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">U_plate</span> <span class="o">=</span> <span class="n">total_material_energy</span><span class="p">(</span><span class="n">u_flat</span><span class="p">)</span>
+    <span class="n">U_fiber</span> <span class="o">=</span> <span class="n">total_fiber_energy</span><span class="p">(</span><span class="n">u_flat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">U_plate</span> <span class="o">+</span> <span class="n">U_fiber</span>
+
+
+<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">total_energy_without_fibre</span><span class="p">(</span><span class="n">u_flat</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">U_plate</span> <span class="o">=</span> <span class="n">total_material_energy</span><span class="p">(</span><span class="n">u_flat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">U_plate</span>
+</code></pre></div>
+<h2 id="applying-boundary-conditions">Applying boundary conditions<a class="headerlink" href="#applying-boundary-conditions" title="Permanent link">¤</a></h2>
+<p>We apply uniaxial tension to the bulk material.</p>
+<div class="language-python highlight"><pre><span></span><code><span class="n">y_max</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">y_min</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">x_min</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">height</span> <span class="o">=</span> <span class="n">y_max</span> <span class="o">-</span> <span class="n">y_min</span>
+
+
+<span class="n">upper_nodes</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_max</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">lower_nodes</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_min</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">fixed_dofs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="mi">2</span> <span class="o">*</span> <span class="n">upper_nodes</span><span class="p">,</span>
+        <span class="mi">2</span> <span class="o">*</span> <span class="n">upper_nodes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="mi">2</span> <span class="o">*</span> <span class="n">lower_nodes</span><span class="p">,</span>
+        <span class="mi">2</span> <span class="o">*</span> <span class="n">lower_nodes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+
+<span class="n">applied_disp</span> <span class="o">=</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.2</span>  <span class="c1"># 10% strain</span>
+
+<span class="n">prescribed_values</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dofs</span><span class="p">)</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">upper_nodes</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">prescribed_values</span> <span class="o">=</span> <span class="n">prescribed_values</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">upper_nodes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">applied_disp</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+<span class="n">prescribed_values</span> <span class="o">=</span> <span class="n">prescribed_values</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lower_nodes</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">prescribed_values</span> <span class="o">=</span> <span class="n">prescribed_values</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lower_nodes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">-</span><span class="n">applied_disp</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">free_dofs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_dofs</span><span class="p">),</span> <span class="n">fixed_dofs</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="matrix-free-approach">Matrix-free approach<a class="headerlink" href="#matrix-free-approach" title="Permanent link">¤</a></h2>
+<p>We use a matrix-free approach to automatically consider the additions terms due to the embedding of the fibers in the bulk material.</p>
+<div class="language-python highlight"><pre><span></span><code><span class="n">gradient</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacrev</span><span class="p">(</span><span class="n">total_energy</span><span class="p">)</span>
+<span class="n">gradient_wo_fiber</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacrev</span><span class="p">(</span><span class="n">total_energy_without_fibre</span><span class="p">)</span>
+
+
+<span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_tangent</span><span class="p">(</span><span class="n">du</span><span class="p">,</span> <span class="n">u_prev</span><span class="p">,</span> <span class="n">gradient</span><span class="p">):</span>
+    <span class="n">du_projected</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">tangent</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jvp</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="p">(</span><span class="n">u_prev</span><span class="p">,),</span> <span class="p">(</span><span class="n">du_projected</span><span class="p">,))[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">tangent</span> <span class="o">=</span> <span class="n">tangent</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tangent</span>
+</code></pre></div>
+<details class="example">
+<summary>Conjugate Gradient Solver and Newton-Krylov Loop</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">conjugate_gradient</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">iiter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">body_fun</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">rsold</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">iiter</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="n">Ap</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">rsold</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Ap</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">Ap</span><span class="p">)</span>
+        <span class="n">rsnew</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">rsnew</span> <span class="o">/</span> <span class="n">rsold</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="n">rsold</span> <span class="o">=</span> <span class="n">rsnew</span>
+        <span class="n">iiter</span> <span class="o">=</span> <span class="n">iiter</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">rsold</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">iiter</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">cond_fun</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">rsold</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">iiter</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rsold</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">atol</span><span class="p">,</span> <span class="n">iiter</span> <span class="o">&lt;</span> <span class="n">max_iter</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">A</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">r</span>
+    <span class="n">rsold</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">rsold</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">iiter</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">while_loop</span><span class="p">(</span>
+        <span class="n">cond_fun</span><span class="p">,</span> <span class="n">body_fun</span><span class="p">,</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">rsold</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">iiter</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">iiter</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">newton_krylov_solver</span><span class="p">(</span>
+    <span class="n">u</span><span class="p">,</span>
+    <span class="n">fext</span><span class="p">,</span>
+    <span class="n">gradient</span><span class="p">,</span>
+    <span class="n">compute_tangent</span><span class="p">,</span>
+    <span class="n">fixed_dofs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">fint</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">du</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">iiter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">norm_res</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-8</span>
+    <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">80</span>
+    <span class="k">while</span> <span class="n">norm_res</span> <span class="o">&gt;</span> <span class="n">tol</span> <span class="ow">and</span> <span class="n">iiter</span> <span class="o">&lt;</span> <span class="n">max_iter</span><span class="p">:</span>
+        <span class="n">residual</span> <span class="o">=</span> <span class="n">fext</span> <span class="o">-</span> <span class="n">fint</span>
+        <span class="n">residual</span> <span class="o">=</span> <span class="n">residual</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">A</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Partial</span><span class="p">(</span><span class="n">compute_tangent</span><span class="p">,</span> <span class="n">u_prev</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">gradient</span><span class="o">=</span><span class="n">gradient</span><span class="p">)</span>
+        <span class="n">du</span><span class="p">,</span> <span class="n">cg_iiter</span> <span class="o">=</span> <span class="n">conjugate_gradient</span><span class="p">(</span><span class="n">A</span><span class="o">=</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">residual</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">at</span><span class="p">[:]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">du</span><span class="p">)</span>
+
+        <span class="n">fint</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="n">residual</span> <span class="o">=</span> <span class="n">fext</span> <span class="o">-</span> <span class="n">fint</span>
+        <span class="n">residual</span> <span class="o">=</span> <span class="n">residual</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">norm_res</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">residual</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Residual: </span><span class="si">{</span><span class="n">norm_res</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">iiter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">norm_res</span>
+</code></pre></div>
+</details>
+<div class="language-python highlight"><pre><span></span><code><span class="n">u_prev_wo_fiber</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dofs</span><span class="p">)</span>
+
+<span class="n">fext</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dofs</span><span class="p">)</span>
+
+<span class="n">n_steps</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">applied_displacement</span> <span class="o">=</span> <span class="n">prescribed_values</span> <span class="o">/</span> <span class="n">n_steps</span>
+<span class="n">force_on_top</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+<span class="n">disp_on_top</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+<span class="n">force_on_top_wo_fiber</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+<span class="n">disp_on_top_wo_fiber</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+    <span class="n">u_prev</span> <span class="o">=</span> <span class="n">u_prev</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">applied_displacement</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">])</span>
+    <span class="n">u_prev_wo_fiber</span> <span class="o">=</span> <span class="n">u_prev_wo_fiber</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+        <span class="n">applied_displacement</span><span class="p">[</span><span class="n">fixed_dofs</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">u_new</span><span class="p">,</span> <span class="n">rnorm</span> <span class="o">=</span> <span class="n">newton_krylov_solver</span><span class="p">(</span>
+        <span class="n">u_prev</span><span class="p">,</span>
+        <span class="n">fext</span><span class="p">,</span>
+        <span class="n">gradient</span><span class="p">,</span>
+        <span class="n">compute_tangent</span><span class="p">,</span>
+        <span class="n">fixed_dofs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">u_new_wo_fiber</span><span class="p">,</span> <span class="n">rnorm</span> <span class="o">=</span> <span class="n">newton_krylov_solver</span><span class="p">(</span>
+        <span class="n">u_prev_wo_fiber</span><span class="p">,</span>
+        <span class="n">fext</span><span class="p">,</span>
+        <span class="n">gradient_wo_fiber</span><span class="p">,</span>
+        <span class="n">compute_tangent</span><span class="p">,</span>
+        <span class="n">fixed_dofs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">u_prev</span> <span class="o">=</span> <span class="n">u_new</span>
+    <span class="n">u_prev_wo_fiber</span> <span class="o">=</span> <span class="n">u_new_wo_fiber</span>
+
+    <span class="n">fint</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">u_prev</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)</span>
+    <span class="n">force_on_top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fint</span><span class="p">[</span><span class="n">upper_nodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">disp_on_top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">u_prev</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)[</span><span class="n">upper_nodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+
+    <span class="n">fint_wo_fiber</span> <span class="o">=</span> <span class="n">gradient_wo_fiber</span><span class="p">(</span><span class="n">u_prev_wo_fiber</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)</span>
+    <span class="n">force_on_top_wo_fiber</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fint_wo_fiber</span><span class="p">[</span><span class="n">upper_nodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">disp_on_top_wo_fiber</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">u_prev_wo_fiber</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)[</span><span class="n">upper_nodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Iteration </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Residual Norm = </span><span class="si">{</span><span class="n">rnorm</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">u_sol</span> <span class="o">=</span> <span class="n">u_prev</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)</span>
+<span class="n">u_sol_wo_fiber</span> <span class="o">=</span> <span class="n">u_prev_wo_fiber</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_dofs_per_node</span><span class="p">)</span>
+</code></pre></div>
+<details class="info">
+<summary>Output</summary>
+<div class="language-text highlight"><pre><span></span><code>Residual: 5.60e+00
+  Residual: 2.00e+00
+  Residual: 5.44e-01
+  Residual: 9.69e-02
+  Residual: 9.13e-03
+  Residual: 1.82e-04
+  Residual: 3.75e-05
+  Residual: 2.48e-05
+  Residual: 1.38e-05
+  Residual: 6.50e-06
+  Residual: 5.91e-06
+  Residual: 2.19e-06
+  Residual: 1.93e-06
+  Residual: 8.48e-07
+  Residual: 6.57e-07
+  Residual: 3.22e-07
+  Residual: 2.38e-07
+  Residual: 1.17e-07
+  Residual: 9.15e-08
+  Residual: 4.27e-08
+  Residual: 3.37e-08
+  Residual: 1.68e-08
+  Residual: 9.69e-09
+  Residual: 5.65e+00
+  Residual: 2.01e+00
+  Residual: 5.37e-01
+  Residual: 8.60e-02
+  Residual: 6.63e-03
+  Residual: 8.05e-05
+  Residual: 1.75e-05
+  Residual: 3.47e-06
+  Residual: 1.77e-06
+  Residual: 3.77e-07
+  Residual: 2.04e-07
+  Residual: 4.35e-08
+  Residual: 2.39e-08
+  Residual: 9.59e-09
+Iteration 0: Residual Norm = 9.5937e-09
+  Residual: 5.22e+00
+  Residual: 1.84e+00
+  Residual: 4.82e-01
+  Residual: 7.75e-02
+  Residual: 5.91e-03
+  Residual: 1.26e-04
+  Residual: 4.13e-05
+  Residual: 1.39e-05
+  Residual: 1.58e-05
+  Residual: 3.30e-06
+  Residual: 5.89e-06
+  Residual: 9.55e-07
+  Residual: 1.94e-06
+  Residual: 3.22e-07
+  Residual: 6.38e-07
+  Residual: 1.24e-07
+  Residual: 2.00e-07
+  Residual: 3.59e-08
+  Residual: 7.78e-08
+  Residual: 1.31e-08
+  Residual: 4.83e-08
+  Residual: 9.99e-09
+  Residual: 5.30e+00
+  Residual: 1.86e+00
+  Residual: 4.78e-01
+  Residual: 6.75e-02
+  Residual: 3.92e-03
+  Residual: 3.84e-05
+  Residual: 1.41e-05
+  Residual: 2.63e-06
+  Residual: 1.46e-06
+  Residual: 3.03e-07
+  Residual: 1.74e-07
+  Residual: 3.57e-08
+  Residual: 2.04e-08
+  Residual: 9.68e-09
+Iteration 1: Residual Norm = 9.6778e-09
+  Residual: 4.89e+00
+  Residual: 1.70e+00
+  Residual: 4.28e-01
+  Residual: 6.11e-02
+  Residual: 3.65e-03
+  Residual: 1.15e-04
+  Residual: 3.41e-05
+  Residual: 7.33e-06
+  Residual: 6.52e-06
+  Residual: 2.61e-06
+  Residual: 4.15e-06
+  Residual: 6.73e-07
+  Residual: 7.85e-07
+  Residual: 2.58e-07
+  Residual: 2.70e-07
+  Residual: 1.31e-07
+  Residual: 2.49e-07
+  Residual: 2.29e-08
+  Residual: 6.09e-08
+  Residual: 9.86e-09
+  Residual: 5.00e+00
+  Residual: 1.74e+00
+  Residual: 4.32e-01
+  Residual: 5.50e-02
+  Residual: 2.49e-03
+  Residual: 2.65e-05
+  Residual: 1.24e-05
+  Residual: 2.10e-06
+  Residual: 1.20e-06
+  Residual: 2.55e-07
+  Residual: 1.50e-07
+  Residual: 3.27e-08
+  Residual: 1.94e-08
+  Residual: 9.92e-09
+Iteration 2: Residual Norm = 9.9184e-09
+  Residual: 4.62e+00
+  Residual: 1.58e+00
+  Residual: 3.87e-01
+  Residual: 5.01e-02
+  Residual: 2.42e-03
+  Residual: 1.01e-04
+  Residual: 2.78e-05
+  Residual: 5.07e-06
+  Residual: 1.94e-06
+  Residual: 1.04e-06
+  Residual: 7.17e-07
+  Residual: 3.12e-07
+  Residual: 2.72e-07
+  Residual: 1.17e-07
+  Residual: 9.63e-08
+  Residual: 4.74e-08
+  Residual: 2.64e-08
+  Residual: 3.42e-08
+  Residual: 9.94e-09
+  Residual: 4.75e+00
+  Residual: 1.63e+00
+  Residual: 3.94e-01
+  Residual: 4.58e-02
+  Residual: 1.65e-03
+  Residual: 2.07e-05
+  Residual: 1.05e-05
+  Residual: 1.46e-06
+  Residual: 9.42e-07
+  Residual: 1.65e-07
+  Residual: 1.11e-07
+  Residual: 2.07e-08
+  Residual: 9.97e-09
+Iteration 3: Residual Norm = 9.9748e-09
+  Residual: 4.37e+00
+  Residual: 1.48e+00
+  Residual: 3.52e-01
+  Residual: 4.17e-02
+  Residual: 1.65e-03
+  Residual: 9.04e-05
+  Residual: 2.01e-05
+  Residual: 6.88e-06
+  Residual: 1.57e-06
+  Residual: 1.38e-06
+  Residual: 7.93e-07
+  Residual: 4.18e-07
+  Residual: 4.54e-07
+  Residual: 1.25e-07
+  Residual: 1.18e-07
+  Residual: 3.97e-08
+  Residual: 3.53e-08
+  Residual: 1.77e-08
+  Residual: 9.79e-09
+  Residual: 4.53e+00
+  Residual: 1.54e+00
+  Residual: 3.63e-01
+  Residual: 3.90e-02
+  Residual: 1.15e-03
+  Residual: 1.81e-05
+  Residual: 9.50e-06
+  Residual: 1.96e-06
+  Residual: 1.08e-06
+  Residual: 2.29e-07
+  Residual: 1.29e-07
+  Residual: 2.76e-08
+  Residual: 1.57e-08
+  Residual: 9.83e-09
+Iteration 4: Residual Norm = 9.8288e-09
+  Residual: 4.16e+00
+  Residual: 1.40e+00
+  Residual: 3.24e-01
+  Residual: 3.60e-02
+  Residual: 1.22e-03
+  Residual: 8.49e-05
+  Residual: 2.04e-05
+  Residual: 6.07e-06
+  Residual: 6.55e-06
+  Residual: 1.73e-06
+  Residual: 3.52e-06
+  Residual: 5.09e-07
+  Residual: 1.15e-06
+  Residual: 1.71e-07
+  Residual: 4.55e-07
+  Residual: 5.63e-08
+  Residual: 2.03e-07
+  Residual: 1.65e-08
+  Residual: 4.63e-08
+  Residual: 9.62e-09
+  Residual: 4.33e+00
+  Residual: 1.46e+00
+  Residual: 3.37e-01
+  Residual: 3.39e-02
+  Residual: 8.50e-04
+  Residual: 1.76e-05
+  Residual: 8.26e-06
+  Residual: 2.69e-06
+  Residual: 1.40e-06
+  Residual: 4.75e-07
+  Residual: 2.56e-07
+  Residual: 8.85e-08
+  Residual: 4.83e-08
+  Residual: 1.68e-08
+  Residual: 9.91e-09
+Iteration 5: Residual Norm = 9.9107e-09
+  Residual: 3.98e+00
+  Residual: 1.32e+00
+  Residual: 3.00e-01
+  Residual: 3.17e-02
+  Residual: 9.52e-04
+  Residual: 9.32e-05
+  Residual: 1.72e-05
+  Residual: 9.94e-06
+  Residual: 5.74e-06
+  Residual: 3.38e-06
+  Residual: 2.02e-06
+  Residual: 8.72e-07
+  Residual: 9.17e-07
+  Residual: 3.18e-07
+  Residual: 2.62e-07
+  Residual: 1.18e-07
+  Residual: 9.84e-08
+  Residual: 4.27e-08
+  Residual: 4.06e-08
+  Residual: 1.53e-08
+  Residual: 9.95e-09
+  Residual: 4.15e+00
+  Residual: 1.39e+00
+  Residual: 3.13e-01
+  Residual: 2.98e-02
+  Residual: 6.46e-04
+  Residual: 1.83e-05
+  Residual: 5.12e-06
+  Residual: 2.43e-06
+  Residual: 7.44e-07
+  Residual: 3.73e-07
+  Residual: 1.18e-07
+  Residual: 6.05e-08
+  Residual: 1.93e-08
+  Residual: 9.99e-09
+Iteration 6: Residual Norm = 9.9871e-09
+  Residual: 3.82e+00
+  Residual: 1.26e+00
+  Residual: 2.81e-01
+  Residual: 2.89e-02
+  Residual: 8.26e-04
+  Residual: 9.04e-05
+  Residual: 1.91e-05
+  Residual: 1.17e-05
+  Residual: 7.13e-06
+  Residual: 3.12e-06
+  Residual: 1.86e-06
+  Residual: 1.06e-06
+  Residual: 9.78e-07
+  Residual: 3.31e-07
+  Residual: 6.31e-07
+  Residual: 9.57e-08
+  Residual: 1.39e-07
+  Residual: 4.14e-08
+  Residual: 4.47e-08
+  Residual: 1.29e-08
+  Residual: 9.77e-09
+  Residual: 4.00e+00
+  Residual: 1.32e+00
+  Residual: 2.94e-01
+  Residual: 2.67e-02
+  Residual: 5.26e-04
+  Residual: 1.89e-05
+  Residual: 2.19e-06
+  Residual: 8.70e-07
+  Residual: 3.87e-07
+  Residual: 1.74e-07
+  Residual: 7.78e-08
+  Residual: 3.46e-08
+  Residual: 9.91e-09
+Iteration 7: Residual Norm = 9.9117e-09
+  Residual: 3.67e+00
+  Residual: 1.20e+00
+  Residual: 2.64e-01
+  Residual: 2.67e-02
+  Residual: 7.18e-04
+  Residual: 8.21e-05
+  Residual: 1.74e-05
+  Residual: 1.10e-05
+  Residual: 5.85e-06
+  Residual: 3.73e-06
+  Residual: 1.63e-06
+  Residual: 2.10e-06
+  Residual: 5.02e-07
+  Residual: 6.80e-07
+  Residual: 1.72e-07
+  Residual: 2.08e-07
+  Residual: 6.14e-08
+  Residual: 1.20e-07
+  Residual: 1.99e-08
+  Residual: 4.53e-08
+  Residual: 9.76e-09
+  Residual: 3.86e+00
+  Residual: 1.27e+00
+  Residual: 2.78e-01
+  Residual: 2.44e-02
+  Residual: 4.50e-04
+  Residual: 2.14e-05
+  Residual: 2.19e-06
+  Residual: 5.22e-07
+  Residual: 4.66e-07
+  Residual: 7.56e-08
+  Residual: 8.34e-08
+  Residual: 1.40e-08
+  Residual: 9.98e-09
+Iteration 8: Residual Norm = 9.9847e-09
+  Residual: 3.54e+00
+  Residual: 1.15e+00
+  Residual: 2.50e-01
+  Residual: 2.51e-02
+  Residual: 6.49e-04
+  Residual: 8.67e-05
+  Residual: 1.91e-05
+  Residual: 9.68e-06
+  Residual: 6.52e-06
+  Residual: 3.59e-06
+  Residual: 2.09e-06
+  Residual: 1.43e-06
+  Residual: 7.21e-07
+  Residual: 3.90e-07
+  Residual: 2.42e-07
+  Residual: 1.96e-07
+  Residual: 8.53e-08
+  Residual: 7.76e-08
+  Residual: 2.73e-08
+  Residual: 2.59e-08
+  Residual: 9.82e-09
+  Residual: 3.73e+00
+  Residual: 1.22e+00
+  Residual: 2.64e-01
+  Residual: 2.28e-02
+  Residual: 4.04e-04
+  Residual: 2.24e-05
+  Residual: 3.30e-06
+  Residual: 1.33e-06
+  Residual: 6.86e-07
+  Residual: 2.93e-07
+  Residual: 1.47e-07
+  Residual: 6.41e-08
+  Residual: 3.16e-08
+  Residual: 9.99e-09
+Iteration 9: Residual Norm = 9.9888e-09
+</code></pre></div>
+</details>
+<div class="language-python highlight"><pre><span></span><code>
+</code></pre></div>
+<h2 id="visualization">Visualization<a class="headerlink" href="#visualization" title="Permanent link">¤</a></h2>
+<p>We now visualize the deformation of the bulk material and the embedded fibres.</p>
+<details class="example">
+<summary>Post-processing and Visualization</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">patches</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.tri</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tri_mat</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">LineCollection</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">set_size</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">height_ratio</span><span class="o">=</span><span class="s2">&quot;golden&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;two-column&quot;</span><span class="p">,</span> <span class="n">subplots</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">width</span> <span class="o">==</span> <span class="s2">&quot;two-column&quot;</span><span class="p">:</span>
+        <span class="n">width_pt</span> <span class="o">=</span> <span class="mi">180</span>  <span class="c1"># mm</span>
+    <span class="k">elif</span> <span class="n">width</span> <span class="o">==</span> <span class="s2">&quot;one-column&quot;</span><span class="p">:</span>
+        <span class="n">width_pt</span> <span class="o">=</span> <span class="mi">90</span>  <span class="c1"># mm</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">width_pt</span> <span class="o">=</span> <span class="n">width</span>
+
+    <span class="k">if</span> <span class="n">height_ratio</span> <span class="o">==</span> <span class="s2">&quot;golden&quot;</span><span class="p">:</span>
+        <span class="n">ratio_pt</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ratio_pt</span> <span class="o">=</span> <span class="n">height_ratio</span>
+
+    <span class="n">fig_width_pt</span> <span class="o">=</span> <span class="n">width_pt</span> <span class="o">*</span> <span class="n">fraction</span>
+    <span class="n">inches_per_pt</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">25.4</span>
+    <span class="n">fig_width_in</span> <span class="o">=</span> <span class="n">fig_width_pt</span> <span class="o">*</span> <span class="n">inches_per_pt</span>
+    <span class="n">fig_height_in</span> <span class="o">=</span> <span class="n">fig_width_in</span> <span class="o">*</span> <span class="n">ratio_pt</span> <span class="o">*</span> <span class="p">(</span><span class="n">subplots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">subplots</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">fig_dim</span> <span class="o">=</span> <span class="p">(</span><span class="n">fig_width_in</span><span class="p">,</span> <span class="n">fig_height_in</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig_dim</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_pv_grid</span><span class="p">(</span><span class="n">mesh</span><span class="p">:</span> <span class="n">Mesh</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pv</span><span class="o">.</span><span class="n">UnstructuredGrid</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert Tatva mesh to PyVista UnstructuredGrid.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">pv_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pv_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+    <span class="n">cells</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">UnstructuredGrid</span><span class="p">(</span>
+        <span class="n">cells</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pv</span><span class="o">.</span><span class="n">CellType</span><span class="o">.</span><span class="n">TRIANGLE</span><span class="p">),</span> <span class="n">pv_points</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">grid</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_domain_boundary</span><span class="p">(</span><span class="n">elements</span><span class="p">):</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">elements</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">elements</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="n">elements</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+
+    <span class="n">edges_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">unique_edges</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+        <span class="n">edges_sorted</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">boundary_edges</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">counts</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]]</span>
+
+    <span class="k">return</span> <span class="n">boundary_edges</span>
+
+
+<span class="n">grad_u</span> <span class="o">=</span> <span class="n">op_plate</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u_sol</span><span class="p">)</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">grad_u</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+<span class="n">grad_u_wo_fiber</span> <span class="o">=</span> <span class="n">op_plate</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u_sol_wo_fiber</span><span class="p">)</span>
+<span class="n">F_wo_fiber</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">grad_u_wo_fiber</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add_bounding_box</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">y_min</span><span class="p">),</span>
+        <span class="n">Lx</span><span class="p">,</span>
+        <span class="n">Ly</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_strain_energy_flattened</span><span class="p">(</span><span class="n">F_flat</span><span class="p">):</span>
+    <span class="n">F_mat</span> <span class="o">=</span> <span class="n">F_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">strain_energy</span><span class="p">(</span><span class="n">F_mat</span><span class="p">,</span> <span class="n">mat</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="n">mat</span><span class="o">.</span><span class="n">lmbda</span><span class="p">))</span>
+
+
+<span class="n">compute_piola_kirchoff</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacrev</span><span class="p">(</span><span class="n">compute_strain_energy_flattened</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">compute_piola_kirchoff</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">P_wo_fiber</span> <span class="o">=</span> <span class="n">compute_piola_kirchoff</span><span class="p">(</span><span class="n">F_wo_fiber</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">get_pv_grid</span><span class="p">(</span><span class="n">plate_mesh</span><span class="p">)</span>
+<span class="n">grid</span><span class="p">[</span><span class="s2">&quot;sig_xx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">P_wo_fiber</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">grid</span><span class="p">[</span><span class="s2">&quot;sig_yy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">P_wo_fiber</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">grid</span><span class="p">[</span><span class="s2">&quot;sig_xy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">P_wo_fiber</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">grid</span><span class="p">[</span><span class="s2">&quot;sig_xx_wo_fiber&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">P_wo_fiber</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">grid</span><span class="p">[</span><span class="s2">&quot;sig_yy_wo_fiber&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">P_wo_fiber</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">grid</span><span class="p">[</span><span class="s2">&quot;sig_xy_wo_fiber&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">P_wo_fiber</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">grid</span><span class="p">:</span> <span class="n">pv</span><span class="o">.</span><span class="n">UnstructuredGrid</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">cell_data_to_point_data</span><span class="p">()</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">sample_over_line</span><span class="p">(</span>
+    <span class="n">pointa</span><span class="o">=</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">pointb</span><span class="o">=</span><span class="p">(</span><span class="n">x_min</span> <span class="o">+</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">u_quad</span> <span class="o">=</span> <span class="n">op_plate</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">u_sol</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="n">u_fiber</span> <span class="o">=</span> <span class="n">u_quad</span><span class="p">[</span><span class="n">host_indices</span><span class="p">]</span>  <span class="c1"># (N_seg, 2)</span>
+<span class="n">grad_u_fiber</span> <span class="o">=</span> <span class="n">op_line</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u_fiber</span><span class="p">)</span>  <span class="c1"># (N_seg, 1, 2)</span>
+
+<span class="n">triang</span> <span class="o">=</span> <span class="n">tri_mat</span><span class="o">.</span><span class="n">Triangulation</span><span class="p">(</span>
+    <span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u_sol</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u_sol</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">plate_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;./latex_sans_serif.mplstyle&quot;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="n">set_size</span><span class="p">(</span><span class="n">height_ratio</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">subplots</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+    <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span>
+    <span class="n">wspace</span><span class="o">=</span><span class="mf">0.075</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">bx</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">ex</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">cb</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">tripcolor</span><span class="p">(</span>
+    <span class="o">*</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">plate_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span>
+    <span class="n">facecolors</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;managua&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">add_bounding_box</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">axins</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">axins</span><span class="o">.</span><span class="n">tripcolor</span><span class="p">(</span>
+    <span class="o">*</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">plate_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span>
+    <span class="n">facecolors</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;managua&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">axins</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="p">[],</span> <span class="n">yticks</span><span class="o">=</span><span class="p">[])</span>
+<span class="n">axins</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">1.35</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">axins</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.35</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">axins</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
+<span class="n">axins</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">indicate_inset_zoom</span><span class="p">(</span><span class="n">axins</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+
+<span class="n">cb</span> <span class="o">=</span> <span class="n">bx</span><span class="o">.</span><span class="n">tripcolor</span><span class="p">(</span>
+    <span class="n">triang</span><span class="p">,</span>
+    <span class="n">grid</span><span class="p">[</span><span class="s2">&quot;sig_yy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;managua_r&quot;</span><span class="p">,</span>
+    <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;gouraud&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">cax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">((</span><span class="mf">0.73</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.275</span><span class="p">))</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
+    <span class="n">cb</span><span class="p">,</span>
+    <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$P_</span><span class="si">{yy}</span><span class="s2">/P_</span><span class="si">{yy}</span><span class="s2">^</span><span class="si">{o}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">pad</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+<span class="n">edge_elems</span> <span class="o">=</span> <span class="n">find_domain_boundary</span><span class="p">(</span><span class="n">plate_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span>
+
+<span class="n">segments</span> <span class="o">=</span> <span class="n">plate_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">edge_elems</span><span class="p">][:,</span> <span class="p">:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">coll_boundary</span> <span class="o">=</span> <span class="n">LineCollection</span><span class="p">(</span>
+    <span class="n">segments</span> <span class="o">+</span> <span class="n">u_sol</span><span class="p">[</span><span class="n">edge_elems</span><span class="p">][:,</span> <span class="p">:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.7</span>
+<span class="p">)</span>
+<span class="n">bx</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">coll_boundary</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">coords</span><span class="p">,</span> <span class="n">disp</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="n">fiber_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">fiber_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">],</span> <span class="n">u_fiber</span><span class="p">[</span><span class="n">fiber_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">]</span>
+<span class="p">):</span>
+    <span class="n">axins</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">bx</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">disp</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">disp</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">segments</span> <span class="o">=</span> <span class="n">fiber_mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">fiber_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">]</span> <span class="o">+</span> <span class="n">u_fiber</span><span class="p">[</span><span class="n">fiber_mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">]</span>
+<span class="n">lc</span> <span class="o">=</span> <span class="n">LineCollection</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">)</span>
+<span class="n">lc</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="n">grad_u_fiber</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+
+<span class="n">lines</span> <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">lc</span><span class="p">)</span>
+<span class="n">cax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">((</span><span class="mf">0.835</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">))</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
+    <span class="n">lines</span><span class="p">,</span>
+    <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\varepsilon_S$&quot;</span><span class="p">,</span>
+    <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">pad</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># ax.set_xlim([x_min - 0.1, x_min + Lx + 0.1])</span>
+<span class="c1"># ax.set_ylim([y_min - 0.1, y_min + Ly + 0.1])</span>
+<span class="n">ex</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">x_min</span> <span class="o">+</span> <span class="mf">0.35</span><span class="p">,</span> <span class="n">x_min</span> <span class="o">+</span> <span class="n">Lx</span> <span class="o">-</span> <span class="mf">0.35</span><span class="p">])</span>
+<span class="n">ex</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="n">y_min</span> <span class="o">+</span> <span class="mf">0.35</span><span class="p">,</span> <span class="n">y_min</span> <span class="o">+</span> <span class="n">Ly</span> <span class="o">-</span> <span class="mf">0.35</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
+<span class="n">bx</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
+<span class="n">ex</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$y$&quot;</span><span class="p">)</span>
+<span class="n">bx</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ex</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">bx</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+<span class="n">bx</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+<span class="n">bx</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ex</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+<span class="n">ex</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+<span class="n">ex</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ex</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<p><img alt="img" src="../_data/395283b42fbb4380bd87176d456ea31c.png" /></p>
+<div class="language-python highlight"><pre><span></span><code>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 ETH Zurich (SMEC)
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "header-autohide", "announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.instant.preview", "navigation.path", "navigation.sections", "navigation.tabs.sticky", "search.highlight", "search.suggest", "content.footnote.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/vtk.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+      
+        <script src="../../javascripts/carousel.js"></script>
+      
+    
+  </body>
+</html>
