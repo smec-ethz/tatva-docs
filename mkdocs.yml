@@ -131,7 +131,7 @@ nav:
   - Getting Started: "index.md"
   - Basics of tatva:
     - Operator: "operator.ipynb"
-    - Sparse Differentiation: "sparse.ipynb"
+    - Building Stiffness Matrix: "sparse.ipynb"
     - Compound: "compound.ipynb"
     - Lifter: "lifter.ipynb"
   - Examples:

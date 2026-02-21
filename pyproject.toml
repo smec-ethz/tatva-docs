@@ -16,5 +16,6 @@ dependencies = [
     "mkdocs-material>=9.7.1",
     "mkdocs-section-index>=0.3.10",
     "mkdocstrings-python>=2.0.1",
+    "pyvista[jupyter]>=0.47.0",
     "tatva>=0.4.0",
 ]
