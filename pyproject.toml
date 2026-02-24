@@ -17,13 +17,5 @@ dependencies = [
     "mkdocs-section-index>=0.3.10",
     "mkdocstrings-python>=2.0.1",
     "pyvista[jupyter]>=0.47.0",
-    "tatva>=0.7.0",
+    "tatva==0.7.1",
 ]
-
-[tool.uv.workspace]
-members = [
-    "tatva",
-]
-
-[tool.uv.sources]
-tatva = { workspace = true }
