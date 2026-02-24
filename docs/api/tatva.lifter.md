@@ -1,5 +1,5 @@
 # Lifter
         
-::: tatva.lifter.Lifter
+::: tatva.lifter
     options:
         members:
