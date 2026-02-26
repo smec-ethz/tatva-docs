@@ -162,8 +162,12 @@ nav:
               - "examples/ncm_metamaterial.ipynb"
           - Neural Operator Element Method:
               - "examples/neural_operator_method_3d.ipynb"
+  
+  - Custom Elements: 
+      - "custom_elements.md"
       - Beams:
           - Euler-Bernoulli Beam: "examples/euler_bernoulli_2d_beam.ipynb"
+          - Timoshenko Beam: "examples/timoshenko_2d_beam.ipynb"
   - Using External Solvers:
       - SciPy:
           - "external_solvers/linear_elasticity_scipy.ipynb"
