@@ -140,6 +140,8 @@ nav:
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.ipynb"
+      - Hyperelasticity:
+          - "examples/hyperelastic_3d.ipynb"
       - Multi-point Constraints:
           - Rigid Body Constraints:
               - "examples/nonlinear_hole_plate.ipynb"
