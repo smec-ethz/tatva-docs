@@ -9,23 +9,17 @@ copyright: Copyright &copy; 2026 ETH Zurich (SMEC)
 theme:
   name: material
   features:
-    - navigation.sections # sections are included in the left
+    - navigation.instant # Instant navigation between pages
+    - navigation.tabs # Show section headers in the navigation sidebar
     - header-autohide # header disappears when scrolling down
     - announce.dismiss
-    - content.action.edit
-    - content.action.view
     - content.code.annotate
     - content.code.copy
     - content.tooltips
-    - navigation.instant.preview
-    - navigation.path
-    - navigation.sections
-    - navigation.tabs.sticky
     - search.highlight
     - search.suggest
     - content.footnote.tooltips
 
-    #- toc.integrate
   palette:
     - scheme: default
       primary: white
@@ -57,6 +51,7 @@ extra_javascript:
   - javascripts/carousel.js
 
 extra_css:
+  - https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200
   - "stylesheets/custom_css.css"
   - "stylesheets/mkdocstrings.css"
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
@@ -131,12 +126,12 @@ plugins:
   - ipynb:
 
 nav:
-  - Getting Started: "index.md"
+  - Getting started: "index.md"
   - Basics of tatva:
-    - Operator: "operator.ipynb"
+    - Creating Energy Functional: "operator.ipynb"
     - Building Stiffness Matrix: "sparse.ipynb"
-    - Compound: "compound.ipynb"
-    - Lifter: "lifter.ipynb"
+    - Handling Multifield DoFs: "compound.ipynb"
+    - Applying BCs or Constraints: "lifter.ipynb"
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.ipynb"

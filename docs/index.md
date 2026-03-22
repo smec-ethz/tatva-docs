@@ -1,4 +1,4 @@
-# Getting Started
+# 
 
 <div align="center">
 
@@ -61,6 +61,7 @@ way.
     <p>Built-in sparse differentiation via coloring and matrix-free assembly tailored for mordern architecture such as GPUs. </p>
   </div>
 </div>
+
 
 ## Installation
 
