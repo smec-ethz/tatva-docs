@@ -128,8 +128,8 @@ nav:
   - Basics of tatva:
     - Creating Energy Functional: "operator.md"
     - Building Stiffness Matrix: "sparse.md"
-    - Applying Constraints or BCs: "compound.md"
-    - Handling Multifield Variables: "lifter.md"
+    - Handling Multifield DoFs: "compound.md"
+    - Applying Constraints or BCs: "lifter.md"
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.md"
