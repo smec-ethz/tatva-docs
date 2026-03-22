@@ -5,8 +5,13 @@ log = logging.getLogger("mkdocs")
 
 
 def on_page_markdown(markdown, page, config, files):
-    # 1. Only run on notebooks
-    if not page.file.src_uri.endswith(".ipynb"):
+    # 1. Only run on pages converted from notebooks
+    if not page.file.src_uri.endswith(".md"):
+        return markdown
+    import pathlib
+    notebooks_dir = pathlib.Path(config["docs_dir"]).parent / "notebooks"
+    nb_path = page.file.src_uri.lstrip("/").removesuffix(".md") + ".ipynb"
+    if not (notebooks_dir / nb_path).exists():
         return markdown
 
     # 2. Define the Regex Pattern

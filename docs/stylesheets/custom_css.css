@@ -88,27 +88,33 @@ html {
 }
 
 .md-typeset h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    font-weight: 450;
 }
 
 .md-typeset h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 350;
 }
 
 .md-typeset h3 {
     font-size: 1.3rem;
+    font-weight: 350;
 }
 
 .md-typeset h4 {
     font-size: 1.1rem;
+    font-weight: 300;
 }
 
 .md-typeset h5 {
     font-size: 0.9rem;
+    font-weight: 300;
 }
 
 .md-typeset h6 {
     font-size: 0.8rem;
+    font-weight: 300;
 }
 
 .md-typeset details .mkdocstrings > h4 {

@@ -18,4 +18,5 @@ dependencies = [
     "mkdocstrings-python>=2.0.1",
     "pyvista[jupyter]>=0.47.0",
     "tatva==0.7.1",
+    "zensical>=0.0.28",
 ]

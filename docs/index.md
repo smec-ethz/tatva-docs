@@ -1,5 +1,4 @@
-# Getting Started
-
+# 
 <div align="center">
 
 <img src="assets/logo-small.png" alt="drawing" width="300" height="60"/>

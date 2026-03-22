@@ -3,14 +3,20 @@ import re
 
 
 def on_page_markdown(markdown, page, config, files):
-    if not page.file.src_uri.endswith(".ipynb"):
+    if not page.file.src_uri.endswith(".md"):
+        return markdown
+
+    # Only process pages that originated from a notebook (i.e. have a matching .ipynb in notebooks/)
+    nb_rel = page.file.src_uri.lstrip("/").removesuffix(".md") + ".ipynb"
+    import pathlib
+    notebooks_dir = pathlib.Path(config["docs_dir"]).parent / "notebooks"
+    if not (notebooks_dir / nb_rel).exists():
         return markdown
 
     # --- 1. COLAB LINK LOGIC ---
     tag = os.environ.get("LIB_TAG", "main")
-    clean_path = page.file.src_uri.lstrip("/")
-    base_url = f"https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/{tag}/docs/"
-    colab_url = f"{base_url}{clean_path}"
+    base_url = f"https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/{tag}/notebooks/"
+    colab_url = f"{base_url}{nb_rel}"
 
     badge_html = f'<a href="{colab_url}" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>\n\n'
     markdown = badge_html + markdown
