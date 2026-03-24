@@ -25,16 +25,17 @@ way.
     </div>
 
     <div class="swiper-slide">
-      <img src="assets/images/surface_advection_diffusion.gif" alt="Surface Advection Diffusion">
-      <div class="slide-caption">
-        <h3>Surface Advection Diffusion</h3>
-      </div>
-    </div>
-
-    <div class="swiper-slide">
       <img src="assets/images/cohesive_fracture.gif" alt="Cohesive Fracture">
       <div class="slide-caption">
         <h3>Cohesive Fracture</h3>
+      </div>
+    </div>
+
+
+    <div class="swiper-slide">
+      <img src="assets/images/surface_advection_diffusion.gif" alt="Surface Advection Diffusion">
+      <div class="slide-caption">
+        <h3>Surface Advection Diffusion</h3>
       </div>
     </div>
 
