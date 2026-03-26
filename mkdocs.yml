@@ -128,10 +128,10 @@ plugins:
 nav:
   - Getting started: "index.md"
   - Basics of tatva:
-    - Creating Energy Functional: "operator.ipynb"
-    - Building Stiffness Matrix: "sparse.ipynb"
-    - Handling Multifield DoFs: "compound.ipynb"
-    - Applying BCs or Constraints: "lifter.ipynb"
+      - Creating Energy Functional: "operator.ipynb"
+      - Building Stiffness Matrix: "sparse.ipynb"
+      - Handling Multifield DoFs: "compound.ipynb"
+      - Applying BCs or Constraints: "lifter.ipynb"
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.ipynb"
@@ -144,8 +144,11 @@ nav:
               - "examples/nonlinear_hole_plate.ipynb"
       - Contact Mechanics:
           - "examples/contact_3d.ipynb"
-      - Periodic BCs (Lagrange Multipliers):
-          - "examples/homogenization_periodic.ipynb"
+      - Lagrange Multipliers:
+          - Adhesion:
+              - "examples/adhesion_lagrange_multipliers.ipynb"
+          - Periodic BCs:
+              - "examples/homogenization_periodic.ipynb"
       - Mixed-Dimensional Coupling:
           - Cohesive Fracture:
               - "examples/fracture_quasistatic_3d.ipynb"
@@ -161,8 +164,8 @@ nav:
               - "examples/ncm_metamaterial.ipynb"
           - Neural Operator Element Method:
               - "examples/neural_operator_method_3d.ipynb"
-  
-  - Custom Elements: 
+
+  - Custom Elements:
       - "custom_elements.md"
       - Beams:
           - Euler-Bernoulli Beam: "examples/euler_bernoulli_2d_beam.ipynb"
@@ -172,9 +175,9 @@ nav:
           - "external_solvers/linear_elasticity_scipy.ipynb"
       - PETSc:
           - Sparse Solver:
-            - "external_solvers/linear_elasticity_petsc4py.ipynb"
+              - "external_solvers/linear_elasticity_petsc4py.ipynb"
           - Matrix-Free Solver:
-            - "external_solvers/linear_elasticity_petsc4py_mf.ipynb"
+              - "external_solvers/linear_elasticity_petsc4py_mf.ipynb"
   - API reference:
       - Operator: "api/tatva.operator.md"
       - Mesh: "api/tatva.mesh.md"
