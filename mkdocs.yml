@@ -11,6 +11,7 @@ theme:
   features:
     - navigation.instant # Instant navigation between pages
     - navigation.tabs # Show section headers in the navigation sidebar
+    #- navigation.sections # Show section headers in the top navigation bar
     - header-autohide # header disappears when scrolling down
     - announce.dismiss
     - content.code.annotate
@@ -126,7 +127,8 @@ plugins:
   - ipynb:
 
 nav:
-  - Getting started: "index.md"
+  - Home: "index.md"
+  - Getting started: "getting_started.md"
   - Basics of tatva:
       - Creating Energy Functional: "operator.ipynb"
       - Building Stiffness Matrix: "sparse.ipynb"
@@ -166,7 +168,7 @@ nav:
               - "examples/neural_operator_method_3d.ipynb"
 
   - Custom Elements:
-      - "custom_elements.md"
+      - Building Custom Elements: "custom_elements.md"
       - Beams:
           - Euler-Bernoulli Beam: "examples/euler_bernoulli_2d_beam.ipynb"
           - Timoshenko Beam: "examples/timoshenko_2d_beam.ipynb"

@@ -1,4 +1,4 @@
-# Building Custom Elements in tatva
+# Building Custom Elements
 
 
 Tatva is designed to be extensible. While it includes a library of standard elements, the `element.Element` base class allows you to define any interpolation scheme or physics-specific element you need. By leveraging automatic differentiation, you only need to define local relationships; Tatva handles the global assembly, sparsity, and differentiation.
