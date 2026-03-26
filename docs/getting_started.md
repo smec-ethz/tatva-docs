@@ -4,6 +4,13 @@ hide:
   - toc
 ---
 
+<style>
+  /* Target the main content grid and ignore the header */
+  main .md-grid {
+    max-width: 65% !important;
+  }
+</style>
+
 # Getting Started
 
 

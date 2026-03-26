@@ -11,7 +11,6 @@ theme:
   features:
     - navigation.instant # Instant navigation between pages
     - navigation.tabs # Show section headers in the navigation sidebar
-    #- navigation.sections # Show section headers in the top navigation bar
     - header-autohide # header disappears when scrolling down
     - announce.dismiss
     - content.code.annotate
