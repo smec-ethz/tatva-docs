@@ -141,8 +141,11 @@ nav:
           - "examples/nonlinear_hole_plate.md"
       - Contact Mechanics:
           - "examples/contact_3d.md"
-      - Periodic BCs (Lagrange Multipliers):
-          - "examples/homogenization_periodic.md"
+      - Lagrange Multipliers:
+          - Adhesion:
+              - "examples/adhesion_lagrange_multipliers.ipynb"
+          - Periodic BCs:
+              - "examples/homogenization_periodic.md"
       - Mixed-Dimensional Coupling:
           - "examples/fracture_quasistatic_3d.md"
           - "examples/soft_hydrogel.md"
@@ -151,10 +154,9 @@ nav:
       - Non-Variational Formulations:
           - "examples/advection_diffusion_surface.md"
       - Data-Driven Modeling:
-          - "examples/ncm_metamaterial.md"
-          - "examples/neural_operator_method_3d.md"
-  
-  - Custom Elements: 
+        - "examples/ncm_metamaterial.md"
+        - "examples/neural_operator_method_3d.md"
+  - Custom Elements:
       - "custom_elements.md"
       - Beams:
           - Euler-Bernoulli Beam: "examples/euler_bernoulli_2d_beam.md"
