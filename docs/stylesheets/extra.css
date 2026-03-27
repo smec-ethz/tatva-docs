@@ -113,7 +113,7 @@
 /* Default is ~1220px */
 
 .md-grid {
-    max-width: 90%;
+    max-width: 70rem;
     margin-right: auto;
     margin-left: auto;
 }

@@ -7,7 +7,7 @@ hide:
 <style>
   /* Target the main content grid and ignore the header */
   main .md-grid {
-    max-width: 70% !important;
+    max-width: 60rem !important;
   }
 </style>
 
