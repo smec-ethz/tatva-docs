@@ -44,9 +44,11 @@ import equinox as eqx
 
 class MyCustomElement(element.Element):
     # Define Quadrature (e.g., 1-point Gauss)
-    quad_points: jnp.ndarray = eqx.field(default=jnp.array([0.0]))
-    quad_weights: jnp.ndarray = eqx.field(default=jnp.array([2.0]))
-
+    def _default_quadrature(self):
+        quad_points: jnp.ndarray = jnp.array([0.0])
+        quad_weights: jnp.ndarray = jnp.array([2.0])
+        return quad_points, quad_weights
+ 
     # Standard Shape Functions
     def shape_function(self, xi):
         # Linear: [N1, N2]

@@ -90,7 +90,6 @@ markdown_extensions:
 
 hooks:
   - docs/_hooks/tag_notebook_colab.py
-  - docs/_hooks/notebook_tags.py
 
 plugins:
   - search:

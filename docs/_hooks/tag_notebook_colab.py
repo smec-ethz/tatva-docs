@@ -25,7 +25,7 @@ def on_page_markdown(markdown, page, config, files):
         '<img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>'
         '</a>'
         f'<a href="{download_url}" download="{nb_filename}" class="nb-download-btn">'
-        f'{download_icon} Download notebook'
+        f'{download_icon} Download'
         '</a>'
         '</div>\n\n'
     )
