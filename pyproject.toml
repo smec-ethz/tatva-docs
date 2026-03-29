@@ -18,6 +18,8 @@ dependencies = [
     "mkdocs-section-index>=0.3.10",
     "mkdocstrings-python>=2.0.1",
     "pyvista[jupyter]>=0.47.0",
+    "pygments<=2.19.2",
+    "pymdown-extensions==10.21",
     "ruff>=0.15.8",
     "tatva>=0.9.0",
 ]

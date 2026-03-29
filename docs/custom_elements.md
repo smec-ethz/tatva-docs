@@ -40,13 +40,13 @@ Below is a generic template for a custom element. You can either provide standar
 ```python
 from tatva import element
 import jax.numpy as jnp
-import equinox as eqx
 
 class MyCustomElement(element.Element):
+    
     # Define Quadrature (e.g., 1-point Gauss)
     def _default_quadrature(self):
-        quad_points: jnp.ndarray = jnp.array([0.0])
-        quad_weights: jnp.ndarray = jnp.array([2.0])
+        quad_points = jnp.array([0.0])
+        quad_weights = jnp.array([2.0])
         return quad_points, quad_weights
  
     # Standard Shape Functions
