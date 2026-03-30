@@ -1,0 +1,3188 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The documentation for the tatva software package">
+      
+      
+      
+      
+        <link rel="prev" href="../contact_3d/">
+      
+      
+        <link rel="next" href="../homogenization_periodic/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Adhesion - tatva</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    
+      <link rel="stylesheet" href="../../stylesheets/custom_css.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/mkdocstrings.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/carousel.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#peeling-of-a-dimpled-adhesive-beam-via-lagrange-multipliers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="tatva" class="md-header__button md-logo" aria-label="tatva" data-md-component="logo">
+      
+  <img src="../../assets/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            tatva
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Adhesion
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/smec-ethz/tatva" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    smec-ethz/tatva
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting_started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../operator/" class="md-tabs__link">
+          
+  
+  
+  Basics of tatva
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../linear_elasticity/" class="md-tabs__link">
+          
+  
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../external_solvers/linear_elasticity_scipy/" class="md-tabs__link">
+          
+  
+  
+  Using External Solvers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/tatva.operator/" class="md-tabs__link">
+          
+  
+  
+  API reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="tatva" class="md-nav__button md-logo" aria-label="tatva" data-md-component="logo">
+      
+  <img src="../../assets/favicon.png" alt="logo">
+
+    </a>
+    tatva
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/smec-ethz/tatva" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    smec-ethz/tatva
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Basics of tatva
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Basics of tatva
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating Energy Functional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sparse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Stiffness Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compound/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handling Multifield DoFs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lifter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Applying BCs or Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../custom_elements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Custom Elements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear_elasticity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Elasticity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hyperelastic_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hyperelasticity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../elastodynamics_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Elastodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-point Constraints
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multi-point Constraints
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nonlinear_hole_plate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rigid Body Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contact_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact Mechanics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lagrange Multipliers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lagrange Multipliers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adhesion
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adhesion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#meshing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meshing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problem setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#material-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Material law
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operator-compound-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operator &amp; Compound definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lifter-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifter definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#energy-functional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Energy functional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sparsity-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sparsity definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#residual-hessian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Residual &amp; Hessian
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../homogenization_periodic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Periodic BCs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mixed-Dimensional Coupling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mixed-Dimensional Coupling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_7_1" id="__nav_4_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cohesive Fracture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cohesive Fracture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fracture_nitsche_quasistatic_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Nitsche's Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fracture_quasistatic_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Penalty Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../soft_hydrogel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded 1D Fibres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multiphysics Coupling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multiphysics Coupling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../thermal_shock_fracture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thermal-Shock Fracture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advection_diffusion_surface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Non-Variational Formulations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_10" id="__nav_4_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data-Driven Modeling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data-Driven Modeling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ncm_metamaterial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Constitutive Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../neural_operator_method_3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Operator Element Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_11" id="__nav_4_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beams
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beams
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../euler_bernoulli_2d_beam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Euler-Bernoulli Beam
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../timoshenko_2d_beam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timoshenko Beam
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using External Solvers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using External Solvers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../external_solvers/linear_elasticity_scipy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SciPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PETSc
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PETSc
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../external_solvers/linear_elasticity_petsc4py/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sparse Solver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../external_solvers/linear_elasticity_petsc4py_mf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matrix-Free Solver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.mesh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mesh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.element/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Element
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.sparse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sparse
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.compound/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tatva.lifter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lifter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#meshing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meshing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problem setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#material-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Material law
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operator-compound-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operator &amp; Compound definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lifter-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifter definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#energy-functional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Energy functional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sparsity-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sparsity definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#residual-hessian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Residual &amp; Hessian
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/docs/examples/adhesion_lagrange_multipliers.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="https://raw.githubusercontent.com/smec-ethz/tatva-docs/main/docs/examples/adhesion_lagrange_multipliers.ipynb" download="adhesion_lagrange_multipliers.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download</a></div>
+
+<h1 id="peeling-of-a-dimpled-adhesive-beam-via-lagrange-multipliers">Peeling of a dimpled adhesive beam via Lagrange Multipliers<a class="headerlink" href="#peeling-of-a-dimpled-adhesive-beam-via-lagrange-multipliers" title="Permanent link">¤</a></h1>
+<div class="nb-clear"></div>
+
+<p>This example demonstrates how to model the peeling process of an elastic beam from a rigid substrate. It showcases the use of Lagrange multipliers to enforce contact constraints and an active set strategy to model the progressive failure of adhesive bonds.</p>
+<p><strong>Key Technical Concepts</strong></p>
+<ul>
+<li>Nonlinear Elasticity: The beam is modeled using a 2D plane-stress Neo-Hookean material law, accounting for large deformations during the peeling process.</li>
+<li>Lagrange Multipliers: Instead of penalty methods, we use Lagrange multipliers to strictly enforce the zero-displacement constraint on the adhesive interface. These multipliers physically represent the (negative) pressure at the bond.</li>
+<li>Active Set Strategy: The "peeling" is governed by a strength-based criterion. An iterative loop manages the "active set" of constraints, releasing nodes where the Lagrange multiplier exceeds a critical adhesive strength.</li>
+<li>Rigid Body Coupling: A Lifter constraint is used to couple a set of boundary nodes to a single rigid-body motion (translation and rotation), simulating a stiff loading handle.</li>
+<li>Structured State Management: The tatva.compound module is used to define a complex solution space containing the rigid body displacement, the nodal displacement field, and the Lagrange multipliers.</li>
+<li>Efficient Sparse JAX Solvers: We utilize custom sparsity patterns and the SparseTatva linear solver to perform efficient Newton iterations on the constrained system.</li>
+</ul>
+<p><strong>Problem Setup</strong></p>
+<p>A notched beam is adhered to a substrate along its bottom edge. The left end of the beam is pulled upwards by a rigid handle. As the load increases, the stress concentrates at the "peel front." Once the adhesive strength is reached, the constraint is deactivated, the bond "breaks," and the peel front advances.</p>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">replace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">Array</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax_autovmap</span><span class="w"> </span><span class="kn">import</span> <span class="n">autovmap</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">tatva</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mesh</span><span class="p">,</span> <span class="n">Operator</span><span class="p">,</span> <span class="n">compound</span><span class="p">,</span> <span class="n">sparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tatva.element.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Line2</span><span class="p">,</span> <span class="n">Tri3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tatva.lifter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Constraint</span><span class="p">,</span> <span class="n">Fixed</span><span class="p">,</span> <span class="n">Lifter</span><span class="p">,</span> <span class="n">RuntimeValue</span>
+
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">jit</span><span class="p">[</span><span class="o">**</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">](</span><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">jacrev</span><span class="p">[</span><span class="o">**</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">](</span><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacrev</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="meshing">Meshing<a class="headerlink" href="#meshing" title="Permanent link">¤</a></h2>
+<details class="example">
+<summary>Code to generate a notched beam mesh using Gmsh, extract nodes and elements, and plot the mesh.</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">gmsh</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gmsh_context</span><span class="p">():</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="s2">&quot;General.Terminal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">gmsh</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_notched_beam</span><span class="p">(</span>
+    <span class="n">length</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">num_notches</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">notch_radius</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">hmin</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">hmax</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="p">):</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;NotchedBeam&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 1. Create the main beam (Rectangle)</span>
+    <span class="n">beam</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">occ</span><span class="o">.</span><span class="n">addRectangle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+
+    <span class="c1"># 2. Create the notches</span>
+    <span class="n">notch_disks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">spacing</span> <span class="o">=</span> <span class="n">length</span> <span class="o">/</span> <span class="n">num_notches</span>
+    <span class="n">x_pos_0</span> <span class="o">=</span> <span class="n">spacing</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_notches</span><span class="p">):</span>
+        <span class="n">x_pos</span> <span class="o">=</span> <span class="n">x_pos_0</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">spacing</span>
+        <span class="n">disk</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">occ</span><span class="o">.</span><span class="n">addDisk</span><span class="p">(</span><span class="n">x_pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">notch_radius</span><span class="p">,</span> <span class="n">notch_radius</span><span class="p">)</span>
+        <span class="n">notch_disks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">disk</span><span class="p">))</span>
+
+    <span class="c1"># 3. Boolean Subtraction</span>
+    <span class="c1"># Note: &#39;cut&#39; returns a tuple; the first element is the list of remaining surfaces</span>
+    <span class="n">out</span><span class="p">,</span> <span class="n">out_map</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">occ</span><span class="o">.</span><span class="n">cut</span><span class="p">([(</span><span class="mi">2</span><span class="p">,</span> <span class="n">beam</span><span class="p">)],</span> <span class="n">notch_disks</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">occ</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+    <span class="c1"># --- 4. MESH REFINEMENT FIELDS ---</span>
+
+    <span class="c1"># Get all boundary curves (1D) to calculate distance from</span>
+    <span class="c1"># These will be the circular arcs created by the cut</span>
+    <span class="n">boundary_curves</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">getBoundary</span><span class="p">(</span>
+        <span class="n">out</span><span class="p">,</span> <span class="n">combined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">oriented</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="n">notch_curve_tags</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">bottom_curve_tags</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">boundary_curves</span><span class="p">:</span>
+        <span class="c1"># Get the bounding box of the curve [xmin, ymin, zmin, xmax, ymax, zmax]</span>
+        <span class="n">bbox</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">getBoundingBox</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+        <span class="n">ymax</span> <span class="o">=</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+
+        <span class="c1"># If the highest point of the curve is close to the notch_radius height</span>
+        <span class="c1"># and the lowest point is at 0, it&#39;s a notch.</span>
+        <span class="c1"># (Standard beam edges are either at y=0, y=height, or vertical)</span>
+        <span class="k">if</span> <span class="n">ymax</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">notch_radius</span> <span class="o">+</span> <span class="mf">1e-3</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ymax</span> <span class="o">&gt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+            <span class="n">notch_curve_tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ymax</span> <span class="o">&lt;=</span> <span class="mf">1e-3</span><span class="p">:</span>
+            <span class="n">bottom_curve_tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+    <span class="c1"># Field 1: Distance from the notch boundaries</span>
+    <span class="n">f_dist</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;Distance&quot;</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumbers</span><span class="p">(</span><span class="n">f_dist</span><span class="p">,</span> <span class="s2">&quot;CurvesList&quot;</span><span class="p">,</span> <span class="n">notch_curve_tags</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_dist</span><span class="p">,</span> <span class="s2">&quot;Sampling&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">f_dist_bottom</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;Distance&quot;</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumbers</span><span class="p">(</span><span class="n">f_dist_bottom</span><span class="p">,</span> <span class="s2">&quot;CurvesList&quot;</span><span class="p">,</span> <span class="n">bottom_curve_tags</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_dist_bottom</span><span class="p">,</span> <span class="s2">&quot;Sampling&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># Field 2: Threshold - map distance to element size</span>
+    <span class="n">f_thresh</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;Threshold&quot;</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh</span><span class="p">,</span> <span class="s2">&quot;InField&quot;</span><span class="p">,</span> <span class="n">f_dist</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh</span><span class="p">,</span> <span class="s2">&quot;SizeMin&quot;</span><span class="p">,</span> <span class="n">hmin</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh</span><span class="p">,</span> <span class="s2">&quot;SizeMax&quot;</span><span class="p">,</span> <span class="n">hmax</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh</span><span class="p">,</span> <span class="s2">&quot;DistMin&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh</span><span class="p">,</span> <span class="s2">&quot;DistMax&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="n">f_thresh_bottom</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;Threshold&quot;</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh_bottom</span><span class="p">,</span> <span class="s2">&quot;InField&quot;</span><span class="p">,</span> <span class="n">f_dist_bottom</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh_bottom</span><span class="p">,</span> <span class="s2">&quot;SizeMin&quot;</span><span class="p">,</span> <span class="n">hmin</span> <span class="o">*</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh_bottom</span><span class="p">,</span> <span class="s2">&quot;SizeMax&quot;</span><span class="p">,</span> <span class="n">hmax</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh_bottom</span><span class="p">,</span> <span class="s2">&quot;DistMin&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">f_thresh_bottom</span><span class="p">,</span> <span class="s2">&quot;DistMax&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="n">f_min</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;Min&quot;</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setNumbers</span><span class="p">(</span><span class="n">f_min</span><span class="p">,</span> <span class="s2">&quot;FieldsList&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">f_thresh</span><span class="p">,</span> <span class="n">f_thresh_bottom</span><span class="p">])</span>
+
+    <span class="c1"># Set this as the background mesh field</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">setAsBackgroundMesh</span><span class="p">(</span><span class="n">f_min</span><span class="p">)</span>
+
+    <span class="c1"># Gmsh doesn&#39;t use the global min/max options if a field is active</span>
+    <span class="c1"># unless you explicitly tell it to respect them:</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="s2">&quot;Mesh.MeshSizeFromPoints&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="s2">&quot;Mesh.MeshSizeFromCurvature&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">setNumber</span><span class="p">(</span><span class="s2">&quot;Mesh.MeshSizeExtendFromBoundary&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Generate</span>
+    <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_mesh_data</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts nodes and triangular element connectivity from the current Gmsh model.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        nodes: (N, 3) array of [x, y, z] coordinates</span>
+<span class="sd">        elements: (M, 3) array of node indices (zero-based) for triangles</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 1. Get Nodes</span>
+    <span class="c1"># nodeTags: unique ID for each node</span>
+    <span class="c1"># coords: flat list [x1, y1, z1, x2, y2, z2, ...]</span>
+    <span class="n">node_tags</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">getNodes</span><span class="p">()</span>
+
+    <span class="c1"># Reshape coordinates into (N, 3) array</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1"># Create a mapping from Gmsh nodeTag to 0-based array index</span>
+    <span class="c1"># (Gmsh tags often start at 1 and may not be contiguous)</span>
+    <span class="n">node_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">tag</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tag</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">node_tags</span><span class="p">)}</span>
+
+    <span class="c1"># 2. Get Elements (Triangles)</span>
+    <span class="c1"># 2 is the Gmsh element type for a 3-node triangle</span>
+    <span class="n">elem_types</span><span class="p">,</span> <span class="n">elem_tags</span><span class="p">,</span> <span class="n">elem_node_tags</span> <span class="o">=</span> <span class="n">gmsh</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">getElements</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Find the index of the 3-node triangle type in the returned lists</span>
+    <span class="c1"># Note: elem_types is a list of types present in the mesh</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tri_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">elem_types</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">tri_node_tags</span> <span class="o">=</span> <span class="n">elem_node_tags</span><span class="p">[</span><span class="n">tri_idx</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No triangular elements (type 2) found in the mesh.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+    <span class="c1"># 3. Convert connectivity to 0-based indices using our map</span>
+    <span class="c1"># Reshape to (M, 3) since each triangle has 3 nodes</span>
+    <span class="n">tri_node_tags</span> <span class="o">=</span> <span class="n">tri_node_tags</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">node_map</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tri_node_tags</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">elements</span>
+
+
+<span class="n">l</span> <span class="o">=</span> <span class="mf">20.0</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mf">1.5</span>
+
+<span class="k">with</span> <span class="n">gmsh_context</span><span class="p">():</span>
+    <span class="n">generate_notched_beam</span><span class="p">(</span>
+        <span class="n">length</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">h</span><span class="p">,</span> <span class="n">num_notches</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">notch_radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">hmax</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">hmin</span><span class="o">=</span><span class="mf">0.075</span>
+    <span class="p">)</span>
+    <span class="n">nodes</span><span class="p">,</span> <span class="n">elements</span> <span class="o">=</span> <span class="n">extract_mesh_data</span><span class="p">()</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">triplot</span><span class="p">(</span><span class="n">nodes</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">elements</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<div class="language-text highlight"><pre><span></span><code>[&lt;matplotlib.lines.Line2D at 0x7f3c5bd32660&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7f3c5bd327b0&gt;]
+</code></pre></div>
+<p><img alt="img" src="../_data/5972f903e6fa4870998cd400b7c60487.png" /></p>
+<h2 id="problem-setup">Problem setup<a class="headerlink" href="#problem-setup" title="Permanent link">¤</a></h2>
+<h3 id="material-law">Material law<a class="headerlink" href="#material-law" title="Permanent link">¤</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Material</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Material properties for the elasticity operator.&quot;&quot;&quot;</span>
+
+    <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Diffusion coefficient</span>
+    <span class="n">lmbda</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Diffusion coefficient</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_youngs_poisson_2d</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">plane_stress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Material&quot;</span><span class="p">:</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">E</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">plane_stress</span><span class="p">:</span>
+            <span class="n">lmbda</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lmbda</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">lmbda</span><span class="o">=</span><span class="n">lmbda</span><span class="p">)</span>
+
+
+<span class="nd">@autovmap</span><span class="p">(</span><span class="n">grad_u</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_deformation_gradient</span><span class="p">(</span><span class="n">grad_u</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">grad_u</span>
+
+
+<span class="nd">@autovmap</span><span class="p">(</span><span class="n">grad_u</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mat</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">strain_energy_density</span><span class="p">(</span><span class="n">grad_u</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">mat</span><span class="p">:</span> <span class="n">Material</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">compute_deformation_gradient</span><span class="p">(</span><span class="n">grad_u</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">F</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">mat</span><span class="o">.</span><span class="n">mu</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># 2D case</span>
+        <span class="o">-</span> <span class="n">mat</span><span class="o">.</span><span class="n">mu</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+        <span class="o">+</span> <span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">lmbda</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@autovmap</span><span class="p">(</span><span class="n">grad_u</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mat</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_cauchy_stress</span><span class="p">(</span><span class="n">grad_u</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">mat</span><span class="p">:</span> <span class="n">Material</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">compute_deformation_gradient</span><span class="p">(</span><span class="n">grad_u</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">F</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+
+    <span class="n">C_inv</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">C_inv</span><span class="p">)</span> <span class="o">+</span> <span class="n">mat</span><span class="o">.</span><span class="n">lmbda</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">)</span> <span class="o">*</span> <span class="n">C_inv</span>  <span class="c1"># 2nd PK</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">F</span> <span class="o">@</span> <span class="n">S</span>  <span class="c1"># 1st PK</span>
+
+    <span class="n">sigma</span> <span class="o">=</span> <span class="p">(</span><span class="n">P</span> <span class="o">@</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">J</span>  <span class="c1"># Cauchy</span>
+    <span class="k">return</span> <span class="n">sigma</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">von_mises_stress</span><span class="p">(</span><span class="n">sig</span><span class="p">):</span>
+    <span class="n">s_xx</span><span class="p">,</span> <span class="n">s_yy</span><span class="p">,</span> <span class="n">s_xy</span> <span class="o">=</span> <span class="n">sig</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sig</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">sig</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s_xx</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">s_xx</span> <span class="o">*</span> <span class="n">s_yy</span> <span class="o">+</span> <span class="n">s_yy</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">s_xy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="operator-compound-definition">Operator &amp; Compound definition<a class="headerlink" href="#operator-compound-definition" title="Permanent link">¤</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">nodes</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">elements</span><span class="p">))</span>
+
+<span class="n">bottom_nodes</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># bottom_nodes = jnp.where(mesh.coords[:, 1] == 0)[0]</span>
+<span class="n">load_nodes</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># we fix the bottom right corner to prevent rigid body motion when fully cracked</span>
+<span class="n">right_bottom</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">l</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># the line elements are those that have at least 2 nodes on the bottom boundary, and all</span>
+<span class="c1"># of their nodes have y=0</span>
+<span class="n">line_element_indices</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="nb">sum</span><span class="p">(</span>
+        <span class="n">jnp</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="n">dim</span><span class="p">],</span> <span class="n">bottom_nodes</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="o">&gt;=</span> <span class="mi">2</span>
+<span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">line_elements</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">line_element_indices</span><span class="p">]</span>
+<span class="n">mask_y_is_zero</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">line_elements</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="n">line_elements</span> <span class="o">=</span> <span class="n">line_elements</span><span class="p">[</span><span class="n">mask_y_is_zero</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">op</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">Tri3</span><span class="p">())</span>
+<span class="n">op_line</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">(</span><span class="n">replace</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">line_elements</span><span class="p">),</span> <span class="n">Line2</span><span class="p">())</span>
+<span class="n">mat</span> <span class="o">=</span> <span class="n">Material</span><span class="o">.</span><span class="n">from_youngs_poisson_2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="n">compound</span><span class="o">.</span><span class="n">Compound</span><span class="p">):</span>
+    <span class="n">u_rigid</span> <span class="o">=</span> <span class="n">compound</span><span class="o">.</span><span class="n">field</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;x, y displacement of the rigid body&quot;&quot;&quot;</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">compound</span><span class="o">.</span><span class="n">field</span><span class="p">((</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Displacement field (u_x, u_y) at each node&quot;&quot;&quot;</span>
+    <span class="n">lm</span> <span class="o">=</span> <span class="n">compound</span><span class="o">.</span><span class="n">field</span><span class="p">((</span><span class="n">op_line</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],))</span>  <span class="c1"># DG space</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lagrange-multipliers for y-displacement at bottom nodes&quot;&quot;&quot;</span>
+
+
+<span class="n">Solution</span><span class="o">.</span><span class="n">size</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>4562
+</code></pre></div>
+<h3 id="lifter-definition">Lifter definition<a class="headerlink" href="#lifter-definition" title="Permanent link">¤</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RigidBody</span><span class="p">(</span><span class="n">Constraint</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constraint to enforce rigid body motion on a set of nodes.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rigid_nodes</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">x_ref</span><span class="p">:</span> <span class="n">Array</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dofs</span> <span class="o">=</span> <span class="n">Solution</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="n">rigid_nodes</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rigid_nodes</span> <span class="o">=</span> <span class="n">rigid_nodes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_ref</span> <span class="o">=</span> <span class="n">x_ref</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_lift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u_full</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">(</span><span class="n">u_full</span><span class="p">)</span>
+        <span class="n">u</span><span class="p">,</span> <span class="n">u_rigid</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">u_rigid</span>
+        <span class="n">u_after_constraint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_function</span><span class="p">(</span><span class="n">u_rigid</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">sol</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">u_after_constraint</span><span class="p">)</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;u_rigid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">u_rigid</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">constraint_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u_rigid</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Takes u_rigid and computes the constraint u_flat</span>
+<span class="sd">        fn (3,) -&gt; (self.dofs.size,)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vecs</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rigid_nodes</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_ref</span>
+        <span class="n">ux</span><span class="p">,</span> <span class="n">uy</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">u_rigid</span>
+        <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">cos</span><span class="p">,</span> <span class="o">-</span><span class="n">sin</span><span class="p">],</span> <span class="p">[</span><span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">]])</span>
+        <span class="n">rotated_vecs</span> <span class="o">=</span> <span class="n">vecs</span> <span class="o">@</span> <span class="n">rotation_matrix</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">u_rotation</span> <span class="o">=</span> <span class="n">rotated_vecs</span> <span class="o">-</span> <span class="n">vecs</span>
+        <span class="n">u_rigid</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">ux</span><span class="p">,</span> <span class="n">uy</span><span class="p">])</span> <span class="o">+</span> <span class="n">u_rotation</span>
+        <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rigid_nodes</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">u_rigid</span><span class="p">)</span>
+
+
+<span class="n">rigid_body_constraint</span> <span class="o">=</span> <span class="n">RigidBody</span><span class="p">(</span><span class="n">load_nodes</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]))</span>
+<span class="n">lifter</span> <span class="o">=</span> <span class="n">Lifter</span><span class="p">(</span>
+    <span class="n">Solution</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+    <span class="n">Fixed</span><span class="p">(</span><span class="n">Solution</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="n">right_bottom</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+    <span class="n">Fixed</span><span class="p">(</span><span class="n">Solution</span><span class="o">.</span><span class="n">u_rigid</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">RuntimeValue</span><span class="p">(</span><span class="s2">&quot;disp&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)),</span>
+    <span class="n">rigid_body_constraint</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="energy-functional">Energy functional<a class="headerlink" href="#energy-functional" title="Permanent link">¤</a></h3>
+<p>The equilibrium state of the peeling beam is found by stationarity of a total Lagrangian functional <span class="arithmatex">\(\mathcal{L}\)</span>, which combines the internal strain energy of the beam with the potential energy of the adhesive constraints.</p>
+<p>The functional is defined as:</p>
+<div class="arithmatex">\[
+\mathcal{L}(\mathbf{u}, \boldsymbol{\lambda}) = \int_{\Omega} \psi(\nabla \mathbf{u}) \, d\Omega + \int_{\Gamma_c} g(u_y, \lambda, \mathcal{A}) \, d\Gamma
+\]</div>
+<p>Where:</p>
+<ul>
+<li>Strain Energy Density (<span class="arithmatex">\(\psi\)</span>): Represents the hyperelastic response of the material (in this example, a Neo-Hookean model).</li>
+<li>Contact Interface (<span class="arithmatex">\(\Gamma_c\)</span>): The boundary where the beam is adhered to the substrate.</li>
+<li>Constraint Potential (<span class="arithmatex">\(g\)</span>): This term enforces the adhesion using the active set <span class="arithmatex">\(\mathcal{A}\)</span>. It is defined piecewise as:</li>
+</ul>
+<div class="arithmatex">\[
+g = \begin{cases} \lambda \cdot u_y &amp; \text{if } \text{node} \in \mathcal{A} \quad \text{(Bonded)} \\ \frac{1}{2} \lambda^2 &amp; \text{if } \text{node} \notin \mathcal{A} \quad \text{(Released)} \end{cases}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Why the quadratic term for released nodes?</p>
+<p>When a node is released from the active set, the constraint <span class="arithmatex">\(u_y = 0\)</span> no longer applies. However, the Lagrange multiplier <span class="arithmatex">\(\lambda\)</span> remains a variable in our system. By adding the <span class="arithmatex">\(\frac{1}{2}\lambda^2\)</span> term for inactive constraints, we ensure that:</p>
+<ol>
+<li>The stationarity condition <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \lambda} = \lambda = 0\)</span> naturally drives the force at the released element to zero.</li>
+<li>The global Hessian matrix remains well-conditioned and invertible, as every multiplier has a unit entry in the "stiffness" matrix.</li>
+</ol>
+</div>
+<div class="language-python highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">equality_constraint_potential</span><span class="p">(</span><span class="n">lm</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">active_set</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+    <span class="n">density</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">active_set</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+        <span class="n">lm</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">op_line</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">u</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="mf">0.5</span> <span class="o">*</span> <span class="n">lm</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">op_line</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">density</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">total_lagrangian</span><span class="p">(</span><span class="n">z</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">active_set</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">mat</span><span class="p">:</span> <span class="n">Material</span> <span class="o">=</span> <span class="n">mat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+    <span class="n">u_rigid</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">lm</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+    <span class="c1"># strain energy contribution</span>
+    <span class="n">psi</span> <span class="o">=</span> <span class="n">strain_energy_density</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="n">mat</span><span class="p">)</span>
+    <span class="n">Psi</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
+
+    <span class="c1"># constraint contribution</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">equality_constraint_potential</span><span class="p">(</span><span class="n">lm</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">active_set</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Psi</span> <span class="o">+</span> <span class="n">G</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">total_lagrangian_lifted</span><span class="p">(</span>
+    <span class="n">z_reduced</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">active_set</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">lifter</span><span class="p">:</span> <span class="n">Lifter</span><span class="p">,</span> <span class="n">mat</span><span class="p">:</span> <span class="n">Material</span> <span class="o">=</span> <span class="n">mat</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+    <span class="n">z_full</span> <span class="o">=</span> <span class="n">lifter</span><span class="o">.</span><span class="n">lift_from_zeros</span><span class="p">(</span><span class="n">z_reduced</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total_lagrangian</span><span class="p">(</span><span class="n">z_full</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">mat</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="sparsity-definition">Sparsity definition<a class="headerlink" href="#sparsity-definition" title="Permanent link">¤</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="n">u_rigid</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">lm</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="n">active_set</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">lm</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>  <span class="c1"># all constraints active for now</span>
+
+<span class="c1"># We use jacrev to get the gradient w.r.t. lm, and jacfwd to get the Jacobian w.r.t. u.</span>
+<span class="n">g_fn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacrev</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lm</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">equality_constraint_potential</span><span class="p">(</span><span class="n">lm</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">active_set</span><span class="p">))</span>
+<span class="c1"># B_fn will give us the coupling Jacobian (shape=(num_constraints, num_dofs))</span>
+<span class="c1"># need to flatten u for jacfwd and then reshape inside the lambda</span>
+<span class="n">B_fn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">lm</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">g_fn</span><span class="p">(</span><span class="n">lm</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Solution</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">B_fn</span><span class="p">(</span><span class="n">lm</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span>
+
+<span class="c1"># these are the block-diagonal stiffness matrices for the rigid body, the displacement field, and the Lagrange multipliers</span>
+<span class="n">K_rigid</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="n">K_u</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">create_sparsity_pattern</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">K_lm</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">Solution</span><span class="o">.</span><span class="n">lm</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;csr&quot;</span><span class="p">)</span>
+
+<span class="c1"># create a &#39;Mask&#39; matrix that represents which nodes the rigid body &#39;touches&#39;</span>
+<span class="c1"># Shape: (Total_DOFs, 3)</span>
+<span class="n">B_pattern</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="n">Solution</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">B_pattern</span><span class="p">[</span><span class="n">rigid_body_constraint</span><span class="o">.</span><span class="n">rigid_nodes</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">B_pattern</span><span class="p">[</span><span class="n">rigid_body_constraint</span><span class="o">.</span><span class="n">rigid_nodes</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">B_pattern</span> <span class="o">=</span> <span class="n">B_pattern</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
+
+<span class="c1"># The coupling actually extends to anyone connected to a rigid node.</span>
+<span class="c1"># We find this by multiplying the mesh connectivity by our rigid mask.</span>
+<span class="c1"># (Mesh_Sparsity) @ (Rigid_Mask) gives the &quot;influence zone&quot;</span>
+<span class="n">extended_coupling_pattern</span> <span class="o">=</span> <span class="p">(</span><span class="n">K_u</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">@</span> <span class="n">B_pattern</span>
+<span class="n">B_rigid</span> <span class="o">=</span> <span class="n">extended_coupling_pattern</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
+
+<span class="n">block_matrix</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="n">K_rigid</span><span class="p">,</span> <span class="n">B_rigid</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="p">[</span><span class="n">B_rigid</span><span class="p">,</span> <span class="n">K_u</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span><span class="p">],</span>
+    <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">K_lm</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">sparsity_pattern</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">bmat</span><span class="p">(</span><span class="n">block_matrix</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;csr&quot;</span><span class="p">)</span>
+<span class="n">sparsity_pattern</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">reduce_sparsity_pattern</span><span class="p">(</span><span class="n">sparsity_pattern</span><span class="p">,</span> <span class="n">lifter</span><span class="o">.</span><span class="n">free_dofs</span><span class="p">)</span>
+
+<span class="c1"># finally, color the matrix for sparse differentiation</span>
+<span class="n">colored_matrix</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">ColoredMatrix</span><span class="o">.</span><span class="n">from_csr</span><span class="p">(</span><span class="n">sparsity_pattern</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spy</span><span class="p">(</span><span class="n">sparsity_pattern</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>&lt;matplotlib.lines.Line2D at 0x7f3c5bd7eba0&gt;
+</code></pre></div>
+<p><img alt="img" src="../_data/156b4cef9c1a46be8df4e5e91a4a810e.png" /></p>
+<h3 id="residual-hessian">Residual &amp; Hessian<a class="headerlink" href="#residual-hessian" title="Permanent link">¤</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="n">residual_fn</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="n">jacrev</span><span class="p">(</span><span class="n">total_lagrangian_lifted</span><span class="p">))</span>
+<span class="n">residual_fn_full</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="n">jacrev</span><span class="p">(</span><span class="n">total_lagrangian</span><span class="p">))</span>
+
+<span class="n">jacobian_fn</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="n">sparse</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="n">residual_fn</span><span class="p">,</span> <span class="n">colored_matrix</span><span class="o">=</span><span class="n">colored_matrix</span><span class="p">))</span>
+</code></pre></div>
+<h2 id="solve">Solve<a class="headerlink" href="#solve" title="Permanent link">¤</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this example we use <a href="https://github.com/smec-ethz/bamboost">bamboost</a> to store the results. <code>bamboost</code> is a zero-setup scientific data storage system that is easy to use but also scales. You can find it here <a href="https://github.com/smec-ethz/bamboost">https://github.com/smec-ethz/bamboost</a>.</p>
+<p>Furthermore we use <code>soldis</code> (which provides a simple NR solver).</p>
+</div>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">bamboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">Collection</span>
+
+<span class="n">coll</span> <span class="o">=</span> <span class="n">Collection</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+<span class="n">coll</span> <span class="o">=</span> <span class="n">coll</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="s2">&quot;adhesion&quot;</span><span class="p">)</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">coll</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;adhesion_example&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;adhesion&quot;</span><span class="p">,</span> <span class="s2">&quot;with_sig&quot;</span><span class="p">})</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">meshes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span>
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeAlias</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax.experimental</span><span class="w"> </span><span class="kn">import</span> <span class="n">checkify</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">soldis</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear</span><span class="p">,</span> <span class="n">newton</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">soldis.newton</span><span class="w"> </span><span class="kn">import</span> <span class="n">SolverState</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tatva.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_project_function</span>
+
+<span class="n">Carry</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">SolverState</span><span class="p">[</span><span class="n">Array</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">NewtonSolver</span><span class="p">(</span>
+    <span class="n">residual_fn</span><span class="p">,</span>
+    <span class="n">linear</span><span class="o">.</span><span class="n">SparseTatva</span><span class="p">(),</span>
+    <span class="n">jacobian_fn</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="n">newton</span><span class="o">.</span><span class="n">NewtonSolverOptions</span><span class="p">(</span><span class="n">maxiter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># initial guesses</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">lifter</span><span class="o">.</span><span class="n">size_reduced</span><span class="p">)</span>
+<span class="n">active_set</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">Solution</span><span class="o">.</span><span class="n">lm</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>  <span class="c1"># all constraints active for now</span>
+
+<span class="c1"># adhesive strength</span>
+<span class="n">strength</span> <span class="o">=</span> <span class="mf">1e-1</span>
+
+<span class="n">solver</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+<span class="n">initial_state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">lifter</span><span class="p">,</span> <span class="n">mat</span><span class="p">)</span>
+
+<span class="n">project</span> <span class="o">=</span> <span class="n">make_project_function</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">elements</span><span class="o">=</span><span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span>
+
+
+<span class="nd">@jit</span>
+<span class="nd">@checkify</span><span class="o">.</span><span class="n">checkify</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_with_active_set</span><span class="p">(</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">SolverState</span><span class="p">[</span><span class="n">Array</span><span class="p">],</span>
+    <span class="n">active_set</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="n">lifter</span><span class="p">:</span> <span class="n">Lifter</span><span class="p">,</span>
+    <span class="n">mat</span><span class="p">:</span> <span class="n">Material</span><span class="p">,</span>
+    <span class="n">strength</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="n">SolverState</span><span class="p">[</span><span class="n">Array</span><span class="p">]]:</span>
+
+    <span class="n">carry</span><span class="p">:</span> <span class="n">Carry</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="kc">False</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">cond_fun</span><span class="p">(</span><span class="n">carry</span><span class="p">:</span> <span class="n">Carry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+        <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">converged</span> <span class="o">=</span> <span class="n">carry</span>
+        <span class="c1"># continue as long as NOT converged</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">converged</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">body_fun</span><span class="p">(</span><span class="n">carry</span><span class="p">:</span> <span class="n">Carry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Carry</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">_state</span><span class="p">,</span> <span class="n">converged</span> <span class="o">=</span> <span class="n">carry</span>
+
+        <span class="n">jax</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;    Active set loop iteration </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">_state</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">lifter</span><span class="p">,</span> <span class="n">mat</span><span class="p">)</span>
+        <span class="n">checkify</span><span class="o">.</span><span class="n">check</span><span class="p">(</span>
+            <span class="n">sol</span><span class="o">.</span><span class="n">residual_norm</span> <span class="o">&lt;</span> <span class="mf">1e-5</span><span class="p">,</span>
+            <span class="s2">&quot;Solver did not converge within the body of the loop&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">lm</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">(</span><span class="n">lifter</span><span class="o">.</span><span class="n">lift_from_zeros</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">value</span><span class="p">))</span><span class="o">.</span><span class="n">lm</span>
+        <span class="n">new_active_set</span> <span class="o">=</span> <span class="n">active_set</span> <span class="o">*</span> <span class="p">(</span><span class="n">lm</span> <span class="o">&lt;=</span> <span class="n">strength</span><span class="p">)</span>
+        <span class="c1"># max_lm = jnp.argmax(lm)</span>
+        <span class="c1"># new_active_set = active_set.at[max_lm].set(lm[max_lm] &lt;= strength)</span>
+
+        <span class="c1"># Check for convergence: has the active set stopped changing?</span>
+        <span class="n">converged</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">new_active_set</span><span class="p">,</span> <span class="n">active_set</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">new_active_set</span><span class="p">,</span> <span class="n">sol</span><span class="p">,</span> <span class="n">converged</span><span class="p">)</span>
+
+    <span class="n">final_i</span><span class="p">,</span> <span class="n">final_active_set</span><span class="p">,</span> <span class="n">final_state</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">while_loop</span><span class="p">(</span>
+        <span class="n">cond_fun</span><span class="p">,</span> <span class="n">body_fun</span><span class="p">,</span> <span class="n">carry</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">final_active_set</span><span class="p">,</span> <span class="n">final_state</span>
+
+
+<span class="n">d_previous</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">initial_state</span>
+<span class="n">_lifter</span> <span class="o">=</span> <span class="n">lifter</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span>
+    <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">d_previous</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">SolverState</span><span class="p">[</span><span class="n">Array</span><span class="p">],</span>
+    <span class="n">active_set</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="n">_lifter</span><span class="p">:</span> <span class="n">Lifter</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">active_set_backup</span> <span class="o">=</span> <span class="n">active_set</span>
+    <span class="n">state_backup</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--&gt; Solving for displacement: </span><span class="si">{</span><span class="n">d</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_lifter</span> <span class="o">=</span> <span class="n">_lifter</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;disp&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">active_set</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="o">=</span> <span class="n">solve_with_active_set</span><span class="p">(</span>
+        <span class="n">state</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">_lifter</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="n">strength</span>
+    <span class="p">)</span>
+    <span class="c1"># err.throw()</span>
+
+    <span class="k">if</span> <span class="n">err</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># solve at an intermediate displacement to get a better solution</span>
+        <span class="n">_lifter</span> <span class="o">=</span> <span class="n">_lifter</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;disp&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">d_previous</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">-</span> <span class="n">d_previous</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">active_set</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="o">=</span> <span class="n">solve_with_active_set</span><span class="p">(</span>
+            <span class="n">state_backup</span><span class="p">,</span> <span class="n">active_set_backup</span><span class="p">,</span> <span class="n">lifter</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="n">strength</span>
+        <span class="p">)</span>
+        <span class="n">err</span><span class="o">.</span><span class="n">throw</span><span class="p">()</span>
+        <span class="c1"># solve again at the original displacement to get the correct active set for post-processing</span>
+        <span class="n">_lifter</span> <span class="o">=</span> <span class="n">_lifter</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;disp&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">active_set</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="o">=</span> <span class="n">solve_with_active_set</span><span class="p">(</span>
+            <span class="n">state_backup</span><span class="p">,</span> <span class="n">active_set_backup</span><span class="p">,</span> <span class="n">lifter</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="n">strength</span>
+        <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Residual after solve: </span><span class="si">{</span><span class="n">state</span><span class="o">.</span><span class="n">residual_norm</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">state</span><span class="o">.</span><span class="n">iteration</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+    <span class="n">d_previous</span> <span class="o">=</span> <span class="n">d</span>
+
+    <span class="c1"># compute the reaction force at the loaded nodes using the full residual function</span>
+    <span class="n">_lifter</span> <span class="o">=</span> <span class="n">_lifter</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;disp&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">force_value</span> <span class="o">=</span> <span class="n">residual_fn_full</span><span class="p">(</span>
+        <span class="n">_lifter</span><span class="o">.</span><span class="n">lift_from_zeros</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">mat</span>
+    <span class="p">)[</span><span class="n">Solution</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="n">load_nodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="c1"># finally, write the results to the simulation</span>
+    <span class="n">u_rigid</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">lm</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">(</span><span class="n">_lifter</span><span class="o">.</span><span class="n">lift_from_zeros</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">require_step</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;u_rigid&quot;</span><span class="p">,</span> <span class="n">u_rigid</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;lm&quot;</span><span class="p">,</span> <span class="n">lm</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;active_set&quot;</span><span class="p">,</span> <span class="n">active_set</span><span class="p">)</span>
+        <span class="n">sig</span> <span class="o">=</span> <span class="n">get_cauchy_stress</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="n">mat</span><span class="p">)</span>
+        <span class="n">sig_vm</span> <span class="o">=</span> <span class="n">von_mises_stress</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
+        <span class="c1"># sig_vm_nodal = project(op, sig_vm)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;sig_vm&quot;</span><span class="p">,</span> <span class="n">sig_vm</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s2">&quot;force&quot;</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d_previous</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">_lifter</span>
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)):</span>
+    <span class="n">d_previous</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">_lifter</span> <span class="o">=</span> <span class="n">step</span><span class="p">(</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">d_previous</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">_lifter</span>
+    <span class="p">)</span>
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span class="c1"># After the solver fails, we continue solving with a smaller increment</span>
+<span class="c1"># We do this manually here, because we can do that flexibly in a notebook setting. Would have to be automated in a script.</span>
+<span class="c1"># Continue from previous solution</span>
+<span class="n">last_step</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">last_step</span> <span class="ow">or</span> <span class="mi">0</span>
+<span class="n">y_now</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Solution</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">][</span><span class="n">last_step</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;u_rigid&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;u_rigid&quot;</span><span class="p">][</span><span class="n">last_step</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;lm&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;lm&quot;</span><span class="p">][</span><span class="n">last_step</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">arr</span>
+<span class="p">)</span>
+<span class="n">y_now</span> <span class="o">=</span> <span class="n">lifter</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">y_now</span><span class="p">)</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">y_now</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;active_set&quot;</span><span class="p">][</span><span class="n">last_step</span><span class="p">],</span> <span class="n">lifter</span><span class="p">,</span> <span class="n">mat</span><span class="p">)</span>
+<span class="n">d_previous</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">last_step</span><span class="p">]</span>
+<span class="n">active_set</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;active_set&quot;</span><span class="p">][</span><span class="n">last_step</span><span class="p">]</span>
+
+<span class="n">increment</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">d_previous</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">_lifter</span> <span class="o">=</span> <span class="n">step</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="n">d_previous</span> <span class="o">+</span> <span class="n">increment</span><span class="p">,</span> <span class="n">d_previous</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">active_set</span><span class="p">,</span> <span class="n">_lifter</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">d_previous</span> <span class="o">&gt;</span> <span class="mf">13.5</span><span class="p">:</span>
+        <span class="k">break</span>
+</code></pre></div>
+<h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">¤</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.tri</span><span class="w"> </span><span class="kn">import</span> <span class="n">Triangulation</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="n">u</span><span class="p">,</span> <span class="n">lm</span><span class="p">,</span> <span class="n">active_set</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;lm&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;active_set&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">sig_vm</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sig_vm&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+<span class="n">tri</span> <span class="o">=</span> <span class="n">Triangulation</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tripcolor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span> <span class="n">sig_vm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;managua_r&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>13.429999999999884
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>&lt;matplotlib.collections.PolyCollection at 0x7f3c42d97b10&gt;
+</code></pre></div>
+<p><img alt="img" src="../_data/a3bff2d9dfe64b488792ed827a1dd851.png" /></p>
+<div class="language-python highlight"><pre><span></span><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">globals</span><span class="p">[</span><span class="s2">&quot;force&quot;</span><span class="p">][:],</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Applied Displacement&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Reaction Force&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[Text(0.5, 0, &#39;Applied Displacement&#39;), Text(0, 0.5, &#39;Reaction Force&#39;)]
+</code></pre></div>
+<p><img alt="img" src="../_data/cd4d6d2d07ec415089bb631aac85372b.png" /></p>
+<h3 id="animation">Animation<a class="headerlink" href="#animation" title="Permanent link">¤</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="n">total_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">total_steps</span><span class="p">)</span>
+<span class="n">n_frames</span> <span class="o">=</span> <span class="mi">150</span>
+<span class="n">equidistant_loading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">n_frames</span><span class="p">)</span>
+<span class="n">sampled_float_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">equidistant_loading</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">indices</span><span class="p">)</span>
+<span class="n">sampled_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">sampled_float_indices</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+<span class="n">sampled_indices</span> <span class="o">=</span> <span class="n">sampled_indices</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</code></pre></div>
+<details class="example">
+<summary>Code to create an animation of the deformation and stress distribution over time, along with the force-displacement curve.</summary>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.animation</span><span class="w"> </span><span class="kn">import</span> <span class="n">FuncAnimation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.tri</span><span class="w"> </span><span class="kn">import</span> <span class="n">Triangulation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.axes_grid1.inset_locator</span><span class="w"> </span><span class="kn">import</span> <span class="n">inset_axes</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># 1. Setup the Figure and Axes</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_stress</span><span class="p">,</span> <span class="n">ax_force</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+<span class="c1"># Pre-calculate triangulation (topology doesn&#39;t change, only coordinates)</span>
+<span class="n">tri</span> <span class="o">=</span> <span class="n">Triangulation</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span>
+
+<span class="c1"># Extract Force/Displacement data for the right plot</span>
+<span class="n">displacements</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span>
+<span class="n">forces</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">globals</span><span class="p">[</span><span class="s2">&quot;force&quot;</span><span class="p">][:]</span>
+
+<span class="c1"># 2. Initialize the Right Plot (Force-Displacement)</span>
+<span class="p">(</span><span class="n">past_curve</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ax_force</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="p">[],</span> <span class="p">[],</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Response History&quot;</span>
+<span class="p">)</span>
+<span class="p">(</span><span class="n">curr_point</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ax_force</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Current State&quot;</span><span class="p">)</span>
+<span class="n">ax_force</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Applied Displacement&quot;</span><span class="p">)</span>
+<span class="n">ax_force</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Reaction Force&quot;</span><span class="p">)</span>
+<span class="c1"># ax_force.legend()</span>
+<span class="n">ax_force</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">sig_max</span> <span class="o">=</span> <span class="mf">0.15</span>
+<span class="n">sig_min</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">cbar</span>
+    <span class="n">ax_stress</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="n">u_i</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">sig_vm</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sig_vm&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+    <span class="n">x_def</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u_i</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">y_def</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u_i</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">tpc</span> <span class="o">=</span> <span class="n">ax_stress</span><span class="o">.</span><span class="n">tripcolor</span><span class="p">(</span>
+        <span class="n">x_def</span><span class="p">,</span>
+        <span class="n">y_def</span><span class="p">,</span>
+        <span class="n">mesh</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span>
+        <span class="n">sig_vm</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;managua_r&quot;</span><span class="p">,</span>
+        <span class="c1"># shading=&quot;gouraud&quot;,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="n">sig_max</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="n">sig_min</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax_stress</span><span class="o">.</span><span class="n">axhspan</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="n">hatch</span><span class="o">=</span><span class="s2">&quot;///&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+    <span class="n">ax_stress</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+    <span class="n">ax_stress</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">))</span>
+
+    <span class="n">u_rigid</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;u_rigid&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">x_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">u_rigid</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">u_rigid</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">rot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">cos</span><span class="p">,</span> <span class="o">-</span><span class="n">sin</span><span class="p">],</span> <span class="p">[</span><span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">]])</span>
+    <span class="n">p1_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+    <span class="n">p2_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">h</span><span class="p">])</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">x_ref</span> <span class="o">+</span> <span class="n">u_rigid</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">rot</span> <span class="o">@</span> <span class="p">(</span><span class="n">p1_ref</span> <span class="o">-</span> <span class="n">x_ref</span><span class="p">)</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">x_ref</span> <span class="o">+</span> <span class="n">u_rigid</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">rot</span> <span class="o">@</span> <span class="p">(</span><span class="n">p2_ref</span> <span class="o">-</span> <span class="n">x_ref</span><span class="p">)</span>
+    <span class="n">ax_stress</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s2">&quot;k-&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax_stress</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">x_ref</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u_rigid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_ref</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u_rigid</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">head_width</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">head_length</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>  <span class="c1"># fmt: off</span>
+    <span class="n">ax_stress</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+        <span class="n">p2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">p2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s2">&quot;$u_y = </span><span class="si">{:.2f}</span><span class="s2">$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">u_rigid</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+        <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">cbar</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># width: 30% of parent, height: 5% of parent</span>
+        <span class="n">cax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
+            <span class="n">ax_stress</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="s2">&quot;2%&quot;</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span>
+            <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">,</span>
+            <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">bbox_transform</span><span class="o">=</span><span class="n">ax_stress</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+            <span class="n">borderpad</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">tpc</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+        <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;$\sigma_</span><span class="si">{vm}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">cax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+
+    <span class="n">curr_point</span><span class="o">.</span><span class="n">set_data</span><span class="p">([</span><span class="n">displacements</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="p">[</span><span class="n">forces</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+    <span class="n">past_curve</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">displacements</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">forces</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax_force</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">displacements</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
+    <span class="n">ax_force</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">forces</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tpc</span><span class="p">,</span> <span class="n">curr_point</span>
+
+
+<span class="n">ani</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="n">sampled_indices</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># update(-11)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">w_pad</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">ani</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;figs/adhesion_26_2.mp4&quot;</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<video src="../../assets/images/adhesion_26_2.mp4" alt="video adhesion" controls autoplay>
+</video>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 ETH Zurich (SMEC)
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "header-autohide", "announce.dismiss", "content.code.annotate", "content.code.copy", "content.tooltips", "search.highlight", "search.suggest", "content.footnote.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/vtk.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+      
+        <script src="../../javascripts/carousel.js"></script>
+      
+    
+  </body>
+</html>
