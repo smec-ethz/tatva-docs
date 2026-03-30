@@ -132,6 +132,7 @@ nav:
       - Building Stiffness Matrix: "sparse.ipynb"
       - Handling Multifield DoFs: "compound.ipynb"
       - Applying BCs or Constraints: "lifter.ipynb"
+      - Building Custom Elements: "custom_elements.md"
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.ipynb"
@@ -165,9 +166,6 @@ nav:
               - "examples/ncm_metamaterial.ipynb"
           - Neural Operator Element Method:
               - "examples/neural_operator_method_3d.ipynb"
-
-  - Custom Elements:
-      - Building Custom Elements: "custom_elements.md"
       - Beams:
           - Euler-Bernoulli Beam: "examples/euler_bernoulli_2d_beam.ipynb"
           - Timoshenko Beam: "examples/timoshenko_2d_beam.ipynb"
