@@ -6,8 +6,8 @@
     border-radius: 8px;
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
     margin-bottom: 2em;
-    --swiper-navigation-color: #ff9536ff; /* Red Arrows */
-    --swiper-pagination-color: #ff9536ff; /* Green Dots */
+    --swiper-navigation-color: #ff6e68ff; /* Red Arrows */
+    --swiper-pagination-color: #ff6e68ff; /* Green Dots */
 }
 
 .swiper-slide {
@@ -73,7 +73,7 @@
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px #ff6e68ff; /*rgba(0, 0, 0, 0.1);*/
 }
 
 .card h3 {

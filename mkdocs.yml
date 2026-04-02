@@ -9,13 +9,15 @@ copyright: Copyright &copy; 2026 ETH Zurich (SMEC)
 theme:
   name: material
   features:
-    - navigation.instant # Instant navigation between pages
-    - navigation.tabs # Show section headers in the navigation sidebar
     - header-autohide # header disappears when scrolling down
     - announce.dismiss
     - content.code.annotate
     - content.code.copy
     - content.tooltips
+    - navigation.instant.preview
+    - navigation.tabs
+    - navigation.top
+    - navigation.tabs.sticky
     - search.highlight
     - search.suggest
     - content.footnote.tooltips
@@ -23,12 +25,12 @@ theme:
   palette:
     - scheme: default
       primary: white
-      accent: amber
+      accent: deep orange
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - scheme: slate
-      primary: black
+      primary: indigo
       accent: amber
       toggle:
         icon: material/weather-sunny
@@ -52,8 +54,8 @@ extra_javascript:
 
 extra_css:
   - https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200
-  - "stylesheets/custom_css.css"
-  - "stylesheets/mkdocstrings.css"
+  - stylesheets/custom_css.css
+  - stylesheets/mkdocstrings.css
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
   - stylesheets/carousel.css
   - stylesheets/extra.css
@@ -88,9 +90,6 @@ markdown_extensions:
       toc_depth: 4
   - footnotes
 
-hooks:
-  - docs/_hooks/tag_notebook_colab.py
-
 plugins:
   - search:
       separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
@@ -122,61 +121,52 @@ plugins:
             show_symbol_type_heading: true
             show_symbol_type_toc: true
             summary: true
-  - ipynb:
 
 nav:
   - Home: "index.md"
-  - Getting started: "getting_started.md"
+  - Getting Started: "getting_started.md"
   - Basics of tatva:
-      - Creating Energy Functional: "operator.ipynb"
-      - Building Stiffness Matrix: "sparse.ipynb"
-      - Handling Multifield DoFs: "compound.ipynb"
-      - Applying BCs or Constraints: "lifter.ipynb"
+      - Creating Energy Functional: "operator.md"
+      - Building Stiffness Matrix: "sparse.md"
+      - Handling Multifield DoFs: "compound.md"
+      - Applying Constraints or BCs: "lifter.md"
       - Building Custom Elements: "custom_elements.md"
   - Examples:
       - Elasticity:
-          - "examples/linear_elasticity.ipynb"
+          - "examples/linear_elasticity.md"
       - Hyperelasticity:
-          - "examples/hyperelastic_3d.ipynb"
+          - "examples/hyperelastic_3d.md"
       - Elastodynamics:
-          - "examples/elastodynamics_3d.ipynb"
+          - "examples/elastodynamics_3d.md"
       - Multi-point Constraints:
-          - Rigid Body Constraints:
-              - "examples/nonlinear_hole_plate.ipynb"
+          - "examples/nonlinear_hole_plate.md"
       - Contact Mechanics:
-          - "examples/contact_3d.ipynb"
+          - "examples/contact_3d.md"
       - Lagrange Multipliers:
-          - Adhesion:
-              - "examples/adhesion_lagrange_multipliers.ipynb"
-          - Periodic BCs:
-              - "examples/homogenization_periodic.ipynb"
-      - Mixed-Dimensional Coupling:
+          - Adhesion: "examples/adhesion_lagrange_multipliers.md"
+          - "examples/homogenization_periodic.md"
+      - Fracture:
           - Cohesive Fracture:
-              - Using Nitsche's Method: "examples/fracture_nitsche_quasistatic_3d.ipynb"
-              - Using Penalty Method: "examples/fracture_quasistatic_3d.ipynb"
-          - Embedded 1D Fibres:
-              - "examples/soft_hydrogel.ipynb"
+              - Using Nitsche's Method: "examples/fracture_nitsche_quasistatic_3d.md"
+              - Using Penalty method: "examples/fracture_quasistatic_3d.md"
+      - Mixed-Dimensional Coupling:
+          - "examples/soft_hydrogel.md"
       - Multiphysics Coupling:
-          - Thermal-Shock Fracture:
-              - "examples/thermal_shock_fracture.ipynb"
+          - "examples/thermal_shock_fracture.md"
       - Non-Variational Formulations:
-          - "examples/advection_diffusion_surface.ipynb"
+          - "examples/advection_diffusion_surface.md"
       - Data-Driven Modeling:
-          - Neural Constitutive Modeling:
-              - "examples/ncm_metamaterial.ipynb"
-          - Neural Operator Element Method:
-              - "examples/neural_operator_method_3d.ipynb"
+          - "examples/ncm_metamaterial.md"
+          - "examples/neural_operator_method_3d.md"
       - Beams:
-          - Euler-Bernoulli Beam: "examples/euler_bernoulli_2d_beam.ipynb"
-          - Timoshenko Beam: "examples/timoshenko_2d_beam.ipynb"
+          - "examples/euler_bernoulli_2d_beam.md"
+          - "examples/timoshenko_2d_beam.md"
   - Using External Solvers:
       - SciPy:
-          - "external_solvers/linear_elasticity_scipy.ipynb"
+          - "external_solvers/linear_elasticity_scipy.md"
       - PETSc:
-          - Sparse Solver:
-              - "external_solvers/linear_elasticity_petsc4py.ipynb"
-          - Matrix-Free Solver:
-              - "external_solvers/linear_elasticity_petsc4py_mf.ipynb"
+          - "external_solvers/linear_elasticity_petsc4py.md"
+          - "external_solvers/linear_elasticity_petsc4py_mf.md"
   - API reference:
       - Operator: "api/tatva.operator.md"
       - Mesh: "api/tatva.mesh.md"

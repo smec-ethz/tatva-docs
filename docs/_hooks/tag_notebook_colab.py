@@ -3,31 +3,37 @@ import re
 
 
 def on_page_markdown(markdown, page, config, files):
-    if not page.file.src_uri.endswith(".ipynb"):
+    if not page.file.src_uri.endswith(".md"):
+        return markdown
+
+    # Only process pages that originated from a notebook (i.e. have a matching .ipynb in notebooks/)
+    nb_rel = page.file.src_uri.lstrip("/").removesuffix(".md") + ".ipynb"
+    import pathlib
+
+    notebooks_dir = pathlib.Path(config["docs_dir"]).parent / "notebooks"
+    if not (notebooks_dir / nb_rel).exists():
         return markdown
 
     # --- 1. COLAB LINK + DOWNLOAD BUTTON ---
     tag = os.environ.get("LIB_TAG", "main")
-    clean_path = page.file.src_uri.lstrip("/")
-    colab_url = f"https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/{tag}/docs/{clean_path}"
-    download_url = f"https://raw.githubusercontent.com/smec-ethz/tatva-docs/{tag}/docs/{clean_path}"
-    nb_filename = clean_path.split("/")[-1]
+    base_url = f"https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/{tag}/notebooks/"
+    colab_url = f"{base_url}{nb_rel}"
 
     download_icon = (
         '<svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">'
         '<path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/>'
         '<path d="M5 18h14v2H5z"/>'
-        '</svg>'
+        "</svg>"
     )
     header_html = (
         '<div class="nb-header">'
         f'<a href="{colab_url}" target="_blank">'
         '<img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>'
-        '</a>'
+        "</a>"
         f'<a href="{download_url}" download="{nb_filename}" class="nb-download-btn">'
-        f'{download_icon} Download'
-        '</a>'
-        '</div>\n\n'
+        f"{download_icon} Download"
+        "</a>"
+        "</div>\n\n"
     )
 
     # Float the header right and inject a clearfix after the first h1 so the
@@ -35,7 +41,9 @@ def on_page_markdown(markdown, page, config, files):
     def inject_clearfix(m):
         return m.group(0) + '\n\n<div class="nb-clear"></div>\n\n'
 
-    markdown = re.sub(r'^# .+\n', inject_clearfix, markdown, count=1, flags=re.MULTILINE)
+    markdown = re.sub(
+        r"^# .+\n", inject_clearfix, markdown, count=1, flags=re.MULTILINE
+    )
     markdown = header_html + markdown
 
     # --- 2. ROBUST REGEX ---

@@ -1,5 +1,3 @@
-/* Custom CSS for taken from Equinox documentation */
-
 /* Fix /page#foo going to the top of the viewport and being hidden by the navbar */
 
 html {
@@ -73,8 +71,8 @@ div.doc-contents {
 
 html {
     /* Decrease font size for overall webpage
-       Down from 137.5% which is the Material default, equinox uses 110% */
-    font-size: 120%;
+       Down from 137.5% which is the Material default */
+    font-size: 125%;
 }
 
 .md-typeset .admonition {
@@ -88,27 +86,33 @@ html {
 }
 
 .md-typeset h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    font-weight: 450;
 }
 
 .md-typeset h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 350;
 }
 
 .md-typeset h3 {
     font-size: 1.3rem;
+    font-weight: 350;
 }
 
 .md-typeset h4 {
     font-size: 1.1rem;
+    font-weight: 300;
 }
 
 .md-typeset h5 {
     font-size: 0.9rem;
+    font-weight: 300;
 }
 
 .md-typeset h6 {
     font-size: 0.8rem;
+    font-weight: 300;
 }
 
 .md-typeset details .mkdocstrings > h4 {
@@ -122,10 +126,10 @@ html {
 /* Change default colours for <a> tags */
 
 [data-md-color-scheme="default"] {
-    --md-typeset-a-color: #722092 !important;
+    --md-typeset-a-color: #ff6e68ff !important;
 }
 [data-md-color-scheme="slate"] {
-    --md-typeset-a-color: rgb(0, 189, 164) !important;
+    --md-typeset-a-color: #fcbe86 !important;
 }
 
 /* Highlight functions, classes etc. type signatures. Really helps to make clear where
@@ -135,12 +139,6 @@ html {
     --doc-heading-color: #ddd;
     --doc-heading-border-color: #ccc;
     --doc-heading-color-alt: #f0f0f0;
-}
-[data-md-color-scheme="slate"] {
-    --doc-heading-color: rgb(25, 25, 33);
-    --doc-heading-border-color: rgb(25, 25, 33);
-    --doc-heading-color-alt: rgb(33, 33, 44);
-    --md-code-bg-color: rgb(38, 38, 50);
 }
 
 h4.doc-heading {
@@ -162,4 +160,3 @@ h6.heading {
 .output_error > pre {
     overflow: auto;
 }
-

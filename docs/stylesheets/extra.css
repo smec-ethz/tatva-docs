@@ -24,6 +24,69 @@
     height: 20px;
 }
 
+/* Clears the float after the h1 so body content is unaffected */
+.nb-clear {
+    clear: both;
+}
+
+@media (max-width: 600px) {
+    .nb-header {
+        float: none;
+        margin: 0 0 1rem 0;
+    }
+}
+
+.nb-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 20px;
+    padding: 0 8px;
+    border-radius: 3px;
+    background-color: #3c3c3c;
+    color: #fff !important;
+    font-family: var(--md-text-font, sans-serif);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+}
+
+.nb-download-btn:hover {
+    background-color: #111;
+    color: #fff !important;
+}
+
+[data-md-color-scheme="slate"] .nb-download-btn {
+    background-color: #555;
+}
+
+[data-md-color-scheme="slate"] .nb-download-btn:hover {
+    background-color: #777;
+}
+
+.nb-download-icon {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    fill: currentColor;
+}
+
+/* Container for the tags */
+.nb-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px; /* Space between tags and Colab badge */
+}
+
+.nb-header img {
+    display: block;
+    height: 20px;
+}
+
 .nb-download-btn {
     display: inline-flex;
     align-items: center;
@@ -81,281 +144,25 @@
     margin-left: auto;
 }
 
-/* Dark mode (slate) overrides for admonition titles - make them white */
-[data-md-color-scheme="slate"] .md-typeset .admonition > .admonition-title,
-[data-md-color-scheme="slate"] .md-typeset details > summary,
-[data-md-color-scheme="slate"]
-    .md-typeset
-    .admonition
-    > .admonition-title::before,
-[data-md-color-scheme="slate"] .md-typeset details > summary::before,
-[data-md-color-scheme="slate"] .md-typeset details > summary::after {
-    color: #ffffff !important;
+/* Collapse empty h1 (e.g. index.md uses "# " as a placeholder to avoid
+   a fallback page title, but we don't want its whitespace) */
+.md-typeset h1:empty {
+    display: none;
+    margin: 0;
+    padding: 0;
 }
 
-/* Specific override for example (code) collapse icon color in light mode */
-.md-typeset details.example > summary::after {
-    color: #ffa000;
+/* Pull up the first content element and reduce container top padding
+   on pages where the h1 is hidden */
+.md-content__inner:has(h1:empty) {
+    padding-top: 0.1rem;
 }
 
-/* Uniform admonition tint: body and header share the same shade. */
-.md-typeset .admonition.note,
-.md-typeset details.note {
-    background-color: rgba(68, 138, 255, 0.1);
-}
-.md-typeset .admonition.abstract,
-.md-typeset .admonition.summary,
-.md-typeset .admonition.tldr,
-.md-typeset details.abstract,
-.md-typeset details.summary,
-.md-typeset details.tldr {
-    background-color: rgba(0, 176, 255, 0.1);
-}
-.md-typeset .admonition.info,
-.md-typeset .admonition.todo,
-.md-typeset details.info,
-.md-typeset details.todo {
-    background-color: rgba(0, 184, 212, 0.1);
-}
-.md-typeset .admonition.tip,
-.md-typeset .admonition.hint,
-.md-typeset .admonition.important,
-.md-typeset details.tip,
-.md-typeset details.hint,
-.md-typeset details.important {
-    background-color: rgba(0, 191, 165, 0.1);
-}
-.md-typeset .admonition.success,
-.md-typeset .admonition.check,
-.md-typeset .admonition.done,
-.md-typeset details.success,
-.md-typeset details.check,
-.md-typeset details.done {
-    background-color: rgba(0, 200, 83, 0.1);
-}
-.md-typeset .admonition.question,
-.md-typeset .admonition.help,
-.md-typeset .admonition.faq,
-.md-typeset details.question,
-.md-typeset details.help,
-.md-typeset details.faq {
-    background-color: rgba(100, 221, 23, 0.1);
-}
-.md-typeset .admonition.warning,
-.md-typeset .admonition.caution,
-.md-typeset .admonition.attention,
-.md-typeset details.warning,
-.md-typeset details.caution,
-.md-typeset details.attention {
-    background-color: rgba(255, 145, 0, 0.1);
-}
-.md-typeset .admonition.failure,
-.md-typeset .admonition.fail,
-.md-typeset .admonition.missing,
-.md-typeset details.failure,
-.md-typeset details.fail,
-.md-typeset details.missing {
-    background-color: rgba(255, 82, 82, 0.1);
-}
-.md-typeset .admonition.danger,
-.md-typeset .admonition.error,
-.md-typeset details.danger,
-.md-typeset details.error {
-    background-color: rgba(255, 23, 68, 0.1);
-}
-.md-typeset .admonition.bug,
-.md-typeset details.bug {
-    background-color: rgba(245, 0, 87, 0.1);
-}
-.md-typeset .admonition.example,
-.md-typeset details.example {
-    background-color: rgba(255, 171, 0, 0.1);
-}
-.md-typeset .admonition.quote,
-.md-typeset .admonition.cite,
-.md-typeset details.quote,
-.md-typeset details.cite {
-    background-color: rgba(158, 158, 158, 0.1);
+.md-typeset h1:empty + * {
+    margin-top: 0;
 }
 
-/* Admonition Title properties */
-.md-typeset .admonition > .admonition-title,
-.md-typeset details > summary {
-    background-color: transparent !important;
-    display: flex !important;
-    align-items: center;
-    font-weight: 500;
-}
-
-/* Remove border/outline from admonitions */
-.md-typeset .admonition,
-.md-typeset details {
-    border: none !important;
-    box-shadow: none !important;
-}
-
-/* Material Symbols for Icons */
-.md-typeset .admonition > .admonition-title::before,
-.md-typeset details > summary::before {
-    background-color: transparent !important;
-    mask-image: none !important;
-    -webkit-mask-image: none !important;
-    font-family: "Material Symbols Outlined";
-    font-size: 1.1rem;
-    font-weight: 300;
-    line-height: 1;
-    width: auto;
-    height: auto;
-    transform: translateY(-0.15em);
-}
-
-/* Colors for each type */
-.md-typeset .admonition.note > .admonition-title,
-.md-typeset details.note > summary,
-.md-typeset .admonition.note > .admonition-title::before,
-.md-typeset details.note > summary::before {
-    content: "stylus_note";
-    color: #1976d2;
-}
-.md-typeset .admonition.abstract > .admonition-title,
-.md-typeset .admonition.summary > .admonition-title,
-.md-typeset .admonition.tldr > .admonition-title,
-.md-typeset details.abstract > summary,
-.md-typeset details.summary > summary,
-.md-typeset details.tldr > summary,
-.md-typeset .admonition.abstract > .admonition-title::before,
-.md-typeset .admonition.summary > .admonition-title::before,
-.md-typeset .admonition.tldr > .admonition-title::before,
-.md-typeset details.abstract > summary::before,
-.md-typeset details.summary > summary::before,
-.md-typeset details.tldr > summary::before {
-    content: "description";
-    color: #0288d1;
-}
-.md-typeset .admonition.info > .admonition-title,
-.md-typeset .admonition.todo > .admonition-title,
-.md-typeset details.info > summary,
-.md-typeset details.todo > summary,
-.md-typeset .admonition.info > .admonition-title::before,
-.md-typeset .admonition.todo > .admonition-title::before,
-.md-typeset details.info > summary::before,
-.md-typeset details.todo > summary::before {
-    content: "info";
-    color: #0097a7;
-}
-.md-typeset .admonition.tip > .admonition-title,
-.md-typeset .admonition.hint > .admonition-title,
-.md-typeset .admonition.important > .admonition-title,
-.md-typeset details.tip > summary,
-.md-typeset details.hint > summary,
-.md-typeset details.important > summary,
-.md-typeset .admonition.tip > .admonition-title::before,
-.md-typeset .admonition.hint > .admonition-title::before,
-.md-typeset .admonition.important > .admonition-title::before,
-.md-typeset details.tip > summary::before,
-.md-typeset details.hint > summary::before,
-.md-typeset details.important > summary::before {
-    content: "tips_and_updates";
-    color: #00796b;
-}
-.md-typeset .admonition.success > .admonition-title,
-.md-typeset .admonition.check > .admonition-title,
-.md-typeset .admonition.done > .admonition-title,
-.md-typeset details.success > summary,
-.md-typeset details.check > summary,
-.md-typeset details.done > summary,
-.md-typeset .admonition.success > .admonition-title::before,
-.md-typeset .admonition.check > .admonition-title::before,
-.md-typeset .admonition.done > .admonition-title::before,
-.md-typeset details.success > summary::before,
-.md-typeset details.check > summary::before,
-.md-typeset details.done > summary::before {
-    content: "check_circle";
-    color: #388e3c;
-}
-.md-typeset .admonition.question > .admonition-title,
-.md-typeset .admonition.help > .admonition-title,
-.md-typeset .admonition.faq > .admonition-title,
-.md-typeset details.question > summary,
-.md-typeset details.help > summary,
-.md-typeset details.faq > summary,
-.md-typeset .admonition.question > .admonition-title::before,
-.md-typeset .admonition.help > .admonition-title::before,
-.md-typeset .admonition.faq > .admonition-title::before,
-.md-typeset details.question > summary::before,
-.md-typeset details.help > summary::before,
-.md-typeset details.faq > summary::before {
-    content: "contact_support";
-    color: #689f38;
-}
-.md-typeset .admonition.warning > .admonition-title,
-.md-typeset .admonition.caution > .admonition-title,
-.md-typeset .admonition.attention > .admonition-title,
-.md-typeset details.warning > summary,
-.md-typeset details.caution > summary,
-.md-typeset details.attention > summary,
-.md-typeset .admonition.warning > .admonition-title::before,
-.md-typeset .admonition.caution > .admonition-title::before,
-.md-typeset .admonition.attention > .admonition-title::before,
-.md-typeset details.warning > summary::before,
-.md-typeset details.caution > summary::before,
-.md-typeset details.attention > summary::before {
-    content: "report";
-    color: #f57c00;
-}
-.md-typeset .admonition.failure > .admonition-title,
-.md-typeset .admonition.fail > .admonition-title,
-.md-typeset .admonition.missing > .admonition-title,
-.md-typeset details.failure > summary,
-.md-typeset details.fail > summary,
-.md-typeset details.missing > summary,
-.md-typeset .admonition.failure > .admonition-title::before,
-.md-typeset .admonition.fail > .admonition-title::before,
-.md-typeset .admonition.missing > .admonition-title::before,
-.md-typeset details.failure > summary::before,
-.md-typeset details.fail > summary::before,
-.md-typeset details.missing > summary::before {
-    content: "cancel";
-    color: #d32f2f;
-}
-.md-typeset .admonition.danger > .admonition-title,
-.md-typeset .admonition.error > .admonition-title,
-.md-typeset details.danger > summary,
-.md-typeset details.error > summary,
-.md-typeset .admonition.danger > .admonition-title::before,
-.md-typeset .admonition.error > .admonition-title::before,
-.md-typeset details.danger > summary::before,
-.md-typeset details.error > summary::before {
-    content: "bolt";
-    color: #c2185b;
-}
-.md-typeset .admonition.bug > .admonition-title,
-.md-typeset details.bug > summary,
-.md-typeset .admonition.bug > .admonition-title::before,
-.md-typeset details.bug > summary::before {
-    content: "bug_report";
-    color: #c2185b;
-}
-.md-typeset .admonition.example > .admonition-title,
-.md-typeset details.example > summary,
-.md-typeset .admonition.example > .admonition-title::before,
-.md-typeset details.example > summary::before {
-    content: "code_xml";
-    color: #ffa000;
-}
-.md-typeset .admonition.quote > .admonition-title,
-.md-typeset .admonition.cite > .admonition-title,
-.md-typeset details.quote > summary,
-.md-typeset details.cite > summary,
-.md-typeset .admonition.quote > .admonition-title::before,
-.md-typeset .admonition.cite > .admonition-title::before,
-.md-typeset details.quote > summary::before,
-.md-typeset details.cite > summary::before {
-    content: "format_quote";
-    color: #757575;
-}
-
-/* Center images */
+/* Center images that are the ONLY thing in the paragraph */
 .md-typeset p > img:only-child {
     display: block;
     margin: 0 auto;
