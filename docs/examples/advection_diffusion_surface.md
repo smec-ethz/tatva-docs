@@ -1,37 +1,9 @@
 <div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/notebooks/examples/advection_diffusion_surface.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="/assets/notebooks/examples/advection_diffusion_surface.ipynb" download="advection_diffusion_surface.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download notebook</a></div>
 
-# Non-Variational Formulations
+# Advection-Diffusion on Sphere
 
 <div class="nb-clear"></div>
 
-
-
-??? example "Colab Setup (Install Dependencies)"
-    ```python
-    
-    # Only run this if we are in Google Colab
-    if 'google.colab' in str(get_ipython()):
-        print("Installing dependencies using uv...")
-        # Install uv if not available
-        !pip install -q uv
-        # Install system dependencies
-        !apt-get install -qq gmsh
-        # Use uv to install Python dependencies
-        !uv pip install --system matplotlib meshio
-        !uv pip install --system pyvista
-        !uv pip install --system "git+https://github.com/smec-ethz/tatva-docs.git"
-      
-        import pyvista as pv
-    
-        pv.global_theme.jupyter_backend = 'static'
-        pv.global_theme.notebook = True
-        pv.start_xvfb()
-        
-        print("Installation complete!")
-    else:
-        import pyvista as pv
-        pv.global_theme.jupyter_backend = 'client'
-    ```
 
 In this notebook, we will solve the surface advection-diffusion equation using the finite element method (FEM) implemented in `tatva`. We will focus on  2D spherical surface embedded in 3D space.
 
@@ -65,6 +37,38 @@ To derive the weak form, we multiply the equation by a test function $v$ and int
 $$ 
 \mathcal{W}(c, v) =\underbrace{\int_{\Gamma} \frac{\partial c}{\partial t} v ~ d\Gamma}_{\text{Inertia}} - \underbrace{\int_{\Gamma} c  \boldsymbol{u} \cdot \nabla_s v ~ d\Gamma}_{\text{Advection (Conservative)}} + \underbrace{\int_{\Gamma} D \nabla_s c \cdot \nabla_s v ~ d\Gamma}_{\text{Diffusion}} - \underbrace{\int_{\Gamma} f v ~ d\Gamma}_{\text{Source}} 
 $$
+
+
+
+
+??? example "Colab Setup (Install Dependencies)"
+    ```python
+    
+    # Only run this if we are in Google Colab
+    if 'google.colab' in str(get_ipython()):
+        print("Installing dependencies using uv...")
+        # Install uv if not available
+        !pip install -q uv
+        # Install system dependencies
+        !apt-get install -qq gmsh
+        # Use uv to install Python dependencies
+        !uv pip install --system matplotlib meshio
+        !uv pip install --system pyvista
+        !uv pip install --system "git+https://github.com/smec-ethz/tatva-docs.git"
+      
+        import pyvista as pv
+    
+        pv.global_theme.jupyter_backend = 'static'
+        pv.global_theme.notebook = True
+        pv.start_xvfb()
+        
+        print("Installation complete!")
+    else:
+        import pyvista as pv
+        pv.global_theme.jupyter_backend = 'client'
+    ```
+
+
 
 
 ```python
@@ -116,14 +120,8 @@ mesh = create_sphere_mesh(r=radius, lc=0.05)
 n_dofs = mesh.coords.shape[0]
 ```
 
-
-
-
-```python
-
-```
-
-In order to the surface PDE, we  define a triangular element (topology in 2D) embedded in 3D space. We then define the surface gradient operator using the Jacobian of the mapping from the reference element to the surface element. Finally, we assemble the mass and stiffness matrices using the surface gradient operator.
+??? info "Output"
+    In order to the surface PDE, we  define a triangular element (topology in 2D) embedded in 3D space. We then define the surface gradient operator using the Jacobian of the mapping from the reference element to the surface element. Finally, we assemble the mass and stiffness matrices using the surface gradient operator.
 
 
 ```python

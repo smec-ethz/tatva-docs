@@ -26,7 +26,7 @@
 
 This tutorial demonstrates how to implement a custom finite element in **Tatva**. We use a 2D Timoshenko beam as our example. You will learn how to go from a local energy density definition to a full nonlinear sparse solver using JAX and Tatva's differentiable engine.
 
-Unlike [Euler-Bernoulli beams](examples/euler_bernoulli_2d_beam.ipynb), the **Timoshenko model** accounts for shear deformation. This is essential for "thick" beams where the cross-section does not remain perfectly perpendicular to the neutral axis.
+Unlike [Euler-Bernoulli beams](euler_bernoulli_2d_beam.ipynb), the **Timoshenko model** accounts for shear deformation. This is essential for "thick" beams where the cross-section does not remain perfectly perpendicular to the neutral axis.
 
 The kinematic state is defined by:
 
@@ -114,7 +114,7 @@ physical space. For a 2nd-order beam in 2D space, we define a `Line2In3D` class 
     - `shape_function_derivative`
     - `gradient` which is used by `Operator.grad` to compute the gradient of physical   field
 
-    Unlike [Euler-Bernoulli beams](examples/euler_bernoulli_2d_beam.ipynb), we donot implement `interpolate` function because here the Line element only requires shape functions and nodal values to interpolate.
+    Unlike [Euler-Bernoulli beams](euler_bernoulli_2d_beam.ipynb), we donot implement `interpolate` function because here the Line element only requires shape functions and nodal values to interpolate.
 
 
 ```python
@@ -124,8 +124,13 @@ class Line2In3D(element.Element):
     Should be used for Timoshenko beam formulations.
     """
 
-    quad_points: Array = eqx.field(default_factory=lambda: jnp.array([0.0]))
-    quad_weights: Array = eqx.field(default_factory=lambda: jnp.array([2.0]))
+
+    def _default_quadrature(self):
+        # 1-point Gauss quadrature for line element
+        quad_points = jnp.array([0.0])  # Natural coordinate at the center
+        quad_weights = jnp.array([2.0])  # Weight for the quadrature point
+        return quad_points, quad_weights
+        
 
     def shape_function(self, xi: Array) -> Array:
         return jnp.array([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)])
@@ -493,7 +498,7 @@ for step, load in enumerate(applied_loading):
     print(load, rnorm)
 ```
 
-    Time to compute Hessian: 0.80 seconds
+    Time to compute Hessian: 1.29 seconds
     0.0 0.0
     -0.05263157894736842 8.661987206383461e-16
     -0.10526315789473684 1.495195790406089e-15
@@ -522,8 +527,15 @@ We compare the Finite Element results against the analytical solution for a cant
 
 **Analytical Solutions:**
 
-* Transverse displacement $$w(x) = \underbrace{\frac{P}{6EI}(3Lx^2 - x^3)}_{\text{Bending}} + \underbrace{\frac{Px}{\kappa AG}}_{\text{Shear}}$$
-* Rotation $$\theta(x) = \frac{P}{2EI}(2Lx - x^2)$$
+* Transverse displacement 
+
+$$
+w(x) = \underbrace{\frac{P}{6EI}(3Lx^2 - x^3)}_{\text{Bending}} + \underbrace{\frac{Px}{\kappa AG}}_{\text{Shear}}
+$$
+
+* Rotation 
+
+$$\theta(x) = \frac{P}{2EI}(2Lx - x^2)$$
 
 The plots below show that our custom `tatva` element matches the theoretical values.
 
@@ -575,7 +587,3 @@ The plots below show that our custom `tatva` element matches the theoretical val
 
 ![png](timoshenko_2d_beam_files/timoshenko_2d_beam_29_0.png)
 
-
-```python
-
-```

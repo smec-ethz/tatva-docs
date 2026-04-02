@@ -90,7 +90,6 @@ markdown_extensions:
       toc_depth: 4
   - footnotes
 
-
 plugins:
   - search:
       separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
@@ -125,11 +124,13 @@ plugins:
 
 nav:
   - Home: "index.md"
+  - Getting Started: "getting_started.md"
   - Basics of tatva:
-    - Creating Energy Functional: "operator.md"
-    - Building Stiffness Matrix: "sparse.md"
-    - Handling Multifield DoFs: "compound.md"
-    - Applying Constraints or BCs: "lifter.md"
+      - Creating Energy Functional: "operator.md"
+      - Building Stiffness Matrix: "sparse.md"
+      - Handling Multifield DoFs: "compound.md"
+      - Applying Constraints or BCs: "lifter.md"
+      - Building Custom Elements: "custom_elements.md"
   - Examples:
       - Elasticity:
           - "examples/linear_elasticity.md"
@@ -142,23 +143,24 @@ nav:
       - Contact Mechanics:
           - "examples/contact_3d.md"
       - Lagrange Multipliers:
-        - "examples/adhesion_lagrange_multipliers.md"
-        - "examples/homogenization_periodic.md"
+          - Adhesion: "examples/adhesion_lagrange_multipliers.md"
+          - "examples/homogenization_periodic.md"
+      - Fracture:
+          - Cohesive Fracture:
+              - Using Nitsche's Method: "examples/fracture_nitsche_quasistatic_3d.md"
+              - Using Penalty method: "examples/fracture_quasistatic_3d.md"
       - Mixed-Dimensional Coupling:
-          - "examples/fracture_quasistatic_3d.md"
           - "examples/soft_hydrogel.md"
       - Multiphysics Coupling:
           - "examples/thermal_shock_fracture.md"
       - Non-Variational Formulations:
           - "examples/advection_diffusion_surface.md"
       - Data-Driven Modeling:
-        - "examples/ncm_metamaterial.md"
-        - "examples/neural_operator_method_3d.md"
-  - Custom Elements:
-      - "custom_elements.md"
+          - "examples/ncm_metamaterial.md"
+          - "examples/neural_operator_method_3d.md"
       - Beams:
-          - Euler-Bernoulli Beam: "examples/euler_bernoulli_2d_beam.md"
-          - Timoshenko Beam: "examples/timoshenko_2d_beam.md"
+          - "examples/euler_bernoulli_2d_beam.md"
+          - "examples/timoshenko_2d_beam.md"
   - Using External Solvers:
       - SciPy:
           - "external_solvers/linear_elasticity_scipy.md"

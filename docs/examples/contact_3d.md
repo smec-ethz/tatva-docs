@@ -1,9 +1,23 @@
 <div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/notebooks/examples/contact_3d.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="/assets/notebooks/examples/contact_3d.ipynb" download="contact_3d.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download notebook</a></div>
 
-# Contact mechanics
+# Contact mechanics using Penalty Approach
 
 <div class="nb-clear"></div>
 
+
+In this notebook, we model the circular punch of a sphere on a deformable plane.
+
+We impose the contact constraint via a penalty approach by extending the total energy functional with a contact contribution $\Psi_c$, defined by the penalty density
+
+$$
+\psi_c =\frac{1}{2} \kappa~ g(\boldsymbol{u}_1, \boldsymbol{u}_2)^2~,
+$$
+
+where $g$ represents the normal gap function and $\kappa$ denotes the penalty parameter. The resulting total energy functional reads
+
+\begin{equation}
+\Psi(\boldsymbol{u}_1, \boldsymbol{u}_2) = \int_{\Omega_{\mathrm{sphere}}}\psi_\varepsilon(\boldsymbol{u}_1)~\mathrm{d\Omega} + \int_{\Omega_{\mathrm{cube}}}\psi_\varepsilon(\boldsymbol{u}_2)~\mathrm{d\Omega} +\int_{\mathrm{S}_c}\psi_c(\boldsymbol{u}_1, \boldsymbol{u}_2) ~\mathrm{dS} ~ .
+\end{equation}
 
 
 ??? example "Colab Setup (Install Dependencies)"
@@ -27,19 +41,7 @@
         print("Installation complete!")
     ```
 
-In this notebook, we model the circular punch of a sphere on a deformable plane.
 
-We impose the contact constraint via a penalty approach by extending the total energy functional with a contact contribution $\Psi_c$, defined by the penalty density
-
-$$
-\psi_c =\frac{1}{2} \kappa~ g(\boldsymbol{u}_1, \boldsymbol{u}_2)^2~,
-$$
-
-where $g$ represents the normal gap function and $\kappa$ denotes the penalty parameter. The resulting total energy functional reads
-
-\begin{equation}
-\Psi(\boldsymbol{u}_1, \boldsymbol{u}_2) = \int_{\Omega_{\mathrm{sphere}}}\psi_\varepsilon(\boldsymbol{u}_1)~\mathrm{d\Omega} + \int_{\Omega_{\mathrm{cube}}}\psi_\varepsilon(\boldsymbol{u}_2)~\mathrm{d\Omega} +\int_{\mathrm{S}_c}\psi_c(\boldsymbol{u}_1, \boldsymbol{u}_2) ~\mathrm{dS} ~ .
-\end{equation}
 
 
 ```python

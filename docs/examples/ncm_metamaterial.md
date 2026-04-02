@@ -6,6 +6,11 @@
 
 
 
+
+In this example, we will implement a neural constitutive model. A neural constitutive model uses neural networks to represent the relationship between stress and strain in materials. This approach allows for more flexible and accurate modeling of complex material behaviors compared to traditional constitutive models.
+
+
+
 ??? example "Colab Setup (Install Dependencies)"
     ```python
     
@@ -33,7 +38,7 @@
         pv.global_theme.jupyter_backend = 'client'
     ```
 
-In this example, we will implement a neural constitutive model. A neural constitutive model uses neural networks to represent the relationship between stress and strain in materials. This approach allows for more flexible and accurate modeling of complex material behaviors compared to traditional constitutive models.
+
 
 
 ```python

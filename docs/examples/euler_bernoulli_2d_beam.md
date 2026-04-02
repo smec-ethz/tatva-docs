@@ -41,21 +41,19 @@ We start by configuring JAX. Finite Element Method (FEM) calculations usually re
 ```python
 import jax
 
-jax.config.update("jax_enable_x64", True)  # use double-precision
-jax.config.update("jax_persistent_cache_min_compile_time_secs", 0)
-jax.config.update("jax_platforms", "cpu")
 
 import time
-from functools import partial
 from typing import NamedTuple, Tuple
 
-import equinox as eqx
 import jax.experimental.sparse as jsp
 import jax.numpy as jnp
 import numpy as np
 from jax import Array
 from jax_autovmap import autovmap
 from tatva import Mesh, Operator, element, sparse
+
+jax.config.update("jax_enable_x64", True)  # use double-precision
+
 ```
 
 ## Mesh Generation
@@ -189,14 +187,14 @@ We define a custom element class `HermiteBeamElement2D` that inherits from `tatv
         can be overridden by passing custom quadrature points and weights to the constructor.
         """
     
-        dofs_per_node: int = eqx.field(static=True, default=3)
+        dofs_per_node: int = 3
     
-        quad_points: Array = eqx.field(
-            default_factory=lambda: jnp.array(np.polynomial.legendre.leggauss(3)[0])
-        )
-        quad_weights: Array = eqx.field(
-            default_factory=lambda: jnp.array(np.polynomial.legendre.leggauss(3)[1])
-        )
+        def _default_quadrature(self):
+            pts, wts = np.polynomial.legendre.leggauss(3)
+            quad_points, quad_weights = jnp.array(pts), jnp.array(wts)
+            return quad_points, quad_weights
+    
+    
     
         def shape_function(self, xi: Array) -> Array:
             raise NotImplementedError(
@@ -208,7 +206,6 @@ We define a custom element class `HermiteBeamElement2D` that inherits from `tatv
                 "Shape function derivative is not defined for hermite beam. Use local interpolation instead."
             )
     
-        @jax.jit
         def interpolate(
             self,
             xi: Array,
@@ -224,17 +221,14 @@ We define a custom element class `HermiteBeamElement2D` that inherits from `tatv
     
             return jnp.array([u_val, w_val, theta_val])
     
-        @jax.jit
         def compute_length(self, coords: Array) -> float:
             return jnp.linalg.norm(coords[1] - coords[0])
     
-        @jax.jit
         def get_jacobian(self, xi: Array, nodal_coords: Array) -> Tuple[Array, Array]:
             L = self.compute_length(nodal_coords)
             detJ = L / 2.0
             return detJ, detJ
     
-        @jax.jit
         def _get_local_dofs(self, dofs: Array, coords: Array) -> Array:
             """
             Compute the dofs of the beam in the local frame.
@@ -267,7 +261,6 @@ We define a custom element class `HermiteBeamElement2D` that inherits from `tatv
                 ]
             )
     
-        @jax.jit
         def gradient(self, xi: Array, nodal_values: Array, nodal_coords: Array) -> Array:
             """
             Computes the generalized strain vector.
@@ -414,7 +407,7 @@ Inside the wrapper, we reconstruct the complete displacement vector. We use JAX'
 
 
 ```python
-@eqx.filter_jit
+@jax.jit
 def total_energy_free(u_free, applied_disp):
     u_full = jnp.zeros(n_dofs).at[free_dofs].set(u_free)
     u_full = u_full.at[fixed_dofs].set(applied_disp)
@@ -469,15 +462,13 @@ applied_loading = jnp.linspace(0, P, num=nsteps)
 
 u_free = u.at[free_dofs].get()
 
-fn_partial = jax.jit(
-    partial(fn, fext=fext.at[free_dofs].get(), applied_disp=jnp.zeros(len(fixed_dofs)))
-)
 start_time = time.time()
 hessian_fn = sparse.jacfwd(
     fn=fn,
     colored_matrix=colored_matrix,
     color_batch_size=len(jnp.unique(colored_matrix.colors)) + 1,
 )
+hessian_fn = jax.jit(hessian_fn)
 
 print(f"Time to compute Hessian: {time.time() - start_time:.2f} seconds")
 
@@ -486,13 +477,12 @@ max_iter = 20
 for step, load in enumerate(applied_loading):
     fext = fext.at[applied_dofs].set(load)
     fext_free = fext.at[free_dofs].get()
-    fn_partial = eqx.Partial(
-        fn, fext=fext_free, applied_disp=jnp.zeros(len(fixed_dofs))
-    )
 
-    hessian_partial = eqx.Partial(
-        hessian_fn, fext=fext_free, applied_disp=jnp.zeros(len(fixed_dofs))
-    )
+    def fn_partial(u_free):
+        return fn(u_free, fext_free, applied_disp=jnp.zeros(len(fixed_dofs)))
+
+    def hessian_partial(u_free):
+        return hessian_fn(u_free, fext_free, applied_disp=jnp.zeros(len(fixed_dofs)))
 
     residual = fn_partial(u_free)
     K_sparse = hessian_partial(u_free)
@@ -525,27 +515,27 @@ for step, load in enumerate(applied_loading):
     print(load, rnorm)
 ```
 
-    Time to compute Hessian: 1.16 seconds
+    Time to compute Hessian: 0.01 seconds
     0.0 0.0
-    -0.05263157894736842 1.024963864719169e-12
-    -0.10526315789473684 1.8625127629814634e-12
-    -0.15789473684210525 2.3796302716920972e-12
-    -0.21052631578947367 3.650452040931451e-12
-    -0.2631578947368421 4.316995830566685e-12
-    -0.3157894736842105 5.788092592697906e-12
-    -0.3684210526315789 4.5789000652386196e-12
-    -0.42105263157894735 6.922766448014438e-12
-    -0.47368421052631576 9.007479865409747e-12
-    -0.5263157894736842 4.920091855971215e-12
-    -0.5789473684210527 1.0007352491164198e-11
-    -0.631578947368421 1.3291042038253511e-11
-    -0.6842105263157894 1.226486602683769e-11
-    -0.7368421052631579 1.298247516709811e-11
-    -0.7894736842105263 8.577051937470935e-12
-    -0.8421052631578947 1.7209923552105954e-11
-    -0.894736842105263 1.6334988064775164e-11
-    -0.9473684210526315 1.8197255215717367e-11
-    -1.0 1.8687979755414412e-11
+    -0.05263157894736842 1.0226066339679528e-12
+    -0.10526315789473684 2.1290628763345342e-12
+    -0.15789473684210525 1.9474385273603595e-12
+    -0.21052631578947367 3.4888731207826387e-12
+    -0.2631578947368421 3.022618085139983e-12
+    -0.3157894736842105 5.6798480284671376e-12
+    -0.3684210526315789 7.383846594835723e-12
+    -0.42105263157894735 1.0005639702457447e-11
+    -0.47368421052631576 7.077797707204222e-12
+    -0.5263157894736842 5.510784592556764e-12
+    -0.5789473684210527 5.875491716283076e-12
+    -0.631578947368421 1.3935937312869008e-11
+    -0.6842105263157894 2.2498072400411463e-11
+    -0.7368421052631579 1.174453419321761e-11
+    -0.7894736842105263 1.5067711136635974e-11
+    -0.8421052631578947 9.286443300382963e-12
+    -0.894736842105263 2.031778437689385e-11
+    -0.9473684210526315 2.162285292517473e-11
+    -1.0 1.7639380869434547e-11
 
 
 ## Validation
@@ -553,8 +543,14 @@ for step, load in enumerate(applied_loading):
 We compare the Finite Element results against the analytical solution for a cantilever beam with a point load $P$ at the tip.
 
 **Analytical Solutions:**
-* Deflection: $w(x) = \frac{P x^2}{6EI} (3L - x)$
-* Rotation: $\theta(x) = \frac{P x}{2EI} (2L - x)$
+
+* Deflection: 
+
+$$w(x) = \frac{P x^2}{6EI} (3L - x)$$
+
+* Rotation: 
+
+$$\theta(x) = \frac{P x}{2EI} (2L - x)$$
 
 The plots below show that our custom `tatva` element matches the theoretical values.
 
@@ -606,7 +602,3 @@ The plots below show that our custom `tatva` element matches the theoretical val
 
 ![png](euler_bernoulli_2d_beam_files/euler_bernoulli_2d_beam_26_0.png)
 
-
-```python
-
-```

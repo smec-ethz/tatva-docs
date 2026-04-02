@@ -1,4 +1,4 @@
-# Building Custom Elements in tatva
+# Building Custom Elements
 
 
 Tatva is designed to be extensible. While it includes a library of standard elements, the `element.Element` base class allows you to define any interpolation scheme or physics-specific element you need. By leveraging automatic differentiation, you only need to define local relationships; Tatva handles the global assembly, sparsity, and differentiation.
@@ -40,13 +40,15 @@ Below is a generic template for a custom element. You can either provide standar
 ```python
 from tatva import element
 import jax.numpy as jnp
-import equinox as eqx
 
 class MyCustomElement(element.Element):
+    
     # Define Quadrature (e.g., 1-point Gauss)
-    quad_points: jnp.ndarray = eqx.field(default=jnp.array([0.0]))
-    quad_weights: jnp.ndarray = eqx.field(default=jnp.array([2.0]))
-
+    def _default_quadrature(self):
+        quad_points = jnp.array([0.0])
+        quad_weights = jnp.array([2.0])
+        return quad_points, quad_weights
+ 
     # Standard Shape Functions
     def shape_function(self, xi):
         # Linear: [N1, N2]

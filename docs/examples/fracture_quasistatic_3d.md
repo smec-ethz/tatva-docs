@@ -1,9 +1,12 @@
 <div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/notebooks/examples/fracture_quasistatic_3d.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="/assets/notebooks/examples/fracture_quasistatic_3d.ipynb" download="fracture_quasistatic_3d.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download notebook</a></div>
 
-# Cohesive Fracture
+# Cohesive Fracture: Penalty Method
 
 <div class="nb-clear"></div>
 
+
+
+In this notebook, we simulate quasi-static crack propagation along an interface in a 3D plate using Cohesive law. This is an example of mixed-dimensional coupling where the energies are computed in domains which are dimensionally separate. In bulk which is a 3D domain and along the interface which a 2D domain.
 
 
 ??? example "Colab Setup (Install Dependencies)"
@@ -33,7 +36,7 @@
         pv.global_theme.jupyter_backend = 'client'
     ```
 
-In this notebook, we simulate quasi-static crack propagation along an interface in a 3D plate using Cohesive law. This is an example of mixed-dimensional coupling where the energies are computed in domains which are dimensionally separate. In bulk which is a 3D domain and along the interface which a 2D domain.
+
 
 
 ```python
@@ -1850,48 +1853,4 @@ Now we use `pyvista` and `matplotlib` to visualize the results.
     ```
 
 ![png](fracture_quasistatic_3d_files/fracture_quasistatic_3d_42_0.png)
-
-
-??? example "Create an animation of the fracture process"
-    ```python
-    
-    plotter = pv.Plotter(notebook=False, off_screen=True)
-    plotter.window_size = (800, 400)
-    
-    grid.point_data["u"] = disp_per_step[0].reshape(-1, n_dofs_per_node)
-    grid.cell_data["c"] = np.mean(np.array(stresses_per_step[0]), axis=1) / E
-    grid.set_active_scalars("c")
-    
-    plotter.open_gif("../assets/images/cohesive_fracture.gif", fps=2)
-    plotter.add_mesh(
-        grid,
-        show_edges=False,
-        scalars="c",
-        cmap="managua_r",
-        line_width=0.1,
-        show_scalar_bar=False,
-    )
-    plotter.view_vector([-0.85, -0.5, 1.0])
-    
-    
-    
-    for n in range(len(disp_per_step)):
-        u_current = disp_per_step[n].reshape(-1, n_dofs_per_node)
-        values_current = stresses_per_step[n]
-        grid.point_data["u"] = u_current
-        grid.points = np.array(mesh.coords) + np.array(u_current)
-        grid.cell_data["c"] = np.mean(np.array(values_current), axis=1) / E
-        grid = grid.cell_data_to_point_data()
-        grid.set_active_scalars("c")
-    
-        plotter.update_scalar_bar_range(
-            [np.min(grid.point_data["c"]), np.max(grid.point_data["c"])]
-        )
-        plotter.write_frame()
-    
-    
-    plotter.close()
-    ```
-
-
 

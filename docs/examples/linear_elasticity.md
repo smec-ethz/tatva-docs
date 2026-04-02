@@ -6,6 +6,20 @@
 
 
 
+
+In this notebook, we solve a linear elastic problem where the boundary conditions are enforced via condensation. The example consists of a plate with a circular hole at its center being subjected to a uniaxial tension. Owing to symmetry, we model only one half of the domain, with symmetry boundary conditions imposed along the left edge. A prescribed traction is applied on the right boundary of the plate.
+
+The problem can be formulated as the minimization of the total potential energy subject to kinematic constraints,
+
+
+\begin{gather}
+    \Psi(\boldsymbol{u}) 
+    = \int_{\Omega} \psi_\varepsilon\!\left(\boldsymbol{\varepsilon}(\boldsymbol{u})\right)\,\mathrm{d}\Omega
+    - \int_{\mathrm{S}_t} \boldsymbol{t} \cdot \boldsymbol{u}\,\mathrm{d}\Gamma ~, \\
+    \boldsymbol{u}_x = \mathbf{0} \quad \text{on } \mathrm{S}_{D} ~,  \notag
+\end{gather}
+
+
 ??? example "Colab Setup (Install Dependencies)"
     ```python
     
@@ -39,19 +53,6 @@ from jax import Array
 from jax_autovmap import autovmap
 from tatva import Mesh, Operator
 ```
-
-
-In this notebook, we solve a linear elastic problem where the boundary conditions are enforced via condensation. The example consists of a plate with a circular hole at its center being subjected to a uniaxial tension. Owing to symmetry, we model only one half of the domain, with symmetry boundary conditions imposed along the left edge. A prescribed traction is applied on the right boundary of the plate.
-
-The problem can be formulated as the minimization of the total potential energy subject to kinematic constraints,
-
-
-\begin{gather}
-    \Psi(\boldsymbol{u}) 
-    = \int_{\Omega} \psi_\varepsilon\!\left(\boldsymbol{\varepsilon}(\boldsymbol{u})\right)\,\mathrm{d}\Omega
-    - \int_{\mathrm{S}_t} \boldsymbol{t} \cdot \boldsymbol{u}\,\mathrm{d}\Gamma ~, \\
-    \boldsymbol{u}_x = \mathbf{0} \quad \text{on } \mathrm{S}_{D} ~,  \notag
-\end{gather}
 
 
 ??? example "Code for generating a plate with a hole and plotting the mesh"
@@ -375,6 +376,7 @@ f_ext = f_ext_0.at[free_dofs].get()
 ```
 
 Now let us define the function that we want to set to `0` i.e.
+
 $$
 \boldsymbol{f} = \boldsymbol{f}_\text{ext} - \boldsymbol{f}_\text{int}
 $$

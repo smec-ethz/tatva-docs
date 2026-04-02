@@ -47,6 +47,15 @@ def find_notebooks() -> list[Path]:
     return sorted(NOTEBOOKS_DIR.rglob("*.ipynb"))
 
 
+def needs_conversion(nb_path: Path) -> bool:
+    """Return True if the notebook is newer than its corresponding markdown."""
+    rel = nb_path.relative_to(NOTEBOOKS_DIR)
+    md_path = DOCS_DIR / rel.parent / (nb_path.stem + ".md")
+    if not md_path.exists():
+        return True
+    return nb_path.stat().st_mtime > md_path.stat().st_mtime
+
+
 def convert_notebook(nb_path: Path, inline: bool = False) -> Path:
     """Convert a single notebook to markdown. Returns the output .md path."""
     rel = nb_path.relative_to(NOTEBOOKS_DIR)
@@ -243,11 +252,16 @@ def main() -> None:
             print(f"  {nb.relative_to(ROOT)}")
         return
 
+    stale = [nb for nb in notebooks if needs_conversion(nb)]
+    if not stale:
+        print("All notebooks are up to date.")
+        return
+
     mode = "inline base64" if args.inline else "separate image files"
-    print(f"Converting {len(notebooks)} notebook(s) [{mode}]...\n")
+    print(f"Converting {len(stale)}/{len(notebooks)} changed notebook(s) [{mode}]...\n")
 
     ok, failed = 0, 0
-    for nb in notebooks:
+    for nb in stale:
         try:
             md = convert_notebook(nb, inline=args.inline)
             print(f"  ok  {nb.relative_to(ROOT)}  ->  {md.relative_to(ROOT)}")

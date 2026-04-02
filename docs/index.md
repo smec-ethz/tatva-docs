@@ -1,4 +1,18 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
+<style>
+  /* Target the main content grid and ignore the header */
+  main .md-grid {
+    max-width: 60rem !important;
+  }
+</style>
+
 # 
+
 <div align="center">
 
 <img src="assets/logo-small.png" alt="drawing" width="300" height="60"/>
@@ -62,47 +76,34 @@ way.
   </div>
 </div>
 
-## Installation
+<div style="width: 100%; margin: 20px 0;">
+    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7442949970275504128?collapsed=1" 
+            height="600" 
+            style="width: 100%; border: none;" 
+            frameborder="0" 
+            allowfullscreen="" 
+            title="">
+    </iframe>
+</div>
 
-Install the current release from PyPI:
 
-```bash
-pip install tatva
-```
+<div style="width: 100%; margin: 20px 0;">
+    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7434187928412606464?collapsed=1"
+            height="600" 
+            style="width: 100%; border: none;" 
+            frameborder="0" 
+            allowfullscreen="" 
+            title="">
+    </iframe>
+</div>
 
-For development work, clone the repository and install it in editable mode (use your preferred virtual environment tool such as `uv` or `venv`):
 
-```bash
-git clone https://github.com/smec-ethz/tatva.git
-cd tatva
-pip install -e .
-```
-
-## Quick Example
-
-Create a mesh, pick an element type, and let Operator perform the heavy lifting with JAX arrays:
-
-```bash
-import jax.numpy as jnp
-from tatva.element import Tri3
-from tatva.mesh import Mesh
-from tatva.operator import Operator
-
-coords = jnp.array([[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]])
-elements = jnp.array([[0, 1, 2], [0, 2, 3]])
-
-mesh = Mesh(coords, elements)
-
-op = Operator(mesh, Tri3())
-nodal_values = jnp.arange(coords.shape[0], dtype=jnp.float64)
-
-# Integrate a nodal field over the mesh
-total = op.integrate(nodal_values)
-
-# Evaluate gradients at all quadrature points
-gradients = op.grad(nodal_values)
-```
-
-## License
-
-`tatva` is distributed under the GNU Lesser General Public License v3.0 or later. See `COPYING` and `COPYING.LESSER` for the complete terms. © 2025 ETH Zurich (SMEC).
+<div style="width: 100%; margin: 20px 0;">
+    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7429468306744586240?collapsed=1" 
+            height="300" 
+            style="width: 100%; border: none;" 
+            frameborder="0" 
+            allowfullscreen="" 
+            title="">
+    </iframe>
+</div>
