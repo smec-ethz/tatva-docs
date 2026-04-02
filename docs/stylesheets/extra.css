@@ -1,143 +1,169 @@
 /* Hide Jupyter input prompts like "In [1]:" */
 .jp-InputPrompt,
 .jp-InputArea-prompt {
-  display: none !important;
+    display: none !important;
 }
 
 /* Hide Jupyter output prompt area*/
 .jp-OutputPrompt,
 .jp-OutputArea-prompt {
-  display: none !important;
+    display: none !important;
 }
 
 /* Notebook header: floated right so the h1 sits alongside it */
 .nb-header {
-  float: right;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0.3rem 0 0 1.5rem;
+    float: right;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0.3rem 0 0 1.5rem;
 }
 
 .nb-header img {
-  display: block;
-  height: 20px;
+    display: block;
+    height: 20px;
 }
 
 /* Clears the float after the h1 so body content is unaffected */
 .nb-clear {
-  clear: both;
+    clear: both;
 }
 
 @media (max-width: 600px) {
-  .nb-header {
-    float: none;
-    margin: 0 0 1rem 0;
-  }
+    .nb-header {
+        float: none;
+        margin: 0 0 1rem 0;
+    }
 }
 
 .nb-download-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  height: 20px;
-  padding: 0 8px;
-  border-radius: 3px;
-  background-color: #3c3c3c;
-  color: #fff !important;
-  font-family: var(--md-text-font, sans-serif);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  text-decoration: none !important;
-  white-space: nowrap;
-  transition: background-color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 20px;
+    padding: 0 8px;
+    border-radius: 3px;
+    background-color: #3c3c3c;
+    color: #fff !important;
+    font-family: var(--md-text-font, sans-serif);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
 }
 
 .nb-download-btn:hover {
-  background-color: #111;
-  color: #fff !important;
+    background-color: #111;
+    color: #fff !important;
 }
 
 [data-md-color-scheme="slate"] .nb-download-btn {
-  background-color: #555;
+    background-color: #555;
 }
 
 [data-md-color-scheme="slate"] .nb-download-btn:hover {
-  background-color: #777;
+    background-color: #777;
 }
 
 .nb-download-icon {
-  width: 11px;
-  height: 11px;
-  flex-shrink: 0;
-  fill: currentColor;
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    fill: currentColor;
 }
 
 /* Container for the tags */
 .nb-tags-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px; /* Space between tags and Colab badge */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px; /* Space between tags and Colab badge */
 }
 
-/* The Tag Badge */
-.nb-tag {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 12px;
-  
-  /* Modern, subtle coloring */
-  background-color: var(--md-default-fg-color--lightest); 
-  color: var(--md-default-fg-color);
-  border: 1px solid var(--md-default-fg-color--lighter);
-  
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.nb-header img {
+    display: block;
+    height: 20px;
 }
 
-/* Optional: Make tags colorful on hover */
-.nb-tag:hover {
-  border-color: var(--md-accent-fg-color);
-  color: var(--md-accent-fg-color);
-  cursor: default;
+.nb-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 20px;
+    padding: 0 8px;
+    border-radius: 3px;
+    background-color: #3c3c3c;
+    color: #fff !important;
+    font-family: var(--md-text-font, sans-serif);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
 }
 
-.md-grid {
-  max-width: 1300px; 
+.nb-download-btn:hover {
+    background-color: #111;
+    color: #fff !important;
 }
+
+[data-md-color-scheme="slate"] .nb-download-btn {
+    background-color: #555;
+}
+
+[data-md-color-scheme="slate"] .nb-download-btn:hover {
+    background-color: #777;
+}
+
+.nb-download-icon {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    fill: currentColor;
+}
+
+/* Clears the float after the h1 so body content flows normally */
+.nb-clear {
+    clear: both;
+}
+
+@media (max-width: 600px) {
+    .nb-header {
+        float: none;
+        margin: 0 0 1rem 0;
+    }
+}
+
 /* Default is ~1220px */
-/*
 .md-grid {
-  max-width: 96%;
-  margin-right: auto;
-  margin-left: auto;
+    max-width: 70rem;
+    margin-right: auto;
+    margin-left: auto;
 }
-  */
 
 /* Collapse empty h1 (e.g. index.md uses "# " as a placeholder to avoid
    a fallback page title, but we don't want its whitespace) */
 .md-typeset h1:empty {
-  display: none;
-  margin: 0;
-  padding: 0;
+    display: none;
+    margin: 0;
+    padding: 0;
 }
 
 /* Pull up the first content element and reduce container top padding
    on pages where the h1 is hidden */
 .md-content__inner:has(h1:empty) {
-  padding-top: 0.1rem;
+    padding-top: 0.1rem;
 }
 
 .md-typeset h1:empty + * {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 /* Center images that are the ONLY thing in the paragraph */
 .md-typeset p > img:only-child {
-  display: block;      /* Make it a block element so margins work */
-  margin: 0 auto;      /* Auto margins on left/right centers it */
+    display: block;
+    margin: 0 auto;
 }
