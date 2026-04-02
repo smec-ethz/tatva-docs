@@ -149,7 +149,7 @@ def _prepend_header(content: str, nb_rel: Path) -> str:
         '<img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>'
         "</a>"
         f'<a href="{download_path}" download="{nb_rel.name}" class="nb-download-btn">'
-        f"{download_icon} Download notebook"
+        f"{download_icon} Download"
         "</a>"
         "</div>\n\n"
     )
@@ -235,6 +235,11 @@ def main() -> None:
         "--check", action="store_true", help="list notebooks without converting"
     )
     parser.add_argument(
+        "--force",
+        action="store_true",
+        help="convert all notebooks even if they are up to date",
+    )
+    parser.add_argument(
         "--inline",
         action="store_true",
         help="embed images as base64 instead of separate files",
@@ -252,7 +257,7 @@ def main() -> None:
             print(f"  {nb.relative_to(ROOT)}")
         return
 
-    stale = [nb for nb in notebooks if needs_conversion(nb)]
+    stale = notebooks if args.force else [nb for nb in notebooks if needs_conversion(nb)]
     if not stale:
         print("All notebooks are up to date.")
         return

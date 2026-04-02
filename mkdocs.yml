@@ -25,7 +25,7 @@ theme:
   palette:
     - scheme: default
       primary: white
-      accent: indigo
+      accent: deep orange
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
@@ -54,8 +54,8 @@ extra_javascript:
 
 extra_css:
   - https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200
-  - "stylesheets/custom_css.css"
-  - "stylesheets/mkdocstrings.css"
+  - stylesheets/custom_css.css
+  - stylesheets/mkdocstrings.css
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
   - stylesheets/carousel.css
   - stylesheets/extra.css
