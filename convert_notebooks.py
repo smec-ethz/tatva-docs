@@ -42,6 +42,7 @@ GITHUB_REPO = "smec-ethz/tatva-docs"
 # Notebook → markdown conversion
 # ---------------------------------------------------------------------------
 
+
 def find_notebooks() -> list[Path]:
     return sorted(NOTEBOOKS_DIR.rglob("*.ipynb"))
 
@@ -109,11 +110,12 @@ def _inline_images(md_path: Path) -> None:
 # Post-processing: badges, collapse directives, tags
 # ---------------------------------------------------------------------------
 
+
 def _post_process(md_path: Path, nb_rel: Path) -> None:
     content = md_path.read_text()
     content, tags_html = _extract_tags(content)  # remove tags from source position
     content = _apply_cell_directives(content)
-    content = _prepend_header(content, nb_rel)   # float-right header before h1
+    content = _prepend_header(content, nb_rel)  # float-right header before h1
     content = _inject_after_h1(content, tags_html)  # clearfix + tags below h1
     md_path.write_text(content)
 
@@ -147,7 +149,9 @@ def _prepend_header(content: str, nb_rel: Path) -> str:
 
 def _extract_tags(content: str) -> tuple[str, str]:
     """Remove # tags: [...] from content and return (cleaned_content, tags_html)."""
-    match = re.search(r"^#\s*tags:\s*\[(.*?)\]", content, flags=re.MULTILINE | re.IGNORECASE)
+    match = re.search(
+        r"^#\s*tags:\s*\[(.*?)\]", content, flags=re.MULTILINE | re.IGNORECASE
+    )
     if not match:
         return content, ""
 
@@ -190,7 +194,9 @@ def _apply_cell_directives(content: str) -> str:
             return "\n".join(f"    {line}" for line in text.splitlines())
 
         if "collapse: code" in directives or "collapse: all" in directives:
-            code_block = f'??? example "{title}"\n    ```python\n{indent(code_body)}\n    ```'
+            code_block = (
+                f'??? example "{title}"\n    ```python\n{indent(code_body)}\n    ```'
+            )
         else:
             code_block = f"```python\n{code_body}\n```"
 
@@ -211,12 +217,19 @@ def _apply_cell_directives(content: str) -> str:
 # CLI
 # ---------------------------------------------------------------------------
 
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("--check", action="store_true", help="list notebooks without converting")
-    parser.add_argument("--inline", action="store_true", help="embed images as base64 instead of separate files")
+    parser.add_argument(
+        "--check", action="store_true", help="list notebooks without converting"
+    )
+    parser.add_argument(
+        "--inline",
+        action="store_true",
+        help="embed images as base64 instead of separate files",
+    )
     args = parser.parse_args()
 
     notebooks = find_notebooks()

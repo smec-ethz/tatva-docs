@@ -142,10 +142,8 @@ nav:
       - Contact Mechanics:
           - "examples/contact_3d.md"
       - Lagrange Multipliers:
-          - Adhesion:
-              - "examples/adhesion_lagrange_multipliers.ipynb"
-          - Periodic BCs:
-              - "examples/homogenization_periodic.md"
+        - "examples/adhesion_lagrange_multipliers.md"
+        - "examples/homogenization_periodic.md"
       - Mixed-Dimensional Coupling:
           - "examples/fracture_quasistatic_3d.md"
           - "examples/soft_hydrogel.md"
