@@ -2,9 +2,6 @@
 
 # Elasto-dynamics in 3D: Explicit Central Difference Integration
 
-<div class="nb-clear"></div>
-
-
 Elastic wave propagation in a 3D bar under a step axial load. A compressive P-wave is launched from the free end (x = L), travels to the clamped end (x = 0), reflects, and returns.
 
 The leap-frog (central difference) scheme reads:

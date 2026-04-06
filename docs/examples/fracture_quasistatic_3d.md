@@ -2,9 +2,6 @@
 
 # Cohesive Fracture: Penalty Method
 
-<div class="nb-clear"></div>
-
-
 
 In this notebook, we simulate quasi-static crack propagation along an interface in a 3D plate using Cohesive law. This is an example of mixed-dimensional coupling where the energies are computed in domains which are dimensionally separate. In bulk which is a 3D domain and along the interface which a 2D domain.
 

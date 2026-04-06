@@ -2,9 +2,6 @@
 
 # How to create an energy functional?
 
-<div class="nb-clear"></div>
-
-
 In `tatva`, we define any physical problem as an energy functional $\Psi$ and then use `JAX` based differentiation to construct residual operator or tangent stiffness operator. 
 
 $$

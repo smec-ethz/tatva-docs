@@ -1,9 +1,13 @@
+---
+tags:
+  - sparse-differentiation
+  - mixed-element
+  - lifter
+---
+
 <div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/notebooks/examples/adhesion_lagrange_multipliers.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="/assets/notebooks/examples/adhesion_lagrange_multipliers.ipynb" download="adhesion_lagrange_multipliers.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download</a></div>
 
 # Peeling of a dimpled adhesive beam via Lagrange Multipliers
-
-<div class="nb-clear"></div>
-
 
 This example demonstrates how to model the peeling process of an elastic beam from a rigid substrate. It showcases the use of Lagrange multipliers to enforce contact constraints and an active set strategy to model the progressive failure of adhesive bonds.
 
@@ -214,7 +218,7 @@ def jacrev[**P, T](f: Callable[P, T], *args, **kwargs) -> Callable[P, T]:
 
 
     
-![png](adhesion_lagrange_multipliers_files/adhesion_lagrange_multipliers_3_1.png)
+![png](adhesion_lagrange_multipliers_files/adhesion_lagrange_multipliers_4_1.png)
     
 
 
@@ -479,7 +483,7 @@ ax.spy(sparsity_pattern, markersize=0.3, color="k")
 
 
     
-![png](adhesion_lagrange_multipliers_files/adhesion_lagrange_multipliers_13_1.png)
+![png](adhesion_lagrange_multipliers_files/adhesion_lagrange_multipliers_14_1.png)
     
 
 
@@ -721,7 +725,7 @@ ax.tripcolor(x, y, mesh.elements, sig_vm, cmap="managua_r")
 
 
     
-![png](adhesion_lagrange_multipliers_files/adhesion_lagrange_multipliers_22_2.png)
+![png](adhesion_lagrange_multipliers_files/adhesion_lagrange_multipliers_23_2.png)
     
 
 
@@ -742,7 +746,7 @@ ax.set(xlabel="Applied Displacement", ylabel="Reaction Force")
 
 
     
-![png](adhesion_lagrange_multipliers_files/adhesion_lagrange_multipliers_23_1.png)
+![png](adhesion_lagrange_multipliers_files/adhesion_lagrange_multipliers_24_1.png)
     
 
 

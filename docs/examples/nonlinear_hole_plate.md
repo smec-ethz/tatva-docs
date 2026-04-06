@@ -2,9 +2,6 @@
 
 # Rigid Body Constraints
 
-<div class="nb-clear"></div>
-
-
 
 ??? example "Colab Setup (Install Dependencies)"
     ```python

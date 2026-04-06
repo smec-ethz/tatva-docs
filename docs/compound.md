@@ -2,9 +2,6 @@
 
 # Multifield variable 
 
-<div class="nb-clear"></div>
-
-
 In `tatva` we intend to define a total energy functional that takes a **flat** array $\mathbf{z}$ with all unknown DOFs and returns a scalar.
 However, the actual unknowns in $\mathbf{z}$ are most often **nodal fields** with a specific shape, $e.g$ a displacement field `(n_nodes, 2)`.
 Furthermore, the DOF array may include **multiple** fields. For example, a different nodal field like temperature `(n_nodes, 1)`, or a set of Lagrange-Multipliers `(n_constraints, n)`.

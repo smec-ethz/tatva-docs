@@ -1,9 +1,12 @@
+---
+tags: 
+  - lifter
+  - mixed-dimenson
+---
+
 <div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/notebooks/examples/contact_3d.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="/assets/notebooks/examples/contact_3d.ipynb" download="contact_3d.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download</a></div>
 
 # Contact mechanics using Penalty Approach
-
-<div class="nb-clear"></div>
-
 
 In this notebook, we model the circular punch of a sphere on a deformable plane.
 
@@ -449,7 +452,7 @@ _ = pl.show()
 
 
     
-![png](contact_3d_files/contact_3d_8_0.png)
+![png](contact_3d_files/contact_3d_9_0.png)
     
 
 
@@ -566,7 +569,7 @@ _ = pl.show()
 
 
     
-![png](contact_3d_files/contact_3d_10_0.png)
+![png](contact_3d_files/contact_3d_11_0.png)
     
 
 
@@ -1075,7 +1078,7 @@ plot_contact_result(mesh_sphere, mesh_cube, u2, u1, stress_sphere, stress_box)
 
 
     
-![png](contact_3d_files/contact_3d_34_0.png)
+![png](contact_3d_files/contact_3d_35_0.png)
     
 
 
@@ -1176,7 +1179,7 @@ plot_contact_result(mesh_sphere, mesh_cube, u2, u1, stress_sphere, stress_box)
     plot_sig_zz(ax)
     ```
 
-![png](contact_3d_files/contact_3d_36_0.png)
+![png](contact_3d_files/contact_3d_37_0.png)
 
 
 ??? example "Create plot for traction distribution $p(r)$ and compare to analytical solution"
@@ -1219,5 +1222,5 @@ plot_contact_result(mesh_sphere, mesh_cube, u2, u1, stress_sphere, stress_box)
 
 
     
-![png](contact_3d_files/contact_3d_37_1.png)
+![png](contact_3d_files/contact_3d_38_1.png)
 

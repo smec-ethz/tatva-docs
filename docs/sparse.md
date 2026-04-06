@@ -2,9 +2,6 @@
 
 # Building Stiffness Matrix
 
-<div class="nb-clear"></div>
-
-
 
 
 In finite element analysis, the tangent stiffness matrix (Hessian) $\mathbf{K}$ is typically **sparse**. A node only interacts with its immediate neighbors, meaning most entries in $\mathbf{K}$ are zero. However, standard automatic differentiation (AD) in JAX (`jax.jacfwd` or `jax.jacrev`) is unaware of this sparsity. It attempts to recover the full dense matrix by evaluating the Jacobian-Vector Product (JVP) once for every degree of freedom.

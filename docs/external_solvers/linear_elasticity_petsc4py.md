@@ -2,9 +2,6 @@
 
 # Linear elasticity with PETSc
 
-<div class="nb-clear"></div>
-
-
 !!! info
 
     This example uses `PETSc` to solver the nonlinear problem. Please ensure that `petsc4py` is installed to run this example. 

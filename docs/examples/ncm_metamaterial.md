@@ -2,9 +2,6 @@
 
 # Neural Constitutive Modeling
 
-<div class="nb-clear"></div>
-
-
 
 
 In this example, we will implement a neural constitutive model. A neural constitutive model uses neural networks to represent the relationship between stress and strain in materials. This approach allows for more flexible and accurate modeling of complex material behaviors compared to traditional constitutive models.

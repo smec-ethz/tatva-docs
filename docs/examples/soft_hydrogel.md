@@ -1,9 +1,12 @@
+---
+tags:
+  - matrix-free
+  - mixed-dimension
+---
+
 <div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/notebooks/examples/soft_hydrogel.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="/assets/notebooks/examples/soft_hydrogel.ipynb" download="soft_hydrogel.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download</a></div>
 
 # Embedded 1D Fibers
-
-<div class="nb-clear"></div>
-
 
 
 ??? example "Colab Setup (Install Dependencies)"
@@ -260,7 +263,7 @@ fiber_mesh = generate_honeycomb_mesh(
     plt.show()
     ```
 
-![png](soft_hydrogel_files/soft_hydrogel_6_0.png)
+![png](soft_hydrogel_files/soft_hydrogel_7_0.png)
     
 
 
@@ -1370,7 +1373,7 @@ We now visualize the deformation of the bulk material and the embedded fibres.
     plt.show()
     ```
 
-![png](soft_hydrogel_files/soft_hydrogel_30_0.png)
+![png](soft_hydrogel_files/soft_hydrogel_31_0.png)
 
 
 ```python

@@ -18,9 +18,6 @@
 
 # Periodic Boundary Conditions
 
-<div class="nb-clear"></div>
-
-
 We compute the effective (homogenized) stiffness of a periodic composite by solving a **cell problem** on one representative unit cell $\mathcal{A}$.
 The microscopic displacement is decomposed as
 

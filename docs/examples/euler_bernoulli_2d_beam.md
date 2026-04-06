@@ -2,9 +2,6 @@
 
 # 2D Euler-Bernoulli Beam
 
-<div class="nb-clear"></div>
-
-
 
 
 

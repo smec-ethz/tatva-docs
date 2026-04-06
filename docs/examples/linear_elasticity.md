@@ -1,9 +1,11 @@
+---
+tags:
+  - matrix-free
+---
+
 <div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/notebooks/examples/linear_elasticity.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="/assets/notebooks/examples/linear_elasticity.ipynb" download="linear_elasticity.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download</a></div>
 
 # Elasticity
-
-<div class="nb-clear"></div>
-
 
 
 
@@ -209,7 +211,7 @@ plot_mesh(mesh)
 
 
     
-![png](linear_elasticity_files/linear_elasticity_5_1.png)
+![png](linear_elasticity_files/linear_elasticity_6_1.png)
     
 
 
@@ -780,9 +782,5 @@ def stress_cartesian_to_polar(
     
     ```
 
-![png](linear_elasticity_files/linear_elasticity_22_0.png)
+![png](linear_elasticity_files/linear_elasticity_23_0.png)
 
-
-```python
-
-```

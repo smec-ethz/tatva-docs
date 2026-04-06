@@ -2,9 +2,6 @@
 
 # Applying Constraints or BCs
 
-<div class="nb-clear"></div>
-
-
 
 In constrained problems, we often solve only for **free** DOFs and reconstruct the full vector afterwards.
 Typical constraints include:

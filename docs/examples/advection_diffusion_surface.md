@@ -2,9 +2,6 @@
 
 # Advection-Diffusion on Sphere
 
-<div class="nb-clear"></div>
-
-
 In this notebook, we will solve the surface advection-diffusion equation using the finite element method (FEM) implemented in `tatva`. We will focus on  2D spherical surface embedded in 3D space.
 
 

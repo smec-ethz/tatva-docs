@@ -122,15 +122,16 @@ def _inline_images(md_path: Path) -> None:
 
 def _post_process(md_path: Path, nb_rel: Path) -> None:
     content = md_path.read_text()
-    content, tags_html = _extract_tags(content)  # remove tags from source position
+    content, frontmatter = _extract_tags(content)  # remove YAML frontmatter
     content = _apply_cell_directives(content)
-    content = _prepend_header(content, nb_rel)  # float-right header before h1
-    content = _inject_after_h1(content, tags_html)  # clearfix + tags below h1
+    content = _prepend_header(
+        content, nb_rel, frontmatter
+    )  # frontmatter + badges before content
     md_path.write_text(content)
 
 
-def _prepend_header(content: str, nb_rel: Path) -> str:
-    """Prepend Colab badge and download button."""
+def _prepend_header(content: str, nb_rel: Path, frontmatter: str = "") -> str:
+    """Prepend YAML frontmatter (if present), then Colab badge and download button."""
     tag = os.environ.get("LIB_TAG", "main")
     nb_rel_str = nb_rel.as_posix()
 
@@ -153,40 +154,22 @@ def _prepend_header(content: str, nb_rel: Path) -> str:
         "</a>"
         "</div>\n\n"
     )
-    return header + content
+    prefix = frontmatter + "\n\n" if frontmatter else ""
+    return prefix + header + content
 
 
 def _extract_tags(content: str) -> tuple[str, str]:
-    """Remove # tags: [...] from content and return (cleaned_content, tags_html)."""
-    match = re.search(
-        r"^#\s*tags:\s*\[(.*?)\]", content, flags=re.MULTILINE | re.IGNORECASE
-    )
+    """Remove YAML frontmatter from content and return (cleaned_content, frontmatter).
+
+    Frontmatter is a block delimited by ``---`` at the very start of the file.
+    """
+    match = re.match(r"^(---\n.*?\n---)\n*", content, flags=re.DOTALL)
     if not match:
         return content, ""
 
-    tags = [t.strip() for t in match.group(1).split(",") if t.strip()]
-    content = content.replace(match.group(0), "", 1)
-    if not tags:
-        return content, ""
-
-    tags_html = '<div class="nb-tags-container">'
-    for tag in tags:
-        tags_html += f'<span class="nb-tag">{tag}</span>'
-    tags_html += "</div>"
-    return content, tags_html
-
-
-def _inject_after_h1(content: str, tags_html: str) -> str:
-    """Inject a float-clear div (and optional tags) right after the first h1."""
-    parts = ['<div class="nb-clear"></div>']
-    if tags_html:
-        parts.append(tags_html)
-    injected = "\n\n".join(parts) + "\n\n"
-
-    def replace(m: re.Match) -> str:
-        return m.group(0) + "\n" + injected
-
-    return re.sub(r"^# .+\n", replace, content, count=1, flags=re.MULTILINE)
+    frontmatter = match.group(1)
+    content = content[match.end() :]
+    return content, frontmatter
 
 
 def _apply_cell_directives(content: str) -> str:
@@ -257,7 +240,9 @@ def main() -> None:
             print(f"  {nb.relative_to(ROOT)}")
         return
 
-    stale = notebooks if args.force else [nb for nb in notebooks if needs_conversion(nb)]
+    stale = (
+        notebooks if args.force else [nb for nb in notebooks if needs_conversion(nb)]
+    )
     if not stale:
         print("All notebooks are up to date.")
         return

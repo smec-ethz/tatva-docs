@@ -2,9 +2,6 @@
 
 # Linear elasticity with SciPy
 
-<div class="nb-clear"></div>
-
-
 
 
 

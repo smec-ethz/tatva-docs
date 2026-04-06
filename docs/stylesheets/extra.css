@@ -75,13 +75,6 @@
 }
 
 /* Container for the tags */
-.nb-tags-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px; /* Space between tags and Colab badge */
-}
-
 .nb-header img {
     display: block;
     height: 20px;

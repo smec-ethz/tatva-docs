@@ -2,9 +2,6 @@
 
 # 2D Timoshenko Beam
 
-<div class="nb-clear"></div>
-
-
 
 
 ??? example "Colab Setup (Install Dependencies)"
