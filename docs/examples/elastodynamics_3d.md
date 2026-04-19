@@ -1,3 +1,8 @@
+---
+tags:
+  - transient
+---
+
 <div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/notebooks/examples/elastodynamics_3d.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="/assets/notebooks/examples/elastodynamics_3d.ipynb" download="elastodynamics_3d.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download</a></div>
 
 # Elasto-dynamics in 3D: Explicit Central Difference Integration
@@ -374,7 +379,7 @@ plt.show()
 
 
     
-![png](elastodynamics_3d_files/elastodynamics_3d_24_0.png)
+![png](elastodynamics_3d_files/elastodynamics_3d_25_0.png)
     
 
 

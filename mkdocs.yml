@@ -149,8 +149,9 @@ nav:
           - "examples/linear_elasticity.md"
       - Hyperelasticity:
           - "examples/hyperelastic_3d.md"
-      - Elastodynamics:
+      - Transient Problems:
           - "examples/elastodynamics_3d.md"
+          - "examples/heat_exchange.md"
       - Multi-point Constraints:
           - "examples/nonlinear_hole_plate.md"
       - Contact Mechanics:
