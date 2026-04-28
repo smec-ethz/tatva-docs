@@ -33,7 +33,6 @@ we consider a fiber-reinforced composite in which stiff 1D fibers are embedded i
 ```python
 import jax
 
-jax.config.update("jax_enable_x64", True)  # use double-precision
 
 from functools import partial
 from typing import NamedTuple
@@ -43,6 +42,8 @@ import jax.numpy as jnp
 from jax import Array
 from jax_autovmap import autovmap
 from tatva import Mesh, Operator, element
+
+jax.config.update("jax_enable_x64", True)  # use double-precision
 ```
 
 
@@ -91,7 +92,7 @@ from tatva import Mesh, Operator, element
         l4 = gmsh.model.geo.addLine(p4, p1)
     
         loop = gmsh.model.geo.addCurveLoop([l1, l2, l3, l4])
-        surface = gmsh.model.geo.addPlaneSurface([loop])
+        _ = gmsh.model.geo.addPlaneSurface([loop])
     
         # 2. Mesh Generation
         gmsh.model.geo.synchronize()
@@ -221,10 +222,10 @@ fiber_mesh = generate_honeycomb_mesh(
         Info    : [ 30%] Meshing curve 2 (Line)
         Info    : [ 60%] Meshing curve 3 (Line)
         Info    : [ 80%] Meshing curve 4 (Line)
-        Info    : Done meshing 1D (Wall 0.000440115s, CPU 0.00057s)
+        Info    : Done meshing 1D (Wall 0.00043465s, CPU 0.00055s)
         Info    : Meshing 2D...
         Info    : Meshing surface 1 (Plane, Frontal-Delaunay)
-        Info    : Done meshing 2D (Wall 0.103935s, CPU 0.103244s)
+        Info    : Done meshing 2D (Wall 0.0660971s, CPU 0.065573s)
         Info    : 3013 nodes 6028 elements
         Info    : Writing './plate_2d.msh'...
         Info    : Done writing './plate_2d.msh'
@@ -365,8 +366,13 @@ We define two operator one for the bulk material which consists of `Tri3` elemen
         Reference domain: [-1, 1]
         """
     
-        quad_points = jnp.array([[0.0]])
-        quad_weights = jnp.array([2.0])
+        def _default_quadrature(self):
+            quad_points = jnp.array([[0.0]])
+            quad_weights = jnp.array([2.0])
+            return quad_points, quad_weights
+    
+        def _reference_nodes(self):
+            return jnp.array([[-1.0], [1.0]])   
     
         def shape_function(self, xi: Array) -> Array:
             return jnp.array([0.5 * (1.0 - xi[0]), 0.5 * (1.0 + xi[0])])
@@ -491,7 +497,7 @@ fiber_tangents = jnp.array(tangents)
 
 
 ```python
-@eqx.filter_jit
+@jax.jit
 def compute_u_fiber(u_flat: Array, host_indices: Array, local_coords: Array) -> Array:
     u = u_flat.reshape(-1, n_dofs_per_node)
 
@@ -528,7 +534,7 @@ def compute_fiber_stretch(host_elem, local_coord, u):
     return strain
 
 
-@eqx.filter_jit
+@jax.jit
 def fiber_strain_energy(
     u_flat: Array,
     host_elems: Array,
@@ -618,7 +624,7 @@ gradient = jax.jacrev(total_energy)
 gradient_wo_fiber = jax.jacrev(total_energy_without_fibre)
 
 
-@eqx.filter_jit
+@jax.jit(static_argnames=["gradient"])
 def compute_tangent(du, u_prev, gradient):
     du_projected = du.at[fixed_dofs].set(0)
     tangent = jax.jvp(gradient, (u_prev,), (du_projected,))[1]
@@ -752,98 +758,98 @@ u_sol_wo_fiber = u_prev_wo_fiber.reshape(n_nodes, n_dofs_per_node)
     Residual: 5.60e+00
           Residual: 2.00e+00
           Residual: 5.44e-01
-          Residual: 9.69e-02
-          Residual: 9.13e-03
-          Residual: 1.82e-04
-          Residual: 3.75e-05
-          Residual: 2.48e-05
-          Residual: 1.38e-05
-          Residual: 6.50e-06
-          Residual: 5.91e-06
-          Residual: 2.19e-06
-          Residual: 1.93e-06
-          Residual: 8.48e-07
-          Residual: 6.57e-07
-          Residual: 3.22e-07
-          Residual: 2.38e-07
-          Residual: 1.17e-07
-          Residual: 9.15e-08
-          Residual: 4.27e-08
-          Residual: 3.37e-08
-          Residual: 1.68e-08
-          Residual: 9.69e-09
+          Residual: 9.71e-02
+          Residual: 9.16e-03
+          Residual: 1.94e-04
+          Residual: 3.66e-05
+          Residual: 2.41e-05
+          Residual: 1.13e-05
+          Residual: 7.58e-06
+          Residual: 3.44e-06
+          Residual: 3.40e-06
+          Residual: 1.09e-06
+          Residual: 2.15e-06
+          Residual: 3.03e-07
+          Residual: 6.53e-07
+          Residual: 8.48e-08
+          Residual: 2.01e-07
+          Residual: 3.17e-08
+          Residual: 7.64e-08
+          Residual: 1.21e-08
+          Residual: 2.31e-08
+          Residual: 9.64e-09
           Residual: 5.65e+00
           Residual: 2.01e+00
-          Residual: 5.37e-01
-          Residual: 8.60e-02
-          Residual: 6.63e-03
-          Residual: 8.05e-05
-          Residual: 1.75e-05
-          Residual: 3.47e-06
-          Residual: 1.77e-06
-          Residual: 3.77e-07
-          Residual: 2.04e-07
-          Residual: 4.35e-08
-          Residual: 2.39e-08
-          Residual: 9.59e-09
-        Iteration 0: Residual Norm = 9.5937e-09
+          Residual: 5.38e-01
+          Residual: 8.63e-02
+          Residual: 6.69e-03
+          Residual: 8.12e-05
+          Residual: 1.76e-05
+          Residual: 3.51e-06
+          Residual: 1.78e-06
+          Residual: 3.82e-07
+          Residual: 2.07e-07
+          Residual: 4.42e-08
+          Residual: 2.42e-08
+          Residual: 9.75e-09
+        Iteration 0: Residual Norm = 9.7528e-09
           Residual: 5.22e+00
           Residual: 1.84e+00
-          Residual: 4.82e-01
-          Residual: 7.75e-02
-          Residual: 5.91e-03
-          Residual: 1.26e-04
-          Residual: 4.13e-05
+          Residual: 4.80e-01
+          Residual: 7.64e-02
+          Residual: 5.72e-03
+          Residual: 1.29e-04
+          Residual: 3.46e-05
           Residual: 1.39e-05
-          Residual: 1.58e-05
-          Residual: 3.30e-06
-          Residual: 5.89e-06
-          Residual: 9.55e-07
-          Residual: 1.94e-06
-          Residual: 3.22e-07
-          Residual: 6.38e-07
-          Residual: 1.24e-07
-          Residual: 2.00e-07
-          Residual: 3.59e-08
-          Residual: 7.78e-08
-          Residual: 1.31e-08
-          Residual: 4.83e-08
+          Residual: 9.30e-06
+          Residual: 7.39e-06
+          Residual: 2.66e-06
+          Residual: 3.44e-06
+          Residual: 7.49e-07
+          Residual: 9.54e-07
+          Residual: 2.34e-07
+          Residual: 4.49e-07
+          Residual: 7.91e-08
+          Residual: 1.27e-07
+          Residual: 2.85e-08
+          Residual: 2.98e-08
+          Residual: 1.44e-08
           Residual: 9.99e-09
           Residual: 5.30e+00
           Residual: 1.86e+00
           Residual: 4.78e-01
           Residual: 6.75e-02
-          Residual: 3.92e-03
-          Residual: 3.84e-05
+          Residual: 3.93e-03
+          Residual: 3.85e-05
           Residual: 1.41e-05
           Residual: 2.63e-06
           Residual: 1.46e-06
           Residual: 3.03e-07
           Residual: 1.74e-07
-          Residual: 3.57e-08
-          Residual: 2.04e-08
-          Residual: 9.68e-09
-        Iteration 1: Residual Norm = 9.6778e-09
-          Residual: 4.89e+00
+          Residual: 3.58e-08
+          Residual: 2.05e-08
+          Residual: 9.73e-09
+        Iteration 1: Residual Norm = 9.7339e-09
+          Residual: 4.90e+00
           Residual: 1.70e+00
-          Residual: 4.28e-01
-          Residual: 6.11e-02
-          Residual: 3.65e-03
-          Residual: 1.15e-04
-          Residual: 3.41e-05
-          Residual: 7.33e-06
-          Residual: 6.52e-06
-          Residual: 2.61e-06
-          Residual: 4.15e-06
-          Residual: 6.73e-07
-          Residual: 7.85e-07
-          Residual: 2.58e-07
-          Residual: 2.70e-07
-          Residual: 1.31e-07
-          Residual: 2.49e-07
-          Residual: 2.29e-08
-          Residual: 6.09e-08
-          Residual: 9.86e-09
+          Residual: 4.29e-01
+          Residual: 6.15e-02
+          Residual: 3.71e-03
+          Residual: 1.14e-04
+          Residual: 3.20e-05
+          Residual: 1.03e-05
+          Residual: 6.07e-06
+          Residual: 3.67e-06
+          Residual: 2.01e-06
+          Residual: 1.12e-06
+          Residual: 6.78e-07
+          Residual: 3.49e-07
+          Residual: 2.55e-07
+          Residual: 1.64e-07
+          Residual: 1.12e-07
+          Residual: 5.20e-08
+          Residual: 3.33e-08
+          Residual: 9.71e-09
           Residual: 5.00e+00
           Residual: 1.74e+00
           Residual: 4.32e-01
@@ -858,252 +864,253 @@ u_sol_wo_fiber = u_prev_wo_fiber.reshape(n_nodes, n_dofs_per_node)
           Residual: 3.27e-08
           Residual: 1.94e-08
           Residual: 9.92e-09
-        Iteration 2: Residual Norm = 9.9184e-09
+        Iteration 2: Residual Norm = 9.9199e-09
           Residual: 4.62e+00
           Residual: 1.58e+00
-          Residual: 3.87e-01
+          Residual: 3.86e-01
           Residual: 5.01e-02
-          Residual: 2.42e-03
-          Residual: 1.01e-04
-          Residual: 2.78e-05
-          Residual: 5.07e-06
-          Residual: 1.94e-06
-          Residual: 1.04e-06
-          Residual: 7.17e-07
-          Residual: 3.12e-07
-          Residual: 2.72e-07
-          Residual: 1.17e-07
-          Residual: 9.63e-08
-          Residual: 4.74e-08
-          Residual: 2.64e-08
-          Residual: 3.42e-08
+          Residual: 2.40e-03
+          Residual: 1.15e-04
+          Residual: 2.55e-05
+          Residual: 6.66e-06
+          Residual: 1.66e-06
+          Residual: 1.27e-06
+          Residual: 5.47e-07
+          Residual: 5.42e-07
+          Residual: 1.92e-07
+          Residual: 1.61e-07
+          Residual: 7.13e-08
+          Residual: 5.92e-08
+          Residual: 2.48e-08
+          Residual: 2.02e-08
           Residual: 9.94e-09
           Residual: 4.75e+00
           Residual: 1.63e+00
           Residual: 3.94e-01
           Residual: 4.58e-02
           Residual: 1.65e-03
-          Residual: 2.07e-05
+          Residual: 2.08e-05
           Residual: 1.05e-05
-          Residual: 1.46e-06
+          Residual: 1.47e-06
           Residual: 9.42e-07
           Residual: 1.65e-07
           Residual: 1.11e-07
-          Residual: 2.07e-08
-          Residual: 9.97e-09
-        Iteration 3: Residual Norm = 9.9748e-09
+          Residual: 2.09e-08
+          Residual: 9.80e-09
+        Iteration 3: Residual Norm = 9.8020e-09
           Residual: 4.37e+00
           Residual: 1.48e+00
           Residual: 3.52e-01
           Residual: 4.17e-02
           Residual: 1.65e-03
-          Residual: 9.04e-05
-          Residual: 2.01e-05
-          Residual: 6.88e-06
-          Residual: 1.57e-06
-          Residual: 1.38e-06
-          Residual: 7.93e-07
-          Residual: 4.18e-07
-          Residual: 4.54e-07
-          Residual: 1.25e-07
-          Residual: 1.18e-07
-          Residual: 3.97e-08
-          Residual: 3.53e-08
-          Residual: 1.77e-08
-          Residual: 9.79e-09
+          Residual: 1.06e-04
+          Residual: 1.93e-05
+          Residual: 6.44e-06
+          Residual: 1.87e-06
+          Residual: 1.50e-06
+          Residual: 6.37e-07
+          Residual: 3.64e-07
+          Residual: 2.82e-07
+          Residual: 1.27e-07
+          Residual: 1.81e-07
+          Residual: 3.75e-08
+          Residual: 4.14e-08
+          Residual: 1.32e-08
+          Residual: 9.93e-09
           Residual: 4.53e+00
           Residual: 1.54e+00
           Residual: 3.63e-01
-          Residual: 3.90e-02
-          Residual: 1.15e-03
-          Residual: 1.81e-05
-          Residual: 9.50e-06
-          Residual: 1.96e-06
-          Residual: 1.08e-06
-          Residual: 2.29e-07
-          Residual: 1.29e-07
-          Residual: 2.76e-08
-          Residual: 1.57e-08
-          Residual: 9.83e-09
-        Iteration 4: Residual Norm = 9.8288e-09
+          Residual: 3.91e-02
+          Residual: 1.17e-03
+          Residual: 1.82e-05
+          Residual: 9.53e-06
+          Residual: 1.97e-06
+          Residual: 1.09e-06
+          Residual: 2.32e-07
+          Residual: 1.31e-07
+          Residual: 2.80e-08
+          Residual: 1.60e-08
+          Residual: 9.93e-09
+        Iteration 4: Residual Norm = 9.9264e-09
           Residual: 4.16e+00
           Residual: 1.40e+00
           Residual: 3.24e-01
           Residual: 3.60e-02
           Residual: 1.22e-03
-          Residual: 8.49e-05
-          Residual: 2.04e-05
-          Residual: 6.07e-06
-          Residual: 6.55e-06
-          Residual: 1.73e-06
-          Residual: 3.52e-06
-          Residual: 5.09e-07
-          Residual: 1.15e-06
-          Residual: 1.71e-07
-          Residual: 4.55e-07
-          Residual: 5.63e-08
-          Residual: 2.03e-07
-          Residual: 1.65e-08
-          Residual: 4.63e-08
-          Residual: 9.62e-09
+          Residual: 9.00e-05
+          Residual: 1.98e-05
+          Residual: 8.42e-06
+          Residual: 6.56e-06
+          Residual: 2.26e-06
+          Residual: 2.42e-06
+          Residual: 7.32e-07
+          Residual: 6.03e-07
+          Residual: 3.73e-07
+          Residual: 1.85e-07
+          Residual: 1.88e-07
+          Residual: 5.67e-08
+          Residual: 7.50e-08
+          Residual: 1.81e-08
+          Residual: 9.90e-09
           Residual: 4.33e+00
           Residual: 1.46e+00
           Residual: 3.37e-01
           Residual: 3.39e-02
-          Residual: 8.50e-04
+          Residual: 8.48e-04
           Residual: 1.76e-05
           Residual: 8.26e-06
           Residual: 2.69e-06
           Residual: 1.40e-06
           Residual: 4.75e-07
           Residual: 2.56e-07
-          Residual: 8.85e-08
+          Residual: 8.83e-08
           Residual: 4.83e-08
           Residual: 1.68e-08
-          Residual: 9.91e-09
-        Iteration 5: Residual Norm = 9.9107e-09
+          Residual: 9.90e-09
+        Iteration 5: Residual Norm = 9.8963e-09
           Residual: 3.98e+00
           Residual: 1.32e+00
           Residual: 3.00e-01
-          Residual: 3.17e-02
-          Residual: 9.52e-04
-          Residual: 9.32e-05
-          Residual: 1.72e-05
-          Residual: 9.94e-06
-          Residual: 5.74e-06
-          Residual: 3.38e-06
-          Residual: 2.02e-06
-          Residual: 8.72e-07
-          Residual: 9.17e-07
-          Residual: 3.18e-07
-          Residual: 2.62e-07
-          Residual: 1.18e-07
-          Residual: 9.84e-08
-          Residual: 4.27e-08
-          Residual: 4.06e-08
-          Residual: 1.53e-08
-          Residual: 9.95e-09
+          Residual: 3.18e-02
+          Residual: 9.63e-04
+          Residual: 1.01e-04
+          Residual: 1.74e-05
+          Residual: 1.07e-05
+          Residual: 5.55e-06
+          Residual: 2.76e-06
+          Residual: 1.75e-06
+          Residual: 1.45e-06
+          Residual: 5.88e-07
+          Residual: 4.97e-07
+          Residual: 2.08e-07
+          Residual: 2.75e-07
+          Residual: 6.68e-08
+          Residual: 5.17e-08
+          Residual: 3.18e-08
+          Residual: 1.85e-08
+          Residual: 9.82e-09
           Residual: 4.15e+00
           Residual: 1.39e+00
           Residual: 3.13e-01
           Residual: 2.98e-02
           Residual: 6.46e-04
           Residual: 1.83e-05
-          Residual: 5.12e-06
-          Residual: 2.43e-06
-          Residual: 7.44e-07
-          Residual: 3.73e-07
-          Residual: 1.18e-07
-          Residual: 6.05e-08
-          Residual: 1.93e-08
-          Residual: 9.99e-09
-        Iteration 6: Residual Norm = 9.9871e-09
+          Residual: 5.11e-06
+          Residual: 2.41e-06
+          Residual: 7.39e-07
+          Residual: 3.70e-07
+          Residual: 1.17e-07
+          Residual: 6.00e-08
+          Residual: 1.92e-08
+          Residual: 9.92e-09
+        Iteration 6: Residual Norm = 9.9163e-09
           Residual: 3.82e+00
           Residual: 1.26e+00
           Residual: 2.81e-01
           Residual: 2.89e-02
-          Residual: 8.26e-04
-          Residual: 9.04e-05
-          Residual: 1.91e-05
-          Residual: 1.17e-05
-          Residual: 7.13e-06
-          Residual: 3.12e-06
-          Residual: 1.86e-06
-          Residual: 1.06e-06
-          Residual: 9.78e-07
-          Residual: 3.31e-07
-          Residual: 6.31e-07
-          Residual: 9.57e-08
-          Residual: 1.39e-07
-          Residual: 4.14e-08
-          Residual: 4.47e-08
-          Residual: 1.29e-08
-          Residual: 9.77e-09
+          Residual: 8.16e-04
+          Residual: 1.02e-04
+          Residual: 1.75e-05
+          Residual: 1.06e-05
+          Residual: 6.05e-06
+          Residual: 3.32e-06
+          Residual: 2.21e-06
+          Residual: 2.26e-06
+          Residual: 5.37e-07
+          Residual: 9.66e-07
+          Residual: 1.71e-07
+          Residual: 3.64e-07
+          Residual: 5.60e-08
+          Residual: 1.10e-07
+          Residual: 2.04e-08
+          Residual: 3.06e-08
+          Residual: 9.82e-09
           Residual: 4.00e+00
           Residual: 1.32e+00
           Residual: 2.94e-01
           Residual: 2.67e-02
-          Residual: 5.26e-04
+          Residual: 5.25e-04
           Residual: 1.89e-05
-          Residual: 2.19e-06
-          Residual: 8.70e-07
-          Residual: 3.87e-07
-          Residual: 1.74e-07
-          Residual: 7.78e-08
+          Residual: 2.20e-06
+          Residual: 8.73e-07
+          Residual: 3.89e-07
+          Residual: 1.75e-07
+          Residual: 7.71e-08
           Residual: 3.46e-08
           Residual: 9.91e-09
-        Iteration 7: Residual Norm = 9.9117e-09
-          Residual: 3.67e+00
+        Iteration 7: Residual Norm = 9.9063e-09
+          Residual: 3.68e+00
           Residual: 1.20e+00
-          Residual: 2.64e-01
-          Residual: 2.67e-02
-          Residual: 7.18e-04
-          Residual: 8.21e-05
-          Residual: 1.74e-05
-          Residual: 1.10e-05
-          Residual: 5.85e-06
-          Residual: 3.73e-06
-          Residual: 1.63e-06
-          Residual: 2.10e-06
-          Residual: 5.02e-07
-          Residual: 6.80e-07
-          Residual: 1.72e-07
-          Residual: 2.08e-07
-          Residual: 6.14e-08
-          Residual: 1.20e-07
-          Residual: 1.99e-08
-          Residual: 4.53e-08
-          Residual: 9.76e-09
+          Residual: 2.65e-01
+          Residual: 2.68e-02
+          Residual: 7.20e-04
+          Residual: 8.41e-05
+          Residual: 1.82e-05
+          Residual: 9.59e-06
+          Residual: 7.77e-06
+          Residual: 3.45e-06
+          Residual: 1.91e-06
+          Residual: 1.30e-06
+          Residual: 6.56e-07
+          Residual: 7.28e-07
+          Residual: 2.12e-07
+          Residual: 3.02e-07
+          Residual: 7.21e-08
+          Residual: 9.49e-08
+          Residual: 2.54e-08
+          Residual: 3.32e-08
+          Residual: 9.97e-09
           Residual: 3.86e+00
           Residual: 1.27e+00
           Residual: 2.78e-01
           Residual: 2.44e-02
-          Residual: 4.50e-04
-          Residual: 2.14e-05
-          Residual: 2.19e-06
-          Residual: 5.22e-07
-          Residual: 4.66e-07
-          Residual: 7.56e-08
-          Residual: 8.34e-08
-          Residual: 1.40e-08
-          Residual: 9.98e-09
-        Iteration 8: Residual Norm = 9.9847e-09
+          Residual: 4.49e-04
+          Residual: 2.13e-05
+          Residual: 2.08e-06
+          Residual: 6.23e-07
+          Residual: 2.89e-07
+          Residual: 1.01e-07
+          Residual: 7.28e-08
+          Residual: 1.47e-08
+          Residual: 9.97e-09
+        Iteration 8: Residual Norm = 9.9738e-09
           Residual: 3.54e+00
           Residual: 1.15e+00
           Residual: 2.50e-01
-          Residual: 2.51e-02
-          Residual: 6.49e-04
-          Residual: 8.67e-05
-          Residual: 1.91e-05
-          Residual: 9.68e-06
-          Residual: 6.52e-06
-          Residual: 3.59e-06
-          Residual: 2.09e-06
-          Residual: 1.43e-06
-          Residual: 7.21e-07
-          Residual: 3.90e-07
-          Residual: 2.42e-07
-          Residual: 1.96e-07
-          Residual: 8.53e-08
-          Residual: 7.76e-08
-          Residual: 2.73e-08
-          Residual: 2.59e-08
-          Residual: 9.82e-09
+          Residual: 2.50e-02
+          Residual: 6.42e-04
+          Residual: 8.69e-05
+          Residual: 1.68e-05
+          Residual: 1.54e-05
+          Residual: 4.86e-06
+          Residual: 5.69e-06
+          Residual: 1.56e-06
+          Residual: 1.20e-06
+          Residual: 5.53e-07
+          Residual: 7.42e-07
+          Residual: 1.72e-07
+          Residual: 3.25e-07
+          Residual: 5.81e-08
+          Residual: 1.05e-07
+          Residual: 1.99e-08
+          Residual: 4.48e-08
+          Residual: 9.99e-09
           Residual: 3.73e+00
           Residual: 1.22e+00
-          Residual: 2.64e-01
-          Residual: 2.28e-02
-          Residual: 4.04e-04
+          Residual: 2.63e-01
+          Residual: 2.29e-02
+          Residual: 4.06e-04
           Residual: 2.24e-05
-          Residual: 3.30e-06
-          Residual: 1.33e-06
-          Residual: 6.86e-07
-          Residual: 2.93e-07
-          Residual: 1.47e-07
-          Residual: 6.41e-08
+          Residual: 3.32e-06
+          Residual: 1.35e-06
+          Residual: 6.90e-07
+          Residual: 3.08e-07
+          Residual: 1.46e-07
+          Residual: 6.38e-08
           Residual: 3.16e-08
-          Residual: 9.99e-09
-        Iteration 9: Residual Norm = 9.9888e-09
+          Residual: 1.36e-08
+          Residual: 9.78e-09
+        Iteration 9: Residual Norm = 9.7800e-09
 
 
 ```python

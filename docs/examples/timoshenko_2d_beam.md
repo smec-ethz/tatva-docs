@@ -42,19 +42,19 @@ We start by configuring JAX. Finite Element Method (FEM) calculations usually re
 ```python
 import jax
 
-jax.config.update("jax_enable_x64", True)  # use double-precision
 
 import time
 from functools import partial
 from typing import NamedTuple
 
-import equinox as eqx
 import jax.experimental.sparse as jsp
 import jax.numpy as jnp
-import numpy as np
 from jax import Array
 from jax_autovmap import autovmap
 from tatva import Mesh, Operator, element, sparse
+
+jax.config.update("jax_enable_x64", True)  # use double-precision
+
 ```
 
 ## Mesh Generation
@@ -128,6 +128,9 @@ class Line2In3D(element.Element):
         quad_weights = jnp.array([2.0])  # Weight for the quadrature point
         return quad_points, quad_weights
         
+    def _reference_nodes(self):
+        return jnp.array([[-1.0, 0.0], [1.0, 0.0]])
+
 
     def shape_function(self, xi: Array) -> Array:
         return jnp.array([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)])
@@ -365,7 +368,7 @@ def _total_energy_timoshenko(z_flat: Array, tangents: Array) -> Array:
 
     return op.integrate(density)
 
-total_energy_timoshenko = eqx.Partial(_total_energy_timoshenko, tangents=tangents)
+total_energy_timoshenko = jax.jit(partial(_total_energy_timoshenko, tangents=tangents))
 ```
 
 ### Applying Boundary Conditions to the Energy Functional
@@ -377,7 +380,7 @@ Inside the wrapper, we reconstruct the complete displacement vector. We use JAX'
 
 
 ```python
-@eqx.filter_jit
+@jax.jit
 def total_energy_timoshenko_free(u_free, applied_disp):
     u_full = jnp.zeros(n_dofs).at[free_dofs].set(u_free)
     u_full = u_full.at[fixed_dofs].set(applied_disp)
@@ -420,6 +423,7 @@ def fn(u, fext, applied_disp):
 
 
 ```python
+
 u = jnp.zeros(n_dofs)
 fext = jnp.zeros(n_dofs)
 
@@ -444,6 +448,7 @@ hessian_fn = sparse.jacfwd(
     colored_matrix=colored_matrix,
     color_batch_size=len(jnp.unique(colored_matrix.colors)) + 1,
 )
+hessian_fn = jax.jit(hessian_fn)
 
 print(f"Time to compute Hessian: {time.time() - start_time:.2f} seconds")
 
@@ -452,11 +457,11 @@ max_iter = 20
 for step, load in enumerate(applied_loading):
     fext = fext.at[applied_dofs].set(load)
     fext_free = fext.at[free_dofs].get()
-    fn_partial = eqx.Partial(
+    fn_partial = partial(
         fn, fext=fext_free, applied_disp=jnp.zeros(len(fixed_dofs))
     )
 
-    hessian_partial = eqx.Partial(
+    hessian_partial = partial(
         hessian_fn, fext=fext_free, applied_disp=jnp.zeros(len(fixed_dofs))
     )
 
@@ -495,7 +500,7 @@ for step, load in enumerate(applied_loading):
     print(load, rnorm)
 ```
 
-    Time to compute Hessian: 1.29 seconds
+    Time to compute Hessian: 0.00 seconds
     0.0 0.0
     -0.05263157894736842 8.661987206383461e-16
     -0.10526315789473684 1.495195790406089e-15
@@ -584,3 +589,7 @@ The plots below show that our custom `tatva` element matches the theoretical val
 
 ![png](timoshenko_2d_beam_files/timoshenko_2d_beam_29_0.png)
 
+
+```python
+
+```
