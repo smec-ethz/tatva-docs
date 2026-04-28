@@ -191,6 +191,8 @@ We define a custom element class `HermiteBeamElement2D` that inherits from `tatv
             quad_points, quad_weights = jnp.array(pts), jnp.array(wts)
             return quad_points, quad_weights
     
+        def _reference_nodes(self):
+            return jnp.array([[-1.0, 0.0], [1.0, 0.0]])
     
     
         def shape_function(self, xi: Array) -> Array:
@@ -512,7 +514,7 @@ for step, load in enumerate(applied_loading):
     print(load, rnorm)
 ```
 
-    Time to compute Hessian: 0.01 seconds
+    Time to compute Hessian: 0.32 seconds
     0.0 0.0
     -0.05263157894736842 1.0226066339679528e-12
     -0.10526315789473684 2.1290628763345342e-12
@@ -599,3 +601,7 @@ The plots below show that our custom `tatva` element matches the theoretical val
 
 ![png](euler_bernoulli_2d_beam_files/euler_bernoulli_2d_beam_26_0.png)
 
+
+```python
+
+```
