@@ -1,6 +1,6 @@
 <div class="nb-header"><a href="https://colab.research.google.com/github/smec-ethz/tatva-docs/blob/main/notebooks/compound.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><a href="/assets/notebooks/compound.ipynb" download="compound.ipynb" class="nb-download-btn"><svg class="nb-download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-6-6 1.41-1.41L11 13.17V4h2v9.17l3.59-3.58L18 11l-6 6z"/><path d="M5 18h14v2H5z"/></svg> Download</a></div>
 
-# Multifield variable 
+# Multifield variables 
 
 In `tatva` we intend to define a total energy functional that takes a **flat** array $\mathbf{z}$ with all unknown DOFs and returns a scalar.
 However, the actual unknowns in $\mathbf{z}$ are most often **nodal fields** with a specific shape, $e.g$ a displacement field `(n_nodes, 2)`.
@@ -41,7 +41,7 @@ z = jnp.hstack([u.flatten(), p.flatten()])
     z = z.at[right_nodes * 2 + 1].set(0.0)
     ```
 
-    This quickly becomes hard to maintain when the number of fields grows. To ease this handling of multiple fields we provide utility [`Compound`](api/tatva.compound.md#compound)
+    This quickly becomes hard to maintain when the number of fields grows. To ease this handling of multiple fields we provide utility `Compound`
 
 ## Getting started with  `Compound`
 

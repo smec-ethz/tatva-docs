@@ -108,7 +108,6 @@ plugins:
               ignore_init_summary: true
             docstring_section_style: list
             filters: ["!^_"]
-            force_inspection: true
             heading_level: 3
             inherited_members: true
             merge_init_into_class: true
@@ -139,10 +138,10 @@ nav:
   - Home: "index.md"
   - Getting Started: "getting_started.md"
   - Basics of tatva:
-      - Creating Energy Functional: "operator.md"
-      - Building Stiffness Matrix: "sparse.md"
-      - Handling Multifield DoFs: "compound.md"
-      - Applying Constraints or BCs: "lifter.md"
+      - Operator- Creating Energy Functional: "operator.md"
+      - Sparse- Building Stiffness Matrix: "sparse.md"
+      - Compound- Handling Multifield DoFs: "compound.md"
+      - Lifter- Applying Constraints or BCs: "lifter.md"
       - Building Custom Elements: "custom_elements.md"
   - Examples:
       - Elasticity:
@@ -188,3 +187,5 @@ nav:
       - Sparse: "api/tatva.sparse.md"
       - Compound: "api/tatva.compound.md"
       - Lifter: "api/tatva.lifter.md"
+      - MPI: "api/tatva.mpi.md"
+      - Utils: "api/tatva.utils.md"
