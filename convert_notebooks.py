@@ -14,6 +14,13 @@ Usage:
     uv run convert_notebooks.py --check   # show what would be converted
     uv run convert_notebooks.py --inline  # embed images as base64 in the md
 
+Parallel notebook pairing:
+    If foo_parallel.ipynb exists alongside foo.ipynb, the two are merged into
+    a single page with Serial/Parallel content tabs. See CONTRIBUTING for the
+    cell tagging convention (cell.metadata.tags):
+        tab:some_id    — in both notebooks: shown as paired Serial/Parallel tabs
+        parallel-only  — in parallel notebook only: shown as a !!! note admonition
+
 Output layout (default):
     notebooks/examples/linear_elasticity.ipynb        <- source, edit this
     docs/examples/linear_elasticity.md                <- generated, committed
@@ -29,7 +36,10 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
+
+import nbformat
 
 ROOT = Path(__file__).parent
 NOTEBOOKS_DIR = ROOT / "notebooks"
@@ -44,16 +54,22 @@ GITHUB_REPO = "smec-ethz/tatva-docs"
 
 
 def find_notebooks() -> list[Path]:
-    return sorted(NOTEBOOKS_DIR.rglob("*.ipynb"))
+    """Return all notebooks, excluding _parallel variants (merged automatically)."""
+    return sorted(
+        nb for nb in NOTEBOOKS_DIR.rglob("*.ipynb")
+        if not nb.stem.endswith("_parallel")
+    )
 
 
 def needs_conversion(nb_path: Path) -> bool:
-    """Return True if the notebook is newer than its corresponding markdown."""
+    """Return True if the notebook (or its parallel pair) is newer than the markdown."""
     rel = nb_path.relative_to(NOTEBOOKS_DIR)
     md_path = DOCS_DIR / rel.parent / (nb_path.stem + ".md")
     if not md_path.exists():
         return True
-    return nb_path.stat().st_mtime > md_path.stat().st_mtime
+    parallel_path = nb_path.parent / (nb_path.stem + "_parallel.ipynb")
+    sources = [nb_path] + ([parallel_path] if parallel_path.exists() else [])
+    return any(s.stat().st_mtime > md_path.stat().st_mtime for s in sources)
 
 
 def convert_notebook(nb_path: Path, inline: bool = False) -> Path:
@@ -62,19 +78,48 @@ def convert_notebook(nb_path: Path, inline: bool = False) -> Path:
     out_dir = DOCS_DIR / rel.parent
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    result = subprocess.run(
-        [
-            "jupyter",
-            "nbconvert",
-            "--to",
-            "markdown",
-            "--output-dir",
-            str(out_dir),
-            str(nb_path),
-        ],
-        capture_output=True,
-        text=True,
+    parallel_path = nb_path.parent / (nb_path.stem + "_parallel.ipynb")
+    parallel_rel = (
+        parallel_path.relative_to(NOTEBOOKS_DIR) if parallel_path.exists() else None
     )
+
+    if parallel_path.exists():
+        serial_nb = nbformat.read(nb_path, as_version=4)
+        parallel_nb = nbformat.read(parallel_path, as_version=4)
+        merged_nb = _merge_notebooks(serial_nb, parallel_nb)
+
+        with tempfile.NamedTemporaryFile(
+            suffix=".ipynb", mode="w", delete=False, encoding="utf-8"
+        ) as f:
+            nbformat.write(merged_nb, f)
+            tmp_path = Path(f.name)
+
+        try:
+            result = subprocess.run(
+                [
+                    "jupyter", "nbconvert", "--to", "markdown",
+                    "--output", nb_path.stem,
+                    "--output-dir", str(out_dir),
+                    "--TagRemovePreprocessor.enabled=True",
+                    '--TagRemovePreprocessor.remove_input_tags=["remove_input"]',
+                    str(tmp_path),
+                ],
+                capture_output=True,
+                text=True,
+            )
+        finally:
+            tmp_path.unlink(missing_ok=True)
+    else:
+        result = subprocess.run(
+            [
+                "jupyter", "nbconvert", "--to", "markdown",
+                "--output-dir", str(out_dir),
+                str(nb_path),
+            ],
+            capture_output=True,
+            text=True,
+        )
+
     if result.returncode != 0:
         print(f"  ERROR: {result.stderr.strip()}", file=sys.stderr)
         raise RuntimeError(f"nbconvert failed for {nb_path}")
@@ -84,13 +129,17 @@ def convert_notebook(nb_path: Path, inline: bool = False) -> Path:
     if inline:
         _inline_images(md_path)
 
-    # Copy notebook as static asset for download
+    # Copy serial notebook as static asset for download
     asset_path = DOCS_DIR / "assets" / "notebooks" / rel
     asset_path.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(nb_path, asset_path)
 
-    # Apply post-processing (badges, collapse directives, tags)
-    _post_process(md_path, nb_rel=rel)
+    # Copy parallel notebook as static asset too (if present)
+    if parallel_rel:
+        parallel_asset = DOCS_DIR / "assets" / "notebooks" / parallel_rel
+        shutil.copy2(parallel_path, parallel_asset)
+
+    _post_process(md_path, nb_rel=rel, parallel_nb_rel=parallel_rel)
 
     return md_path
 
@@ -116,22 +165,251 @@ def _inline_images(md_path: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Notebook merging: serial + parallel → tabbed synthetic notebook
+# ---------------------------------------------------------------------------
+
+
+def _get_tags(cell: dict) -> list[str]:
+    return cell.get("metadata", {}).get("tags", [])
+
+
+def _get_tab_tag(cell: dict) -> str | None:
+    for tag in _get_tags(cell):
+        if tag.startswith("tab:"):
+            return tag
+    return None
+
+
+def _extract_text_outputs(cell) -> str:
+    """Return all text/stream outputs from a cell as a single string."""
+    parts = []
+    for output in cell.get("outputs", []):
+        otype = output.get("output_type", "")
+        if otype == "stream":
+            parts.append("".join(output.get("text", [])))
+        elif otype in ("execute_result", "display_data"):
+            text = output.get("data", {}).get("text/plain", "")
+            if isinstance(text, list):
+                text = "".join(text)
+            if text:
+                parts.append(text)
+    return "".join(parts).rstrip()
+
+
+def _has_image_outputs(cell) -> bool:
+    for output in cell.get("outputs", []):
+        if any(k.startswith("image/") for k in output.get("data", {})):
+            return True
+    return False
+
+
+def _associate_parallel_only_cells(parallel_cells: list) -> list:
+    """Scan the parallel notebook and cluster parallel-only cells with their
+    nearest tab cell so they can be embedded inside the Parallel tab block.
+
+    Returns a list of events:
+      ('shared', cell)
+      ('tab', tab_id, cell, before_po, after_po)
+        where before_po / after_po are parallel-only cells immediately
+        preceding / following this tab cell (with no intervening shared cell).
+      ('standalone-po', cell)
+        parallel-only cells that are not adjacent to any tab cell.
+    """
+    n = len(parallel_cells)
+    is_tab = [bool(_get_tab_tag(c)) for c in parallel_cells]
+    is_po = ["parallel-only" in _get_tags(c) for c in parallel_cells]
+
+    events: list = []
+    i = 0
+    while i < n:
+        if is_po[i]:
+            # Buffer parallel-only cells; attach to the next/prev tab
+            events.append(("_pending_po", parallel_cells[i]))
+            i += 1
+        elif is_tab[i]:
+            # Pop pending parallel-only cells as before_po
+            before_po = [e[1] for e in events if e[0] == "_pending_po"]
+            events = [e for e in events if e[0] != "_pending_po"]
+
+            # Collect parallel-only cells immediately after this tab
+            after_po = []
+            j = i + 1
+            while j < n and is_po[j]:
+                after_po.append(parallel_cells[j])
+                j += 1
+
+            events.append(("tab", _get_tab_tag(parallel_cells[i]), parallel_cells[i], before_po, after_po))
+            i = j  # skip the consumed after_po cells
+        else:
+            # Shared cell — flush any pending parallel-only cells as standalone
+            for e in events:
+                if e[0] == "_pending_po":
+                    events_copy = [ev for ev in events if ev[0] != "_pending_po"]
+                    # replace inline
+                    break
+            standalone = [("standalone-po", e[1]) for e in events if e[0] == "_pending_po"]
+            events = [e for e in events if e[0] != "_pending_po"] + standalone
+            events.append(("shared", parallel_cells[i]))
+            i += 1
+
+    # Flush any trailing pending-po as standalone
+    result = []
+    for e in events:
+        if e[0] == "_pending_po":
+            result.append(("standalone-po", e[1]))
+        else:
+            result.append(e)
+    return result
+
+
+def _make_tab_markdown_cell(
+    serial_cell,
+    parallel_cell,
+    before_po: list | None = None,
+    after_po: list | None = None,
+) -> nbformat.NotebookNode:
+    """Return a markdown cell with Serial/Parallel content tabs.
+
+    parallel-only cells adjacent to this tab are embedded inside the Parallel
+    tab block so they appear/disappear automatically with tab switching.
+    Text outputs from the serial cell are embedded inside the Serial tab.
+    Image outputs are handled by a separate remove_input cell.
+    """
+    serial_src = "".join(serial_cell["source"])
+    parallel_src = "".join(parallel_cell["source"])
+    serial_text_out = _extract_text_outputs(serial_cell)
+
+    def indent(s: str) -> str:
+        return "\n".join(f"    {line}" for line in s.splitlines())
+
+    def po_admonition(po_cell) -> str:
+        src = "".join(po_cell["source"])
+        if po_cell["cell_type"] == "code":
+            return f'!!! note "Parallel"\n\n    ```python\n{indent(src)}\n    ```'
+        return f'!!! note "Parallel"\n\n{indent(src)}'
+
+    def embed_in_tab(block: str) -> str:
+        """Indent a block by 4 spaces for placement inside a tab."""
+        return "    " + block.replace("\n", "\n    ").rstrip()
+
+    # --- Serial tab ---
+    serial_tab = '=== "Serial"\n\n    ```python\n' + indent(serial_src) + "\n    ```"
+    if serial_text_out:
+        serial_tab += "\n\n    ```\n" + indent(serial_text_out) + "\n    ```"
+
+    # --- Parallel tab ---
+    parallel_parts = ['=== "Parallel"\n']
+    for po in (before_po or []):
+        parallel_parts.append("\n" + embed_in_tab(po_admonition(po)) + "\n")
+    parallel_parts.append("\n    ```python\n" + indent(parallel_src) + "\n    ```")
+    for po in (after_po or []):
+        parallel_parts.append("\n\n" + embed_in_tab(po_admonition(po)))
+
+    parallel_tab = "".join(parallel_parts)
+
+    return nbformat.v4.new_markdown_cell(source=serial_tab + "\n\n" + parallel_tab)
+
+
+def _make_outputs_only_cell(serial_cell) -> nbformat.NotebookNode:
+    """Return a code cell carrying only the serial cell's image outputs.
+
+    Tagged remove_input so nbconvert hides the empty source block.
+    Text outputs are embedded in the tab markdown cell instead.
+    """
+    cell = nbformat.v4.new_code_cell(source="")
+    cell["outputs"] = [
+        o for o in serial_cell.get("outputs", [])
+        if any(k.startswith("image/") for k in o.get("data", {}))
+        or o.get("output_type") == "display_data"
+    ]
+    cell["metadata"]["tags"] = ["remove_input"]
+    return cell
+
+
+def _make_standalone_parallel_only_cell(cell) -> nbformat.NotebookNode:
+    """Wrap a parallel-only cell that has no adjacent tab in a note admonition."""
+    src = "".join(cell["source"])
+
+    def indent(s: str) -> str:
+        return "\n".join(f"    {line}" for line in s.splitlines())
+
+    if cell["cell_type"] == "code":
+        content = f'!!! note "Parallel"\n\n    ```python\n{indent(src)}\n    ```'
+    else:
+        content = f'!!! note "Parallel"\n\n{indent(src)}'
+
+    return nbformat.v4.new_markdown_cell(source=content)
+
+
+def _merge_notebooks(
+    serial_nb: nbformat.NotebookNode, parallel_nb: nbformat.NotebookNode
+) -> nbformat.NotebookNode:
+    """Build a synthetic notebook merging serial and parallel variants.
+
+    - Variant cells (tab:id in both) → Serial/Parallel content tabs.
+      Adjacent parallel-only cells are embedded inside the Parallel tab block
+      so they appear/disappear with tab switching (no JS needed).
+    - Standalone parallel-only cells (no adjacent tab) → !!! note admonition.
+    - Shared cells → taken from the serial notebook (preserving its outputs).
+    """
+    serial_cells = serial_nb["cells"]
+    parallel_cells = parallel_nb["cells"]
+
+    serial_by_tag = {_get_tab_tag(c): c for c in serial_cells if _get_tab_tag(c)}
+    serial_shared = [
+        c for c in serial_cells
+        if not _get_tab_tag(c) and "parallel-only" not in _get_tags(c)
+    ]
+    serial_shared_idx = 0
+
+    synthetic: list[nbformat.NotebookNode] = []
+    for event in _associate_parallel_only_cells(parallel_cells):
+        kind = event[0]
+        if kind == "shared":
+            if serial_shared_idx < len(serial_shared):
+                synthetic.append(serial_shared[serial_shared_idx])
+                serial_shared_idx += 1
+            else:
+                synthetic.append(event[1])
+        elif kind == "tab":
+            _, tab_id, parallel_cell, before_po, after_po = event
+            serial_cell = serial_by_tag.get(tab_id)
+            if serial_cell:
+                synthetic.append(_make_tab_markdown_cell(serial_cell, parallel_cell, before_po, after_po))
+                if _has_image_outputs(serial_cell):
+                    synthetic.append(_make_outputs_only_cell(serial_cell))
+            else:
+                synthetic.append(parallel_cell)
+        elif kind == "standalone-po":
+            synthetic.append(_make_standalone_parallel_only_cell(event[1]))
+
+    merged = nbformat.from_dict(dict(serial_nb))
+    merged["cells"] = synthetic
+    return merged
+
+
+# ---------------------------------------------------------------------------
 # Post-processing: badges, collapse directives, tags
 # ---------------------------------------------------------------------------
 
 
-def _post_process(md_path: Path, nb_rel: Path) -> None:
+def _post_process(
+    md_path: Path, nb_rel: Path, parallel_nb_rel: Path | None = None
+) -> None:
     content = md_path.read_text()
-    content, frontmatter = _extract_tags(content)  # remove YAML frontmatter
+    content, frontmatter = _extract_tags(content)
     content = _apply_cell_directives(content)
-    content = _prepend_header(
-        content, nb_rel, frontmatter
-    )  # frontmatter + badges before content
+    content = _prepend_header(content, nb_rel, frontmatter, parallel_nb_rel)
     md_path.write_text(content)
 
 
-def _prepend_header(content: str, nb_rel: Path, frontmatter: str = "") -> str:
-    """Prepend YAML frontmatter (if present), then Colab badge and download button."""
+def _prepend_header(
+    content: str,
+    nb_rel: Path,
+    frontmatter: str = "",
+    parallel_nb_rel: Path | None = None,
+) -> str:
+    """Prepend YAML frontmatter (if present), then Colab badge and download button(s)."""
     tag = os.environ.get("LIB_TAG", "main")
     nb_rel_str = nb_rel.as_posix()
 
@@ -144,14 +422,30 @@ def _prepend_header(content: str, nb_rel: Path, frontmatter: str = "") -> str:
         '<path d="M5 18h14v2H5z"/>'
         "</svg>"
     )
+
+    if parallel_nb_rel:
+        parallel_download_path = f"/assets/notebooks/{parallel_nb_rel.as_posix()}"
+        download_btns = (
+            f'<a href="{download_path}" download="{nb_rel.name}" class="nb-download-btn">'
+            f"{download_icon} Serial"
+            "</a>"
+            f'<a href="{parallel_download_path}" download="{parallel_nb_rel.name}" class="nb-download-btn">'
+            f"{download_icon} Parallel"
+            "</a>"
+        )
+    else:
+        download_btns = (
+            f'<a href="{download_path}" download="{nb_rel.name}" class="nb-download-btn">'
+            f"{download_icon} Download"
+            "</a>"
+        )
+
     header = (
         '<div class="nb-header">'
         f'<a href="{colab_url}" target="_blank">'
         '<img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>'
         "</a>"
-        f'<a href="{download_path}" download="{nb_rel.name}" class="nb-download-btn">'
-        f"{download_icon} Download"
-        "</a>"
+        f"{download_btns}"
         "</div>\n\n"
     )
     prefix = frontmatter + "\n\n" if frontmatter else ""

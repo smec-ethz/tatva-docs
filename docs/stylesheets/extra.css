@@ -155,6 +155,15 @@
     margin-top: 0;
 }
 
+/* Tab labels and active indicator: accent colour */
+.md-typeset .tabbed-labels > label {
+    color: var(--md-accent-fg-color) !important;
+}
+
+.md-typeset .tabbed-labels:before {
+    background: var(--md-accent-fg-color) !important;
+}
+
 /* Center images that are the ONLY thing in the paragraph */
 .md-typeset p > img:only-child {
     display: block;

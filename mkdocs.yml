@@ -13,6 +13,7 @@ theme:
     - announce.dismiss
     - content.code.annotate
     - content.code.copy
+    - content.tabs.link
     - content.tooltips
     - navigation.instant.preview
     - navigation.tabs
@@ -143,6 +144,8 @@ nav:
       - Lifter- Applying Constraints or BCs: "lifter.md"
       - Building Custom Elements: "custom_elements.md"
   - Examples:
+      - Demo:
+          - "examples/vmap_demo.md"
       - Elasticity:
           - "examples/linear_elasticity.md"
       - Hyperelasticity:
