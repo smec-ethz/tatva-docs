@@ -76,6 +76,17 @@ way.
   </div>
 </div>
 
+<p style="margin-top:5cm;"></p>
+<div style="width: 100%; margin: 20px 0;">
+    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7469644702548426752?collapsed=1" 
+            height="600" 
+            style="width: 100%; border: none;" 
+            frameborder="0" 
+            allowfullscreen="" 
+            title="">
+    </iframe>
+</div>
+
 <div style="width: 100%; margin: 20px 0;">
     <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7442949970275504128?collapsed=1" 
             height="600" 
