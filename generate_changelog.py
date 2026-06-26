@@ -32,6 +32,34 @@ def fetch_releases():
         print(f"Unexpected error: {e}")
         return None
 
+def dedent_lines(lines):
+    non_empty_lines = [line for line in lines if line.strip()]
+    if not non_empty_lines:
+        return lines
+    
+    # Calculate leading spaces for each non-empty line
+    indents = []
+    for line in non_empty_lines:
+        indent = 0
+        for char in line:
+            if char == ' ':
+                indent += 1
+            else:
+                break
+        indents.append(indent)
+        
+    min_indent = min(indents)
+    if min_indent > 0:
+        # Dedent each line by min_indent spaces
+        dedented = []
+        for line in lines:
+            if line.startswith(' ' * min_indent):
+                dedented.append(line[min_indent:])
+            else:
+                dedented.append(line.lstrip(' '))
+        return dedented
+    return lines
+
 def main():
     print("Fetching release notes from GitHub...")
     releases = fetch_releases()
@@ -71,12 +99,33 @@ def main():
             # Format markdown body (ensure proper header levels for material theme)
             # Remove duplicate version headers and demote other headers by 1 level
             version_clean = tag.lstrip('v')
-            version_header_pattern = re.compile(rf"^#+\s+\[?v?{re.escape(version_clean)}\]?")
+            version_header_pattern = re.compile(rf"^\s*#+\s+\[?v?{re.escape(version_clean)}\]?")
             
             lines = body.splitlines()
             formatted_lines = []
+            in_code_block = False
+            code_block_lines = []
+            code_block_marker = ""
             for line in lines:
-                header_match = re.match(r"^(#+)\s+(.*)$", line)
+                if re.match(r"^\s*```", line):
+                    if not in_code_block:
+                        in_code_block = True
+                        code_block_marker = line.strip()
+                        code_block_lines = []
+                    else:
+                        in_code_block = False
+                        dedented = dedent_lines(code_block_lines)
+                        formatted_lines.append(code_block_marker)
+                        for cb_line in dedented:
+                            formatted_lines.append(cb_line.rstrip())
+                        formatted_lines.append(line.strip())
+                    continue
+                    
+                if in_code_block:
+                    code_block_lines.append(line)
+                    continue
+
+                header_match = re.match(r"^\s*(#+)\s+(.*)$", line)
                 if header_match:
                     hashes = header_match.group(1)
                     content = header_match.group(2)
@@ -85,9 +134,22 @@ def main():
                     if version_header_pattern.match(line):
                         continue
                         
-                    # Force H4 (####) for "What's Changed" and "New Contributors", otherwise demote by 1 level
+                    # Force H4 (####) for standard section headings, otherwise demote by 1 level
                     content_clean = content.strip().lower().replace("’", "'")
-                    if "what's changed" in content_clean or "contributors" in content_clean:
+                    forced_h4_keywords = [
+                        "what's changed",
+                        "contributors",
+                        "breaking changes",
+                        "features",
+                        "bug fixes",
+                        "performance improvements",
+                        "refactoring",
+                        "documentation",
+                        "dependency updates",
+                        "dependencies",
+                        "chore",
+                    ]
+                    if any(kw in content_clean for kw in forced_h4_keywords):
                         new_level = 4
                     else:
                         new_level = min(len(hashes) + 1, 6)

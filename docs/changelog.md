@@ -8,6 +8,111 @@ hide:
 
 All releases and changes for the `tatva` library, pulled directly from GitHub.
 
+## [0.11.0](https://github.com/smec-ethz/tatva/releases/tag/v0.11.0) (2026-06-26)
+
+
+This release simplifies and unifies the sparsity pattern generation API across the codebase. It introduces automatic JAX-trace-based sparsity detection directly from energy and virtual work formulations, moves sparsity generation logic out of the    `Compound` class, and consolidates sparsity augmentation/reduction under the `Lifter` class.
+  
+#### Breaking Changes
+  
+ * **Removed/Deprecated Sparse APIs**: The following helper functions have been removed from `tatva.sparse` and will now raise an `ImportError` if called:
+      * `create_sparsity_pattern` (replaced by `pattern_from_mesh`)
+      * `reduce_sparsity_pattern` (replaced by `Lifter.adapt_sparsity`)
+      * `create_sparsity_pattern_KKT`
+      * `create_sparsity_pattern_master_slave`
+      * `get_bc_indices`
+ * **Compound Sparsity Method Removed**: Removed the class method `Compound.get_sparsity()` to decouple structure layout from sparsity generation.
+ * **Coloring Functions Hidden**: Removed `distance2_colors`, `largest_degree_first_distance2_colors`, and `smallest_last_distance2_colors` from the public `tatva.sparse` namespace.
+  
+#### New Features & Refactoring
+  
+  * **Automatic JAX Sparsity Tracing**:
+      * `pattern_from_energy(energy_fn, n_dofs, *static_args)`: Automatically traces and returns the symmetric CSR sparsity pattern of the Hessian (d²E/du²) for a scalar energy function.
+      * `pattern_from_virtual_work(virtual_work_fn, n_dofs, trial_arg, test_arg, *static_args)`: Automatically traces and returns the tangent stiffness matrix sparsity pattern (d²G/dvdu) from a virtual work function.
+ * **Unified Sparsity Extraction Helpers**:
+      * `pattern_from_mesh(mesh, n_dofs_per_node)`: Standardized mesh-based sparsity generation.
+      * `pattern_from_compound(compound_cls, block_wise=False)`: Extracted compound class sparsity generation to the sparse module.
+* **Unified Reduction and Constraint Handling**:
+      * Added `Lifter.adapt_sparsity(sparsity)` to automate both the augmentation (adding master-slave coupling) and reduction (retaining only free DOFs) of a sparsity pattern in a single call.
+  
+
+### Usage Examples (Tracer with Boundary Conditions)                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                            
+By passing a `Lifter` as a static argument, you can trace the sparsity of the reduced system (accounting for boundary conditions) directly:
+
+
+#### 1. Energy-Based Tracer with BCs                                                                                                                                                                                                                     
+
+```python
+import jax
+import jax.numpy as jnp
+from tatva.sparse import pattern_from_energy
+
+@jax.jit
+def total_energy(u):
+    # Compute full potential energy
+    return ...
+
+@jax.jit
+def energy_free(u_free, lf):
+    # Map free DOFs to full state accounting for BCs
+    u_full = lf.lift_from_zeros(u_free)
+    return total_energy(u_full)
+
+# Trace sparsity of the reduced Hessian directly
+traced_reduced_sparsity = pattern_from_energy(
+    energy_free,
+    lifter.size_reduced,
+    lifter  # Passed as static_args
+)
+```
+  
+#### 2. Virtual Work-Based Tracer with BCs
+ 
+
+```python
+import jax
+import jax.numpy as jnp
+from tatva.sparse import pattern_from_virtual_work
+
+@jax.jit
+def virtual_work(test, trial):
+    # Compute virtual work G(test, trial)
+    return ...
+
+@jax.jit
+def virtual_work_free(test_free, trial_free, lf):
+    # Map free trial and test variables to full states
+    test_full = lf.lift_from_zeros(test_free)
+    trial_full = lf.lift_from_zeros(trial_free)
+    return virtual_work(test_full, trial_full)
+
+# Trace sparsity of the reduced tangent stiffness matrix directly
+traced_reduced_sparsity = pattern_from_virtual_work(
+    virtual_work_free,
+    lifter.size_reduced,
+    "trial_free",
+    "test_free",
+    lifter  # Passed as static_args
+)
+```
+  
+
+#### Features
+
+* changes to the api for creating and reducing sparsity pattern ([f2a5d2e](https://github.com/smec-ethz/tatva/commit/f2a5d2e454c9494851bec8f69b36f5608af26800))
+* **sparse:** adds automatic sparsity detection from energy form ([4359503](https://github.com/smec-ethz/tatva/commit/4359503487a80fa449e65dee386c83e31fd9cb4a))
+
+
+#### Bug Fixes
+
+* add custom_vjp/custom_jvp/remat primitives for tracing ([38ab604](https://github.com/smec-ethz/tatva/commit/38ab60471559ae604577380a050a9497b90c0f03))
+* add full test suite for checking if all jax primitives are covered ([558ead9](https://github.com/smec-ethz/tatva/commit/558ead9cf649432d44fe4b3dd90d78f20a74046b))
+* add test for sparsity tracer based on fem application ([3311f78](https://github.com/smec-ethz/tatva/commit/3311f784cd0ce08141fc6bbe0aa6366266e218a5))
+* add tracer for opaque primitive such as ffi/callback and debug ([83b0475](https://github.com/smec-ethz/tatva/commit/83b0475d12a0c27a0f5dd3600259c514b82b95b1))
+* only consider trial-test pair for coupling, vectorize python for-loop inside scan_mp for speed up ([3f104d4](https://github.com/smec-ethz/tatva/commit/3f104d496232142002146e33ff937a0a469336a3))
+
+
 ## [0.10.1](https://github.com/smec-ethz/tatva/releases/tag/v0.10.1) (2026-04-27)
 
 
