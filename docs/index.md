@@ -67,7 +67,7 @@ way.
     <p>Energy-based formulation of FEM operators with automatic differentiation via JAX. Just write energy and differentiate it directly.</p>
   </div>
   <div class="card">
-    <h3>Versitality</h3>
+    <h3>Versatility</h3>
     <p> Operator abstractions that map, integrate, differentiate on arbitrary meshes. Capability to handle mixed-dimension coupling, multi-point constaints, and more. </p>
   </div>
   <div class="card">

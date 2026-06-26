@@ -1,0 +1,239 @@
+---
+title: Changelog
+hide:
+  - navigation
+---
+
+# Changelog
+
+All releases and changes for the `tatva` library, pulled directly from GitHub.
+
+## [0.10.1](https://github.com/smec-ethz/tatva/releases/tag/v0.10.1) (2026-04-27)
+
+
+
+#### Bug Fixes
+
+* **compound:** create basic sparsity pattern from compound classes ([9d959d6](https://github.com/smec-ethz/tatva/commit/9d959d651403a4850e13dfd813e0d8bd94a96aaf))
+* **compound:** incomplete nodal fields takes the local node ids now ([a939beb](https://github.com/smec-ethz/tatva/commit/a939beb5d9b9b3145d544197560b46fa184465d9))
+* **compound:** stack fields with any dims if prefix is same & respect stack=False ([cd64646](https://github.com/smec-ethz/tatva/commit/cd646469439f91fb646a7501d6b9dddbc4c2bce9))
+* **element:** add value based equality for elements ([ab784c5](https://github.com/smec-ethz/tatva/commit/ab784c5cb2266670220737f08980c7d1c57a27da))
+* **element:** corrects the gradient enteries ([91aef4c](https://github.com/smec-ethz/tatva/commit/91aef4c7de157acecbd10d49d15a12212ff2f143))
+* **element:** use einsum to support scalar, vector, and tensor fields ([19cf253](https://github.com/smec-ethz/tatva/commit/19cf2536ccca7f9c37f4d110c1292362dcd58a49))
+* **lifter:** add adapt_sparsity which combines augment & reduce ([af6db56](https://github.com/smec-ethz/tatva/commit/af6db56100c24d4824566cef5f07d58ae3eb4de3))
+
+
+## [0.10.0](https://github.com/smec-ethz/tatva/releases/tag/v0.10.0) (2026-04-23)
+
+
+
+#### Features
+
+* **constraint:** parallel periodic constraint ([f29ac8b](https://github.com/smec-ethz/tatva/commit/f29ac8b8a757fd2625ab08ff233fc5a2d9aa0e46))
+* **lifter:** add reduce_adjoint to reduce a dual vector ([deead9c](https://github.com/smec-ethz/tatva/commit/deead9c0b4470a9f54bf07de8fcbab5b8a8405fb))
+* **mesh:** add utility function to extract local mesh from global mesh ([0673b38](https://github.com/smec-ethz/tatva/commit/0673b38e34e08c2f456107d502affa40a29efa6b))
+* **mpi:** add a communication plan for partitioned meshes based on Compound layouts ([4e98892](https://github.com/smec-ethz/tatva/commit/4e98892d3653c19c8e8afd194c41605aac03428f))
+* **mpi:** add all reduce plan for parallelization ([79fc638](https://github.com/smec-ethz/tatva/commit/79fc63898ef7437481e78ecfc42c88ebe746d326))
+* **sparse:** add sparsity pattern augmentation with lifter constraints ([54daf22](https://github.com/smec-ethz/tatva/commit/54daf228e22f405635dbf2231ac9e5d776be00e0))
+
+
+#### Bug Fixes
+
+* **compound:** add helper to return global dof indices for Compound fields ([e4abd97](https://github.com/smec-ethz/tatva/commit/e4abd97f67c7e6eebdd09f7184029a1024d4cdfd))
+* **compound:** allow inheritance of Compound subclasses ([1dc9e51](https://github.com/smec-ethz/tatva/commit/1dc9e5126a1d6545d1df50a68dc843f9522bdad2))
+* **compound:** clarify stacking logic & introduce AUTO sizing ([3a3168a](https://github.com/smec-ethz/tatva/commit/3a3168af7ed61b27294f6d2b9db89502d1f2139b))
+* **compound:** correct global indexing into stacked fields ([8bae34d](https://github.com/smec-ethz/tatva/commit/8bae34d1faee2072c3e2dd6ce99090dad1bd26bb))
+* **compound:** prevent fields with reserved names, prevent stacking with stack=False ([5e4947e](https://github.com/smec-ethz/tatva/commit/5e4947ea92adced601d7ae0a40f67414438b1528))
+* **compound:** remove metaclass and move initialization to init_subclass ([1dc9e51](https://github.com/smec-ethz/tatva/commit/1dc9e5126a1d6545d1df50a68dc843f9522bdad2))
+* **compound:** type of fields with AUTO in shape are NODAL by default ([356b4a0](https://github.com/smec-ethz/tatva/commit/356b4a032cd3b74b99b8f48b21fcb7f7cecfa2e0))
+* **constraint:** bug in sparsity pattern for periodic constraint ([e1069f8](https://github.com/smec-ethz/tatva/commit/e1069f846250b9ea581a71d2f50d01ff84b7f8a9))
+* **mpi:** add function to reduce a dof layout (for lifter) ([32173d0](https://github.com/smec-ethz/tatva/commit/32173d09cf7dfd761125cc4b6c278bffdd1e47fa))
+* **mpi:** exchange plan accepts sparsity pattern, allreduce also replace indptr, indices ([3dcd509](https://github.com/smec-ethz/tatva/commit/3dcd50927593ce53d8a5762187aa77ea1413dae2))
+* **mpi:** makes hessian sparsity as optional arg in allreduce ([a1d4b6b](https://github.com/smec-ethz/tatva/commit/a1d4b6b5a33a160172518a016782986a0c01036b))
+* **test:** update test ([79fc638](https://github.com/smec-ethz/tatva/commit/79fc63898ef7437481e78ecfc42c88ebe746d326))
+
+
+## [0.9.1](https://github.com/smec-ethz/tatva/releases/tag/v0.9.1) (2026-04-12)
+
+
+
+#### Bug Fixes
+
+* **sparse:** add linearized jacfwd with primal output ([af72244](https://github.com/smec-ethz/tatva/commit/af722445636105bf194d3fc317ecee3efa67a222))
+
+
+## [0.9.0](https://github.com/smec-ethz/tatva/releases/tag/v0.9.0) (2026-03-27)
+
+
+
+#### Features
+
+* **lifter:** add lifted method/decorator to lift functions ([2077ffb](https://github.com/smec-ethz/tatva/commit/2077ffb68d4cf16f322b6486bf3db93dde8ec9e7))
+* **operator:** add an L2 `project` method ([98a16d6](https://github.com/smec-ethz/tatva/commit/98a16d60f76285ca63d2b5c6365a2a7d952295f6))
+
+
+#### Bug Fixes
+
+* **compound:** add Field.size attribute ([cf8505d](https://github.com/smec-ethz/tatva/commit/cf8505d9d375b4a69680871553832b6bd844a100))
+* **lifter:** make dof arrays dynamic Array ([b2222bc](https://github.com/smec-ethz/tatva/commit/b2222bce7a75e163842093038c8639202c63a2a0))
+* **mesh:** add _replace helper to update dataclass ([2c1d9b6](https://github.com/smec-ethz/tatva/commit/2c1d9b617d46c1a57fb345351e20e5446eafbdad))
+* **mesh:** add hmin and hmax methods ([489b76a](https://github.com/smec-ethz/tatva/commit/489b76a03fee2b7568f59b5eb982eda878f47152))
+* **mesh:** hmin/hmax is the cell diameter which is 2*circumradius ([6167223](https://github.com/smec-ethz/tatva/commit/61672235b9ee28c2d2c8004be78dae477c579d20))
+* **mesh:** hotfix find_containing_polygons that points exactly on boundary are valid ([3f95f2f](https://github.com/smec-ethz/tatva/commit/3f95f2f6f6e5354dca38e87e6dadb0fd0ac1f536))
+* minor fixes from code review ([97c6bd4](https://github.com/smec-ethz/tatva/commit/97c6bd4e1969428ffc365aefb1705bba082bc882))
+* **operator:** make interpolate jittable ([d9fe62b](https://github.com/smec-ethz/tatva/commit/d9fe62bf6f179879de90ab7e0f428aace7a0aa8d))
+* **operator:** set batch_size if None given ([e57b362](https://github.com/smec-ethz/tatva/commit/e57b3629a620c050fb2b886e64ed1c997dc65280))
+* **operator:** skip element bounds checks in traced context ([1b7a0a7](https://github.com/smec-ethz/tatva/commit/1b7a0a77f9245ce1d69a9f42ffac25b11588ddef))
+* **sparse:** make default for color_batch_size None but assign 0 ([071af07](https://github.com/smec-ethz/tatva/commit/071af0709470586f46ba615e6a3f2eefd9b56351))
+* **sparse:** revert the default for colored_batch_size to max color ([9ee95da](https://github.com/smec-ethz/tatva/commit/9ee95da5be03cb0a5339cd80700256dd273ab474))
+* **sparse:** set default color_batch_size=max_color ([2683d89](https://github.com/smec-ethz/tatva/commit/2683d891510cfcb9f2e7cb511d3309289ac5718a))
+
+
+#### Performance Improvements
+
+* **mesh:** AABB search for interpolation in triangles ([32ff68d](https://github.com/smec-ethz/tatva/commit/32ff68d12da2b2a37e6bbc28ad1a5800c0fdc0ea))
+
+
+## [0.8.1](https://github.com/smec-ethz/tatva/releases/tag/v0.8.1) (2026-03-23)
+
+
+
+#### Bug Fixes
+
+* make ColoredMatrix compatible with JAX&gt;0.9.0 ([ac51668](https://github.com/smec-ethz/tatva/commit/ac51668bc4c0b480f32f73acac0f4aff04758e92))
+
+
+## [0.8.0](https://github.com/smec-ethz/tatva/releases/tag/v0.8.0) (2026-03-16)
+
+
+
+#### Features
+
+* add quadratic Tri6 element ([37cf37a](https://github.com/smec-ethz/tatva/commit/37cf37a1c9995fa3eeb33ed59523ef017d1e5743))
+* **compound:** add .at(...).set(...) logic to set subspaces ([84d0c8d](https://github.com/smec-ethz/tatva/commit/84d0c8dabe21dc5f3f42884683741097db80ec28))
+* **compound:** add ability to provide individual shaped fields in init ([921f6c4](https://github.com/smec-ethz/tatva/commit/921f6c421371129502ed91c1fbdfb3c3c63b5f2d))
+* **utils:** add a decorator for virtual residual functions ([#32](https://github.com/smec-ethz/tatva/issues/32)) ([c2d6db3](https://github.com/smec-ethz/tatva/commit/c2d6db3d430f57191e80a7d09ab3e88fb6a2725e))
+
+
+#### Bug Fixes
+
+* **compound:** fix compound stack_fields for scalar fields ([92bf79f](https://github.com/smec-ethz/tatva/commit/92bf79f564ab73f8d5c26d58c9eec7e933eb5c7f))
+* **compound:** include default factory when recreating stacked fields ([9ef3972](https://github.com/smec-ethz/tatva/commit/9ef39729b2a8617cf91eb7c127d3442c27d6d3a6))
+* **compound:** manage field indices, and arr updates without materializing a dense integer array of all indices ([17897a1](https://github.com/smec-ethz/tatva/commit/17897a1de546cf4ece27fe516db43b526ed35288))
+* **compound:** preserve shape of scalar fields (don't enforce rank 2) ([92bf79f](https://github.com/smec-ethz/tatva/commit/92bf79f564ab73f8d5c26d58c9eec7e933eb5c7f))
+* **compound:** remove compound metaclass getitem ([e42ad40](https://github.com/smec-ethz/tatva/commit/e42ad409c1b7e181b20cc8196e984f3fa6950ad8))
+* **element:** move quadrature to instance, add quadrature as constructor args ([#27](https://github.com/smec-ethz/tatva/issues/27)) ([06c9c19](https://github.com/smec-ethz/tatva/commit/06c9c19668881f537f160e2a9eaec16e44487f18))
+
+
+## [0.7.1](https://github.com/smec-ethz/tatva/releases/tag/v0.7.1) (2026-02-24)
+
+
+
+#### Bug Fixes
+
+* remove jax BCOO based code for master-slave sparsity ([ac49fc5](https://github.com/smec-ethz/tatva/commit/ac49fc5e6f8a23f6eafc06097b8d7f224e2b2c3d))
+
+
+## [0.7.0](https://github.com/smec-ethz/tatva/releases/tag/v0.7.0) (2026-02-24)
+
+
+
+#### Features
+
+* **sparse:** add a ColoredMatrix type for sparse differentiation ([2ab3214](https://github.com/smec-ethz/tatva/commit/2ab3214678473ed83abd6a01aec8497b8bb66c2b))
+
+
+#### Bug Fixes
+
+* adapt sparse benchmark with new api ([93d1cf4](https://github.com/smec-ethz/tatva/commit/93d1cf4e70436934af45f419c306dcf9d968cb27))
+* **sparse:** switch to scipy csr matrix in all sparsity pattern creation ([2ab3214](https://github.com/smec-ethz/tatva/commit/2ab3214678473ed83abd6a01aec8497b8bb66c2b))
+
+
+#### Performance Improvements
+
+* **sparse:** precompute reconstruction of data from J_compressed ([d2f6a37](https://github.com/smec-ethz/tatva/commit/d2f6a3704bdaebeafa30c5c75f5b9e6de2a33781))
+
+
+## [0.6.0](https://github.com/smec-ethz/tatva/releases/tag/v0.6.0) (2026-02-20)
+
+
+
+#### Features
+
+* **element:** add quadratic Line3 and Quad8 elements ([#18](https://github.com/smec-ethz/tatva/issues/18)) ([37bffdd](https://github.com/smec-ethz/tatva/commit/37bffdd9f898d28fd7bf0ef857d51253b13baa1a))
+* **lifter:** renamed constraints; DirichletBC -&gt; Fixed; PeriodicMap -&gt; ([f4b9a78](https://github.com/smec-ethz/tatva/commit/f4b9a78b2916ca323195c9ad66f5cf98cd3279e6))
+* **lifter:** reworked Lifter with support for changing values (RuntimeValue) ([f4b9a78](https://github.com/smec-ethz/tatva/commit/f4b9a78b2916ca323195c9ad66f5cf98cd3279e6))
+
+
+#### Bug Fixes
+
+* **compound:** refactor stack_fields into a class decorator ([305b87f](https://github.com/smec-ethz/tatva/commit/305b87fd4b3be30c34c6087d149776d59971e80d))
+* **element:** allow interpolate func to accept nodal_coords ([#16](https://github.com/smec-ethz/tatva/issues/16)) ([2042d98](https://github.com/smec-ethz/tatva/commit/2042d9849e87e4e981aed8599fc74efd8b3a2666))
+* **lifter:** clarify constraint contract and make constraints hashable for jax.jit static args ([ad08049](https://github.com/smec-ethz/tatva/commit/ad0804931cf57e077274d963ab4e965cf62b0f3b))
+* **lifter:** support lifters as dynamic and static arguments to jitted ([f4b9a78](https://github.com/smec-ethz/tatva/commit/f4b9a78b2916ca323195c9ad66f5cf98cd3279e6))
+* **sparse:** pass args and kwargs directly to colored jacobian to prevent recompilation and slowness ([2d497df](https://github.com/smec-ethz/tatva/commit/2d497dfd3d71d9685a5fa1ef88d4f6f75951c8f5))
+* **sparse:** single jacfwd function with color batching by default ([4f96770](https://github.com/smec-ethz/tatva/commit/4f96770f01e2203a82a0cfa8695da6506ea193fe))
+
+#### What's Changed
+* non-critical code maintenance by @zrlf in https://github.com/smec-ethz/tatva/pull/13
+* 15 allow elementinterpolate to accept nodal coords by @mohitpundir in https://github.com/smec-ethz/tatva/pull/16
+* Quad8_Line3 by @youuwang in https://github.com/smec-ethz/tatva/pull/18
+* Add runtime values for lifter constraints by @zrlf in https://github.com/smec-ethz/tatva/pull/17
+* Few improvements to sparse module by @mohitpundir in https://github.com/smec-ethz/tatva/pull/19
+* chore(main): release 0.6.0 by @github-actions[bot] in https://github.com/smec-ethz/tatva/pull/14
+
+#### New Contributors
+* @youuwang made their first contribution in https://github.com/smec-ethz/tatva/pull/18
+
+**Full Changelog**: https://github.com/smec-ethz/tatva/compare/v0.5.1...v0.6.0
+
+
+## [0.5.1](https://github.com/smec-ethz/tatva/releases/tag/v0.5.1) (2026-02-15)
+
+
+
+#### Bug Fixes
+
+* **compound:** respect default_factory for initialization of compound instances ([#9](https://github.com/smec-ethz/tatva/issues/9)) ([7449120](https://github.com/smec-ethz/tatva/commit/74491201ec9a0672988f7a6f8718ebb3daaea2e3))
+* **element:** corrected Hex8 implementation, test for elements added ([70755e6](https://github.com/smec-ethz/tatva/commit/70755e6d9993fd1c6313a438951ea2668650672d))
+
+
+## [0.5.0](https://github.com/smec-ethz/tatva/releases/tag/v0.5.0) (2026-02-10)
+
+
+
+#### Features
+
+* **sparse:** add coloring code (source mpundir) ([0623e2c](https://github.com/smec-ethz/tatva/commit/0623e2c6cb3f6c0b2959915bc48a2cbd38e397fb))
+* **sparse:** add method to generate sparsity pattern with full master-slave dof map (from zrlf) ([5d37d56](https://github.com/smec-ethz/tatva/commit/5d37d56f8eb074cb9aee1789543003849227b014))
+
+
+#### Bug Fixes
+
+* **operator:** removes check on quad points dimnension to be equal to coords dimension, necessary for 2D elements in 3D space ([3827149](https://github.com/smec-ethz/tatva/commit/382714951796c920cf16be1ee5e9eac7da3a9e63))
+* **operator:** replaces jax.vmap with batched jax.lax.map for memory efficiency and scalin ([fbab11a](https://github.com/smec-ethz/tatva/commit/fbab11a9c5e8f7e8a990f2a8bf4ef524eb0bc376))
+* **sparse:** enables sparse jacfwd with args without performance issue ([9ba9530](https://github.com/smec-ethz/tatva/commit/9ba953089032593c6d9d74b6279921428a131070))
+* **sparse:** process color based jacobian in batches, replaces jax.linearize with jax.jvp ([6b361d7](https://github.com/smec-ethz/tatva/commit/6b361d704856102bd429d2f9b2a0e1d83fd65584))
+* **sparse:** wraps jacfwd func to accept single parameter ([9fe01e3](https://github.com/smec-ethz/tatva/commit/9fe01e33db3a3a3c15d159d451793010a2132cbf))
+
+
+## [0.4.0](https://github.com/smec-ethz/tatva/releases/tag/v0.4.0) (2026-01-27)
+
+
+
+#### Features
+
+* add solver_utils a Lifter class making bcs easier ([29de30b](https://github.com/smec-ethz/tatva/commit/29de30b15827bfd1d1650e215d4439e082ff0556))
+* **lifter:** include periodic boundary conditions in the lifter ([2e7ee32](https://github.com/smec-ethz/tatva/commit/2e7ee320ac72c02cdd367488228a23dba0b33b2b))
+
+
+#### Bug Fixes
+
+* **lifter:** implement improvements based on review ([250a4e0](https://github.com/smec-ethz/tatva/commit/250a4e0ad224c4de614609a80194642ad3b97e6f))
+* **lifter:** make constructor arguments 1 and 2 positional only ([5230c75](https://github.com/smec-ethz/tatva/commit/5230c750730f4299b188297454f3d1b8853d42e2))
+
+
+#### Documentation
+
+* **lifter:** extend docs for lifter module ([77de185](https://github.com/smec-ethz/tatva/commit/77de185d15ff534f846694a104854fe09379beda))
+

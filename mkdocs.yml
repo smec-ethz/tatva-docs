@@ -179,6 +179,7 @@ nav:
       - PETSc:
           - "external_solvers/linear_elasticity_petsc4py.md"
           - "external_solvers/linear_elasticity_petsc4py_mf.md"
+  - Changelog: "changelog.md"
   - API reference:
       - Operator: "api/tatva.operator.md"
       - Mesh: "api/tatva.mesh.md"
