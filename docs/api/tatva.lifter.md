@@ -31,3 +31,12 @@
 ::: tatva.lifter.LifterError
     options:
         members:
+
+
+::: tatva.lifter.base.Lifter.adapt_sparsity
+    options:
+        members:
+
+::: tatva.lifter.base.Lifter.adapt_layout
+    options:
+        members:

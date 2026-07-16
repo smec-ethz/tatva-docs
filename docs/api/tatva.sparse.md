@@ -12,18 +12,21 @@
     options:
         members:
 
-::: tatva.sparse.create_sparsity_pattern
+::: tatva.sparse.pattern_from_energy
     options:
         members:
 
-::: tatva.sparse.augment_sparsity_with_lifter
+::: tatva.sparse.pattern_from_virtual_work
     options:
         members:
 
-::: tatva.sparse.reduce_sparsity_pattern
+::: tatva.sparse.pattern_from_compound
     options:
         members:
 
-::: tatva.sparse.distance2_colors
+
+::: tatva.sparse.pattern_from_mesh
     options:
         members:
+
+

@@ -70,17 +70,17 @@ $$
 
 ```python
 import jax
+import jax.numpy as jnp
+import numpy as np
+import pyvista as pv
+from jax import Array
+from jax_autovmap import autovmap
+from tatva.utils import virtual_work_to_residual
+
+from tatva import Mesh, Operator, compound, element, sparse
 
 jax.config.update("jax_enable_x64", True)  
 
-from functools import partial
-
-import equinox as eqx
-import jax.numpy as jnp
-import numpy as np
-from jax import Array
-from jax_autovmap import autovmap
-from tatva import Mesh, Operator, element
 ```
 
 We start with creating the mesh for the spherical surface of radius 1.0 using `gmsh`.
@@ -118,6 +118,15 @@ n_dofs = mesh.coords.shape[0]
 ```
 
 ??? info "Output"
+    Info    : Meshing 1D...
+        Info    : [ 40%] Meshing curve 2 (Circle)
+        Info    : Done meshing 1D (Wall 0.000784189s, CPU 0.00029s)
+        Info    : Meshing 2D...
+        Info    : Meshing surface 1 (Sphere, Frontal-Delaunay)
+        Info    : Done meshing 2D (Wall 0.805204s, CPU 0.797604s)
+        Info    : 6093 nodes 12247 elements
+    
+    
     In order to the surface PDE, we  define a triangular element (topology in 2D) embedded in 3D space. We then define the surface gradient operator using the Jacobian of the mapping from the reference element to the surface element. Finally, we assemble the mass and stiffness matrices using the surface gradient operator.
 
 
@@ -162,6 +171,10 @@ To check if the  implementation is correct, we compute the total surface area by
 print(f"Calculated surface area {op.integrate(1.0)}")  # Warm-up
 print(f"Actual surface area {4 * jnp.pi * radius ** 2}")
 ```
+
+    Calculated surface area 12.5600450452555
+    Actual surface area 12.566370614359172
+
 
 We also check if the normals are computed correctly by plotting them on the surface mesh.
 
@@ -251,11 +264,17 @@ Now we define functions to compute the total virtual work and total kinetic ener
 
 
 ```python
-@autovmap(c=0, grad_c=1, v=0, grad_v=1, u_quad=1, epsilon=0)
-def compute_advection_diffusion_density(c, grad_c, v, grad_v, u_quad, epsilon):
+class Concentration(compound.Compound, mesh=mesh):
+    c = compound.field(
+        shape=(compound.FieldSize.AUTO,), field_type=compound.FieldType.NODAL
+    )
+
+
+@autovmap(grad_c=1, v=0, grad_v=1, u_quad=1, epsilon=0)
+def compute_advection_diffusion_density(grad_c, v, grad_v, u_quad, epsilon):
     """
     Computes the virtual work density for Advection-Diffusion.
-    
+
     Args:
         c, v: Scalar values of trial and test functions
         grad_c, grad_v: Surface gradients
@@ -263,156 +282,94 @@ def compute_advection_diffusion_density(c, grad_c, v, grad_v, u_quad, epsilon):
         epsilon: Diffusivity
     """
     term_diffusion = epsilon * jnp.vdot(grad_c, grad_v)
-    
+
     advection_flux = jnp.vdot(u_quad, grad_c)
     term_advection = advection_flux * v
-    
+
     return term_diffusion + term_advection
-
-@jax.jit
-def total_virtual_work(c_flat : Array, v_flat: Array) -> Array:
-    """
-    Computes the spatial part of the weak form: Integral(Advection + Diffusion)
-    Args:
-        c_flat: Flattened nodal values of trial function
-        v_flat: Flattened nodal values of test function
-    """
-    
-    c_quad = op.eval(c_flat)
-    v_quad = op.eval(v_flat)
-    
-    grad_c = op.grad(c_flat)
-    grad_v = op.grad(v_flat)
-
-    # compute density    
-    density = compute_advection_diffusion_density(
-        c_quad, grad_c, 
-        v_quad, grad_v, 
-        u_quad, 
-        transport_params.epsilon
-    )
-    
-    # integrate over the surface
-    return op.integrate(density)
 
 
 @autovmap(c=0, v=0)
 def compute_kinetic_energy_density(c: Array, v: Array) -> Array:
-    """ Computes the kinetic energy density: 0.5 * c * v 
+    """Computes the kinetic energy density: 0.5 * c * v
     Args:
         c, v: Scalar values of trial and test functions
     """
 
     return jnp.dot(c, v)
 
-@jax.jit
-def total_kinetic_energy(c_flat: Array, v_flat: Array) -> Array:
-    """
-    Computes the total kinetic energy: Integral(0.5 * c * v)
-    Args:
-        c_flat: Flattened nodal values of trial function
-        v_flat: Flattened nodal values of test function
-    """
-    c_quad = op.eval(c_flat)
-    v_quad = op.eval(v_flat)
 
-    kinetic_energy_density = compute_kinetic_energy_density(c_quad, v_quad)
-    kinetic_energy = op.integrate(kinetic_energy_density)
-    return kinetic_energy
+@jax.jit
+def total_virtual_work(
+    v_flat: Array, c_flat: Array, c_old_flat: Array, dt: float
+) -> Array:
+    """
+    Computes the spatial part of the weak form: Integral(Advection + Diffusion)
+    Args:
+        v_flat: Flattened nodal values of test function
+        c_flat: Flattened nodal values of trial function
+        c_old_flat: Flattened nodal values of trial function at previous time step
+        dt: Time step size
+    """
+
+    (c,) = Concentration(c_flat)
+    (v,) = Concentration(v_flat)
+    (c_old,) = Concentration(c_old_flat)
+
+    c_quad = op.eval(c)
+    v_quad = op.eval(v)
+    c_old_quad = op.eval(c_old)
+
+    grad_c = op.grad(c)
+    grad_v = op.grad(v)
+
+    # compute density
+    density = compute_advection_diffusion_density(
+        grad_c, v_quad, grad_v, u_quad, transport_params.epsilon
+    )
+
+    # compute kinetic energy density
+    kinetic_energy_density = (
+        compute_kinetic_energy_density(c_quad - c_old_quad, v_quad) / dt
+    )
+
+    # compute total energy
+    total_energy = op.integrate(density + kinetic_energy_density)
+
+    # integrate over the surface
+    return total_energy
 
 ```
 
-We use `jax.jacrev` to compute the derivative of the virtual work with respect to the trial function, which gives us the internal force vector. Similarly, we compute the kinetic vector by differentiating the inertia term with respect to the trial function and dividing by the time step.
-
-
+We define the residual function using `virtual_work_to_residual`, which converts the total virtual work function into a residual function. We use sparse differentiation to compute the Jacobian of the residual function. The sparisty pattern needed is automatically computed from the virtual work function.
 
 
 ```python
-compute_internal_force = jax.jacrev(total_virtual_work, argnums=1)
-compute_kinetic_force = jax.jacrev(total_kinetic_energy, argnums=1)
+compute_residual = virtual_work_to_residual(
+    total_virtual_work, test_size=Concentration.size, jit=True
+)
 
+sparsity_pattern = sparse.pattern_from_virtual_work(
+    total_virtual_work,
+    Concentration.size,
+    "c_flat",
+    "v_flat",
+    jnp.zeros(Concentration.size),
+    1.0,
+)
+cm = sparse.ColoredMatrix.from_csr(sparsity_pattern)
+n_colors = int(cm.colors.max() + 1)
+print(f"Number of colors: {n_colors}")
 
-@jax.jit
-def _compute_residual(c_new, c_old, dt, v_trial):
-    """
-    Computes the global residual vector for the time step.
-    Res = M*(c_new - c_old)/dt + SpatialForce(c_new)
-    Target: Res = 0
-    """
-    
-    force_spatial = compute_internal_force(c_new, v_trial)
-    
-    force_mass = compute_kinetic_force(c_new - c_old, v_trial) / dt
-    
-    return force_mass + force_spatial
+hessian_fn = sparse.jacfwd(
+    compute_residual, colored_matrix=cm, color_batch_size=n_colors
+)
+hessian_fn = jax.jit(hessian_fn)
 
-compute_residual = jax.jit(partial(_compute_residual, v_trial=jnp.zeros(n_dofs)))
-
-@jax.jit
-def compute_tangent(x, c_new, c_old, dt):
-    """
-    Computes J(c_new) * v using Forward Mode AD (jvp).
-    This is the Linear Operator 'A' for the linear solver.
-    """
-    
-    _, jvp_val = jax.jvp(
-        lambda c: compute_residual(c, c_old, dt), 
-        (c_new,), 
-        (x,)
-    )
-    return jvp_val
 ```
 
+    Number of colors: 14
 
-??? example "BiCGSTAB Linear Solver Implementation"
-    ```python
-    
-    @eqx.filter_jit
-    def bicgstab(A, b, atol=1e-8, max_iter=100):
-        x = jnp.zeros_like(b)
-        r = b - A(x)
-        r_hat = r  
-        rho = 1.0
-        alpha = 1.0
-        omega = 1.0
-        v = jnp.zeros_like(b)
-        p = jnp.zeros_like(b)
-        
-        initial_state = (x, r, r_hat, rho, alpha, omega, v, p, 0)
-    
-        def cond_fun(state):
-            x, r, r_hat, rho, alpha, omega, v, p, iiter = state
-            # Terminate if residual is small enough or max iterations reached
-            res_norm = jnp.linalg.norm(r)
-            return jnp.logical_and(res_norm > atol, iiter < max_iter)
-    
-        def body_fun(state):
-            x, r, r_hat, rho_prev, alpha, omega, v, p, iiter = state
-            
-            rho = jnp.vdot(r_hat, r)
-            beta = (rho / rho_prev) * (alpha / omega)
-            p = r + beta * (p - omega * v)
-            
-            v = A(p)
-            alpha = rho / jnp.vdot(r_hat, v)
-            s = r - alpha * v
-            
-            # Check norm of s for early exit if needed, 
-            # but for while_loop simplicity we proceed to t
-            t = A(s)
-            omega = jnp.vdot(t, s) / jnp.vdot(t, t)
-            
-            x = x + alpha * p + omega * s
-            r = s - omega * t
-            
-            return (x, r, r_hat, rho, alpha, omega, v, p, iiter + 1)
-    
-        final_state = jax.lax.while_loop(cond_fun, body_fun, initial_state)
-        x_final, iiter_final = final_state[0], final_state[-1]
-        
-        return x_final, iiter_final
-    
-    ```
 
 Initially, we set the concentration field to be a Gaussian distribution centered at a specific point on the surface. We also define a tangential velocity field that will advect the concentration over time. Finally, we run the time-stepping loop to solve the advection-diffusion equation on the surface. We visualize the concentration field at each time step to observe how it evolves over time.
 
@@ -444,10 +401,10 @@ for step in range(n_steps_transport):
     
     rhs = -compute_residual(c_curr, c_curr, dt_transport)
     
-    A = eqx.Partial(compute_tangent, c_new=c_curr, c_old=c_curr, dt=dt_transport)
-    
-    delta_c, info = bicgstab(A, rhs, atol=1e-6, max_iter=100)
-    
+    A = hessian_fn(c_curr, c_curr, dt_transport)
+
+    delta_c = jax.experimental.sparse.linalg.spsolve(A.data, A.indices, A.indptr, rhs)
+
     c_curr = c_curr + delta_c
     c_history.append(c_curr)
     
@@ -458,7 +415,17 @@ for step in range(n_steps_transport):
         print(f"Step {step}: Max c = {jnp.max(c_curr):.4f}")
 ```
 
-
+??? info "Output"
+    Step 0: Max c = 0.7171
+        Step 10: Max c = 0.0269
+        Step 20: Max c = 0.0188
+        Step 30: Max c = 0.0153
+        Step 40: Max c = 0.0141
+        Step 50: Max c = 0.0139
+        Step 60: Max c = 0.0137
+        Step 70: Max c = 0.0133
+        Step 80: Max c = 0.0130
+        Step 90: Max c = 0.0127
 
 
 ```python
@@ -495,6 +462,9 @@ for step in range(n_steps_transport):
     pl.add_mesh(contours, cmap="pink_r", line_width=0.5, show_scalar_bar=False)
     pl.show()
     ```
+
+Widget(value='<iframe src="http://localhost:33067/index.html?ui=P_0x7ef7ab233530_1&reconnect=auto" class="pyvi…
+
 
 ![Concentration profile at the end of the simulation](../assets/plots/transport_concentration.png)
 
