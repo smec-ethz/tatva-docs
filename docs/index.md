@@ -9,56 +9,66 @@ hide:
   main .md-grid {
     max-width: 60rem !important;
   }
+
+  #__skip {
+    display: none;
+  }
 </style>
 
-# 
+<div class="hero">
 
-<div align="center">
+<img src="assets/tatva.svg" class="logo" alt="drawing" />
 
-<img src="assets/logo-small.png" alt="drawing" width="300" height="60"/>
+<h3>Lego-like building blocks for differentiable FEM</h3>
 
-<h3 align="center">tatva: Lego-like building blocks for differentiable FEM</h3>
+<p>
+<b>tatva (तत्त्व)</b> is a Sanskrit word meaning <i>principle</i> or <i>elements of reality</i>.
+True to its name, <code>tatva</code> provides fundamental Lego-like building blocks
+(elements) which can be used to construct complex finite element method (FEM)
+simulations as energy functionals. <code>tatva</code> is a pure Python library for FEM simulations and is
+built on top of JAX ecosystem, making it easy to use FEM in a differentiable
+way.
+</p>
+
+<div class="hero-buttons">
+<a href="getting_started" class="button">👉 Get Started</a>
+<a href="examples/linear_elasticity" class="button">👷‍♀️ Examples</a>
+</div>
 
 </div>
 
-`tatva` (तत्त्व) is a Sanskrit word meaning _principle_ or _elements of reality_.
-True to its name, `tatva` provides fundamental Lego-like building blocks
-(elements) which can be used to construct complex finite element method (FEM)
-simulations as energy functionals. `tatva` is a pure Python library for FEM simulations and is
-built on top of JAX ecosystem, making it easy to use FEM in a differentiable
-way.
+<section id="home">
 
 <div class="swiper">
-  <div class="swiper-wrapper">
+<div class="swiper-wrapper">
 
-    <div class="swiper-slide">
-      <img src="assets/images/contact_animation.gif" alt="Hertzian Contact">
-      <div class="slide-caption">
-        <h3>Hertzian Contact</h3>
-      </div>
-    </div>
-
-    <div class="swiper-slide">
-      <img src="assets/images/cohesive_fracture.gif" alt="Cohesive Fracture">
-      <div class="slide-caption">
-        <h3>Cohesive Fracture</h3>
-      </div>
-    </div>
-
-
-    <div class="swiper-slide">
-      <img src="assets/images/surface_advection_diffusion.gif" alt="Surface Advection Diffusion">
-      <div class="slide-caption">
-        <h3>Surface Advection Diffusion</h3>
-      </div>
-    </div>
-
+<div class="swiper-slide">
+  <img src="assets/images/contact_animation.gif" alt="Hertzian Contact">
+  <div class="slide-caption">
+    <h3>Hertzian Contact</h3>
   </div>
+</div>
 
-  <div class="swiper-pagination"></div>
+<div class="swiper-slide">
+  <img src="assets/images/cohesive_fracture.gif" alt="Cohesive Fracture">
+  <div class="slide-caption">
+    <h3>Cohesive Fracture</h3>
+  </div>
+</div>
 
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+<div class="swiper-slide">
+  <img src="assets/images/surface_advection_diffusion.gif" alt="Surface Advection Diffusion">
+  <div class="slide-caption">
+    <h3>Surface Advection Diffusion</h3>
+  </div>
+</div>
+
+</div>
+
+<div class="swiper-pagination"></div>
+
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
 </div>
 
 <div class="grid-cards">
@@ -76,45 +86,22 @@ way.
   </div>
 </div>
 
-<p style="margin-top:5cm;"></p>
-<div style="width: 100%; margin: 20px 0;">
-    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7469644702548426752?collapsed=1" 
-            height="600" 
-            style="width: 100%; border: none;" 
-            frameborder="0" 
-            allowfullscreen="" 
-            title="">
-    </iframe>
+</section>
+
+<div class="social-embeds">
+
+<h3>Find us on LinkedIn</h3>
+
+<div class="social-container">
+
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7469644702548426752?collapsed=1" height="470" width="504" frameborder="0" allowfullscreen=""></iframe>
+
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7442949970275504128?collapsed=1" height="550" width="504" frameborder="0" allowfullscreen=""></iframe>
+
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7434187928412606464?collapsed=1" height="550" width="504" frameborder="0" allowfullscreen=""></iframe>
+
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7429468306744586240?collapsed=1" height="264" width="504" frameborder="0" allowfullscreen=""></iframe>
+
 </div>
 
-<div style="width: 100%; margin: 20px 0;">
-    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7442949970275504128?collapsed=1" 
-            height="600" 
-            style="width: 100%; border: none;" 
-            frameborder="0" 
-            allowfullscreen="" 
-            title="">
-    </iframe>
-</div>
-
-
-<div style="width: 100%; margin: 20px 0;">
-    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7434187928412606464?collapsed=1"
-            height="600" 
-            style="width: 100%; border: none;" 
-            frameborder="0" 
-            allowfullscreen="" 
-            title="">
-    </iframe>
-</div>
-
-
-<div style="width: 100%; margin: 20px 0;">
-    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7429468306744586240?collapsed=1" 
-            height="300" 
-            style="width: 100%; border: none;" 
-            frameborder="0" 
-            allowfullscreen="" 
-            title="">
-    </iframe>
 </div>
