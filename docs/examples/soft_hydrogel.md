@@ -1,6 +1,6 @@
 ---
 tags:
-  - matrix-free
+  - sparse-ad
   - mixed-dimension
 ---
 
@@ -34,14 +34,13 @@ we consider a fiber-reinforced composite in which stiff 1D fibers are embedded i
 import jax
 
 
-from functools import partial
 from typing import NamedTuple
 
-import equinox as eqx
 import jax.numpy as jnp
 from jax import Array
 from jax_autovmap import autovmap
-from tatva import Mesh, Operator, element
+
+from tatva import Mesh, Operator, compound, element, lifter, sparse
 
 jax.config.update("jax_enable_x64", True)  # use double-precision
 ```
@@ -222,10 +221,10 @@ fiber_mesh = generate_honeycomb_mesh(
         Info    : [ 30%] Meshing curve 2 (Line)
         Info    : [ 60%] Meshing curve 3 (Line)
         Info    : [ 80%] Meshing curve 4 (Line)
-        Info    : Done meshing 1D (Wall 0.00043465s, CPU 0.00055s)
+        Info    : Done meshing 1D (Wall 0.000292872s, CPU 0.000414s)
         Info    : Meshing 2D...
         Info    : Meshing surface 1 (Plane, Frontal-Delaunay)
-        Info    : Done meshing 2D (Wall 0.0660971s, CPU 0.065573s)
+        Info    : Done meshing 2D (Wall 0.0697915s, CPU 0.068195s)
         Info    : 3013 nodes 6028 elements
         Info    : Writing './plate_2d.msh'...
         Info    : Done writing './plate_2d.msh'
@@ -268,111 +267,17 @@ fiber_mesh = generate_honeycomb_mesh(
     
 
 
-We now find the bulk material elements that contain the nodes of each fiber and then map these nodes tot he quadrature points of that element.
-
-
-??? example "Barycentric Coordinate Computation and Embedding Logic"
-    ```python
-    
-    def compute_barycentric(p, a, b, c):
-        """
-        Computes local coordinates (xi, eta) of point p in triangle abc.
-        Returns (xi, eta) and a boolean 'is_inside'.
-        """
-        v0 = c - a
-        v1 = b - a
-        v2 = p - a
-    
-        dot00 = np.dot(v0, v0)
-        dot01 = np.dot(v0, v1)
-        dot02 = np.dot(v0, v2)
-        dot11 = np.dot(v1, v1)
-        dot12 = np.dot(v1, v2)
-    
-        invDenom = 1 / (dot00 * dot11 - dot01 * dot01)
-        eta = (dot11 * dot02 - dot01 * dot12) * invDenom
-        xi = (dot00 * dot12 - dot01 * dot02) * invDenom
-    
-        tol = 1e-10
-        is_inside = (xi >= -tol) and (eta >= -tol) and (xi + eta <= 1 + tol)
-    
-        return xi, eta, is_inside
-    
-    
-    def embed_fiber_into_plate(host_mesh, fiber_mesh):
-    
-        fiber_nodes = fiber_mesh.coords
-        n_nodes = fiber_nodes.shape[0]
-    
-        n_triangles = len(host_mesh.elements)
-    
-        host_elem_indices = np.full(n_nodes, -1, dtype=int)
-        local_coords = np.zeros((n_nodes, 2))  # (xi, eta)
-    
-        print(f"Embedding {n_nodes} fiber nodes into {n_triangles} triangles...")
-    
-        tri_coords = host_mesh.coords[host_mesh.elements]  # (N_tri, 3, 2)
-        tri_min = tri_coords.min(axis=1)
-        tri_max = tri_coords.max(axis=1)
-    
-        for i, pt in enumerate(fiber_nodes):
-            candidates = np.where(
-                (pt[0] >= tri_min[:, 0])
-                & (pt[0] <= tri_max[:, 0])
-                & (pt[1] >= tri_min[:, 1])
-                & (pt[1] <= tri_max[:, 1])
-            )[0]
-    
-            found = False
-            for tri_idx in candidates:
-                a, b, c = tri_coords[tri_idx]
-    
-                xi, eta, is_inside = compute_barycentric(pt, a, b, c)
-    
-                if is_inside:
-                    host_elem_indices[i] = tri_idx
-                    local_coords[i] = [xi, eta]
-                    found = True
-                    break
-    
-            if not found:
-                print(f"Warning: Fiber segment {i} at {pt} is outside the mesh domain!")
-    
-        return {
-            "host_elem_indices": host_elem_indices,
-            "local_coords": local_coords,  # (xi, eta)
-        }
-    ```
-
-
-
-
-```python
-embedding_data = embed_fiber_into_plate(plate_mesh, fiber_mesh)
-```
-
-    Embedding 98 fiber nodes into 5824 triangles...
-
-
 We define two operator one for the bulk material which consists of `Tri3` elements and one for fibers which are 1D elements emebeded in 2D space. For this we define a new elemenr `Line2in3D` which takes the displacements defined in 2D or 3D space and then project this displacement along its tangent vector.
 
 
 ??? example "Define Custom Line Element in 3D for Fiber Representation"
     ```python
     
-    class Line2In3D(element.Element):
+    class SpringElement(element.Line2):
         """
         A 2-node linear element embedded in 3D space.
         Reference domain: [-1, 1]
         """
-    
-        def _default_quadrature(self):
-            quad_points = jnp.array([[0.0]])
-            quad_weights = jnp.array([2.0])
-            return quad_points, quad_weights
-    
-        def _reference_nodes(self):
-            return jnp.array([[-1.0], [1.0]])   
     
         def shape_function(self, xi: Array) -> Array:
             return jnp.array([0.5 * (1.0 - xi[0]), 0.5 * (1.0 + xi[0])])
@@ -412,7 +317,14 @@ We define two operator one for the bulk material which consists of `Tri3` elemen
 
 ```python
 op_plate = Operator(plate_mesh, element.Tri3())
-op_line = Operator(fiber_mesh, Line2In3D())
+op_line = Operator(fiber_mesh, SpringElement())
+```
+
+We now find the bulk material elements that contain the nodes of each fiber and then map these nodes to the quadrature points of that element. We use `Operator.make_interpolater` to do this.
+
+
+```python
+interpolater = op_plate.make_interpolate(fiber_mesh.coords)
 ```
 
 ## Defining the energy for the bulk material
@@ -432,12 +344,11 @@ def strain_energy(F, mu, lmbda):
     I1 = jnp.trace(C)
     J = jnp.linalg.det(F)
     # return mu / 2 * (I1 - 3) - lmbda * jnp.log(J) + (lmbda / 2) * (jnp.log(J)) ** 2
-    return 0.5 * mu * (I1 - 3 - 2 * jnp.log(J)) + (lmbda / 2) * (jnp.log(J)) ** 2
+    return 0.5 * mu * (I1 - 2 - 2 * jnp.log(J)) + (lmbda / 2) * (jnp.log(J)) ** 2
 
 
 @jax.jit
-def total_material_energy(u_flat: Array) -> float:
-    u = u_flat.reshape(-1, n_dofs_per_node)
+def total_material_energy(u: Array) -> Array:
     u_grad = op_plate.grad(u)
     F = compute_deformation_gradient(u_grad)
     energy_density = strain_energy(F, mat.mu, mat.lmbda)
@@ -454,8 +365,8 @@ def compute_fiber_energy(grad_u):
 class Material(NamedTuple):
     """Material properties for the elasticity operator."""
 
-    mu: float 
-    lmbda: float  
+    mu: float  # Diffusion coefficient
+    lmbda: float  # Diffusion coefficient
 
 
 mat = Material(mu=1, lmbda=10.0)
@@ -489,8 +400,6 @@ vecs = p1 - p0
 lengths = np.linalg.norm(vecs, axis=1)
 tangents = vecs / lengths[:, None]  # Unit vectors (N_seg, 2)
 
-host_indices = jnp.array(embedding_data["host_elem_indices"])
-local_coords = jnp.array(embedding_data["local_coords"])
 fiber_L0 = jnp.array(lengths)
 fiber_tangents = jnp.array(tangents)
 ```
@@ -498,64 +407,14 @@ fiber_tangents = jnp.array(tangents)
 
 ```python
 @jax.jit
-def compute_u_fiber(u_flat: Array, host_indices: Array, local_coords: Array) -> Array:
-    u = u_flat.reshape(-1, n_dofs_per_node)
-
-    xi = local_coords[:, 0]
-    eta = local_coords[:, 1]
-    N1 = 1 - xi - eta
-    N2 = xi
-    N3 = eta
-
-    u1 = u[host_elems[:, 0]]  # (N_seg, 2)
-    u2 = u[host_elems[:, 1]]  # (N_seg, 2)
-    u3 = u[host_elems[:, 2]]  # (N_seg, 2)
-
-    u_fiber = N1[:, None] * u1 + N2[:, None] * u2 + N3[:, None] * u3  # (N_seg, 2)
-
-    return u_fiber
-
-
-@autovmap(u_elem=2, local_coords=1)
-def compute_u_at_fiber(u_elem: Array, local_coords: Array) -> Array:
-    N = element.Tri3().shape_function(local_coords)  # (3,)
-    u_quad = N @ u_elem  # (2,)
-    return u_quad
-
-
-@autovmap(host_elem=1, local_coord=2)
-def compute_fiber_stretch(host_elem, local_coord, u):
-    u_elem = u[host_elem]  # (3, 2)
-    u_at_a = compute_u_at_fiber(u_elem, local_coord[0])
-    u_at_b = compute_u_at_fiber(u_elem, local_coord[1])
-
-    strain = (u_at_b - u_at_a) / fiber_L0
-
-    return strain
-
-
-@jax.jit
 def fiber_strain_energy(
-    u_flat: Array,
-    host_elems: Array,
-    local_coords: Array,
-) -> float:
-    u = u_flat.reshape(-1, n_dofs_per_node)
-    u_elem = u[host_elems]  # (N_seg, 3, 2)
-    u_at_nodes = compute_u_at_fiber(u_elem, local_coords)
+    u: Array,
+) -> Array:
+    u_at_nodes = interpolater(u)
     u_grad = op_line.grad(u_at_nodes)  # (N_seg, 1, 2)
     energy_density = compute_fiber_energy(u_grad)  # (N_seg,)
     return op_line.integrate(energy_density)
 
-
-host_elems = plate_mesh.elements[host_indices]
-total_fiber_energy = jax.jit(
-    partial(
-        fiber_strain_energy,
-        host_elems=host_elems,
-        local_coords=local_coords,
-    )
-)
 ```
 
 ## Coupling the energies
@@ -568,15 +427,10 @@ $$
 ```python
 @jax.jit
 def total_energy(u_flat: Array) -> float:
-    U_plate = total_material_energy(u_flat)
-    U_fiber = total_fiber_energy(u_flat)
-    return U_plate + U_fiber
-
-
-@jax.jit
-def total_energy_without_fibre(u_flat: Array) -> float:
-    U_plate = total_material_energy(u_flat)
-    return U_plate
+    (u,) = Solution(u_flat)
+    U_plate = total_material_energy(u)
+    U_fiber = fiber_strain_energy(u)
+    return U_fiber + U_plate
 ```
 
 ## Applying boundary conditions
@@ -594,103 +448,120 @@ height = y_max - y_min
 upper_nodes = jnp.where(jnp.isclose(plate_mesh.coords[:, 1], y_max))[0]
 lower_nodes = jnp.where(jnp.isclose(plate_mesh.coords[:, 1], y_min))[0]
 
-fixed_dofs = jnp.concatenate(
-    [
-        2 * upper_nodes,
-        2 * upper_nodes + 1,
-        2 * lower_nodes,
-        2 * lower_nodes + 1,
-    ]
+
+class Solution(compound.Compound):
+    u = compound.field(
+        shape=(plate_mesh.coords.shape[0], 2), field_type=compound.FieldType.NODAL
+    )
+
+
+lifter_plate = lifter.Lifter(
+    Solution.size,
+    lifter.Fixed(Solution.u[upper_nodes, 0], 0.0),
+    lifter.Fixed(Solution.u[lower_nodes, :], 0.0),
+    lifter.Fixed(Solution.u[upper_nodes, 1], lifter.RuntimeValue("top_disp", 0.0)),
 )
-
-
-applied_disp = height * 0.2  # 10% strain
-
-prescribed_values = jnp.zeros(n_dofs).at[2 * upper_nodes].set(0.0)
-prescribed_values = prescribed_values.at[2 * upper_nodes + 1].set(applied_disp / 2.0)
-prescribed_values = prescribed_values.at[2 * lower_nodes].set(0.0)
-prescribed_values = prescribed_values.at[2 * lower_nodes + 1].set(-applied_disp / 2.0)
-
-free_dofs = jnp.setdiff1d(jnp.arange(n_dofs), fixed_dofs)
 ```
 
-## Matrix-free approach
-
-We use a matrix-free approach to automatically consider the additions terms due to the embedding of the fibers in the bulk material.
+## Defining Free Energy
 
 
 ```python
-gradient = jax.jacrev(total_energy)
-gradient_wo_fiber = jax.jacrev(total_energy_without_fibre)
+def total_energy_free(u_free: Array, lifter: lifter.Lifter):
+    u_full = lifter.lift_from_zeros(u_free)
+    return total_energy(u_full)
 
 
-@jax.jit(static_argnames=["gradient"])
-def compute_tangent(du, u_prev, gradient):
-    du_projected = du.at[fixed_dofs].set(0)
-    tangent = jax.jvp(gradient, (u_prev,), (du_projected,))[1]
-    tangent = tangent.at[fixed_dofs].set(0)
-    return tangent
+total_energy_free(jnp.zeros(lifter_plate.size_reduced), lifter_plate)  # Test call
 ```
 
 
-??? example "Conjugate Gradient Solver and Newton-Krylov Loop"
+
+
+    Array(0., dtype=float64)
+
+
+
+## Sparse Differentiation to construct the $K$
+
+
+
+
+```python
+gradient = jax.grad(total_energy_free, argnums=0)
+
+sparsity_pattern = sparse.pattern_from_energy(
+    total_energy_free, lifter_plate.size_reduced, lifter_plate
+)
+sparsity_pattern_mesh = sparse.pattern_from_mesh(plate_mesh, n_dofs_per_node=2)
+sparsity_pattern_mesh = lifter_plate.adapt_sparsity(sparsity_pattern_mesh)
+
+cm = sparse.ColoredMatrix.from_csr(sparsity_pattern)
+n_colors = int(cm.colors.max() + 1)
+print(n_colors)
+
+hessian_fn = sparse.jacfwd(gradient, colored_matrix=cm, color_batch_size=n_colors)
+hessian_fn = jax.jit(hessian_fn)
+```
+
+    42
+
+
+
+```python
+
+import matplotlib.pyplot as plt
+
+ax = plt.axes()
+plt.spy(
+    sparsity_pattern_mesh.toarray(),
+    markersize=1,
+    color="darkgray",
+    markeredgecolor="darkgray",
+)
+plt.spy(
+    sparsity_pattern.toarray() - sparsity_pattern_mesh.toarray(),
+    markersize=1,
+    markeredgecolor="#009AF9",
+)
+
+
+ax.set_xticks([])
+ax.set_yticks([])
+
+plt.show()
+```
+
+
+    
+![png](soft_hydrogel_files/soft_hydrogel_28_0.png)
+    
+
+
+
+??? example "Newton-Solver with sparse solver"
     ```python
-    
-    @eqx.filter_jit
-    def conjugate_gradient(A, b, atol=1e-8, max_iter=100):
-        iiter = 0
-    
-        def body_fun(state):
-            b, p, r, rsold, x, iiter = state
-            Ap = A(p)
-            alpha = rsold / jnp.vdot(p, Ap)
-            x = x + jnp.dot(alpha, p)
-            r = r - jnp.dot(alpha, Ap)
-            rsnew = jnp.vdot(r, r)
-            p = r + (rsnew / rsold) * p
-            rsold = rsnew
-            iiter = iiter + 1
-            return (b, p, r, rsold, x, iiter)
-    
-        def cond_fun(state):
-            b, p, r, rsold, x, iiter = state
-            return jnp.logical_and(jnp.sqrt(rsold) > atol, iiter < max_iter)
-    
-        x = jnp.full_like(b, fill_value=0.0)
-        r = b - A(x)
-        p = r
-        rsold = jnp.vdot(r, p)
-    
-        b, p, r, rsold, x, iiter = jax.lax.while_loop(
-            cond_fun, body_fun, (b, p, r, rsold, x, iiter)
-        )
-        return x, iiter
-    
     
     def newton_krylov_solver(
         u,
         fext,
-        gradient,
-        compute_tangent,
-        fixed_dofs,
+        lifter_plate: lifter.Lifter,
     ):
-        fint = gradient(u)
-        du = jnp.zeros_like(u)
+        fint = gradient(u, lifter_plate)
         iiter = 0
         norm_res = 1.0
         tol = 1e-8
         max_iter = 80
         while norm_res > tol and iiter < max_iter:
             residual = fext - fint
-            residual = residual.at[fixed_dofs].set(0)
-    
-            A = eqx.Partial(compute_tangent, u_prev=u, gradient=gradient)
-            du, cg_iiter = conjugate_gradient(A=A, b=residual, atol=1e-8, max_iter=100)
+            A = hessian_fn(u, lifter_plate)
+            du = jax.experimental.sparse.linalg.spsolve(
+                A.data, A.indices, A.indptr, residual
+            )
             u = u.at[:].add(du)
     
-            fint = gradient(u)
+            fint = gradient(u, lifter_plate)
             residual = fext - fint
-            residual = residual.at[fixed_dofs].set(0)
             norm_res = jnp.linalg.norm(residual)
     
             print(f"  Residual: {norm_res:.2e}")
@@ -702,415 +573,327 @@ def compute_tangent(du, u_prev, gradient):
 
 
 ```python
-u_prev_wo_fiber = jnp.zeros(n_dofs)
+fext = jnp.zeros(lifter_plate.size_reduced)
 
-fext = jnp.zeros(n_dofs)
 
-n_steps = 10
-applied_displacement = prescribed_values / n_steps
-force_on_top = [0.0]
-disp_on_top = [0.0]
-force_on_top_wo_fiber = [0.0]
-disp_on_top_wo_fiber = [0.0]
+n_steps = 50
+applied_displacement = height * 0.2 / n_steps
+
+u_sol_per_step = []
 
 for i in range(n_steps):
-    u_prev = u_prev.at[fixed_dofs].add(applied_displacement[fixed_dofs])
-    u_prev_wo_fiber = u_prev_wo_fiber.at[fixed_dofs].add(
-        applied_displacement[fixed_dofs]
-    )
+    lifter_plate = lifter_plate.at["top_disp"].set((i + 1) * applied_displacement)
 
-    u_new, rnorm = newton_krylov_solver(
-        u_prev,
-        fext,
-        gradient,
-        compute_tangent,
-        fixed_dofs,
-    )
-
-    u_new_wo_fiber, rnorm = newton_krylov_solver(
-        u_prev_wo_fiber,
-        fext,
-        gradient_wo_fiber,
-        compute_tangent,
-        fixed_dofs,
-    )
+    u_new, rnorm = newton_krylov_solver(u_prev, fext, lifter_plate=lifter_plate)
 
     u_prev = u_new
-    u_prev_wo_fiber = u_new_wo_fiber
-
-    fint = gradient(u_prev).reshape(-1, n_dofs_per_node)
-    force_on_top.append(jnp.sum(fint[upper_nodes, 1]))
-    disp_on_top.append(jnp.mean(u_prev.reshape(-1, n_dofs_per_node)[upper_nodes, 1]))
-
-    fint_wo_fiber = gradient_wo_fiber(u_prev_wo_fiber).reshape(-1, n_dofs_per_node)
-    force_on_top_wo_fiber.append(jnp.sum(fint_wo_fiber[upper_nodes, 1]))
-    disp_on_top_wo_fiber.append(
-        jnp.mean(u_prev_wo_fiber.reshape(-1, n_dofs_per_node)[upper_nodes, 1])
-    )
+    u_full = lifter_plate.lift_from_zeros(u_prev)
+    u_sol_per_step.append(u_full)
 
     print(f"Iteration {i}: Residual Norm = {rnorm:.4e}")
-
-u_sol = u_prev.reshape(n_nodes, n_dofs_per_node)
-u_sol_wo_fiber = u_prev_wo_fiber.reshape(n_nodes, n_dofs_per_node)
 ```
 
 ??? info "Output"
-    Residual: 5.60e+00
-          Residual: 2.00e+00
-          Residual: 5.44e-01
-          Residual: 9.71e-02
-          Residual: 9.16e-03
-          Residual: 1.94e-04
-          Residual: 3.66e-05
-          Residual: 2.41e-05
-          Residual: 1.13e-05
-          Residual: 7.58e-06
-          Residual: 3.44e-06
-          Residual: 3.40e-06
-          Residual: 1.09e-06
-          Residual: 2.15e-06
-          Residual: 3.03e-07
-          Residual: 6.53e-07
-          Residual: 8.48e-08
-          Residual: 2.01e-07
-          Residual: 3.17e-08
-          Residual: 7.64e-08
-          Residual: 1.21e-08
-          Residual: 2.31e-08
-          Residual: 9.64e-09
-          Residual: 5.65e+00
-          Residual: 2.01e+00
-          Residual: 5.38e-01
-          Residual: 8.63e-02
-          Residual: 6.69e-03
-          Residual: 8.12e-05
-          Residual: 1.76e-05
-          Residual: 3.51e-06
-          Residual: 1.78e-06
-          Residual: 3.82e-07
-          Residual: 2.07e-07
-          Residual: 4.42e-08
-          Residual: 2.42e-08
-          Residual: 9.75e-09
-        Iteration 0: Residual Norm = 9.7528e-09
-          Residual: 5.22e+00
-          Residual: 1.84e+00
-          Residual: 4.80e-01
-          Residual: 7.64e-02
-          Residual: 5.72e-03
-          Residual: 1.29e-04
-          Residual: 3.46e-05
-          Residual: 1.39e-05
-          Residual: 9.30e-06
-          Residual: 7.39e-06
-          Residual: 2.66e-06
-          Residual: 3.44e-06
-          Residual: 7.49e-07
-          Residual: 9.54e-07
-          Residual: 2.34e-07
-          Residual: 4.49e-07
-          Residual: 7.91e-08
-          Residual: 1.27e-07
-          Residual: 2.85e-08
-          Residual: 2.98e-08
-          Residual: 1.44e-08
-          Residual: 9.99e-09
-          Residual: 5.30e+00
-          Residual: 1.86e+00
-          Residual: 4.78e-01
-          Residual: 6.75e-02
-          Residual: 3.93e-03
-          Residual: 3.85e-05
-          Residual: 1.41e-05
-          Residual: 2.63e-06
-          Residual: 1.46e-06
-          Residual: 3.03e-07
-          Residual: 1.74e-07
+    Residual: 2.77e-01
+          Residual: 2.49e-02
+          Residual: 2.63e-04
+          Residual: 4.45e-08
+          Residual: 4.74e-15
+        Iteration 0: Residual Norm = 4.7447e-15
+          Residual: 2.75e-01
+          Residual: 2.46e-02
+          Residual: 2.57e-04
+          Residual: 4.21e-08
+          Residual: 4.71e-15
+        Iteration 1: Residual Norm = 4.7133e-15
+          Residual: 2.73e-01
+          Residual: 2.43e-02
+          Residual: 2.52e-04
+          Residual: 3.98e-08
+          Residual: 4.69e-15
+        Iteration 2: Residual Norm = 4.6920e-15
+          Residual: 2.71e-01
+          Residual: 2.41e-02
+          Residual: 2.46e-04
+          Residual: 3.77e-08
+          Residual: 4.77e-15
+        Iteration 3: Residual Norm = 4.7739e-15
+          Residual: 2.69e-01
+          Residual: 2.38e-02
+          Residual: 2.41e-04
           Residual: 3.58e-08
-          Residual: 2.05e-08
-          Residual: 9.73e-09
-        Iteration 1: Residual Norm = 9.7339e-09
-          Residual: 4.90e+00
-          Residual: 1.70e+00
-          Residual: 4.29e-01
-          Residual: 6.15e-02
-          Residual: 3.71e-03
-          Residual: 1.14e-04
-          Residual: 3.20e-05
-          Residual: 1.03e-05
-          Residual: 6.07e-06
-          Residual: 3.67e-06
-          Residual: 2.01e-06
-          Residual: 1.12e-06
-          Residual: 6.78e-07
-          Residual: 3.49e-07
-          Residual: 2.55e-07
-          Residual: 1.64e-07
-          Residual: 1.12e-07
-          Residual: 5.20e-08
-          Residual: 3.33e-08
-          Residual: 9.71e-09
-          Residual: 5.00e+00
-          Residual: 1.74e+00
-          Residual: 4.32e-01
-          Residual: 5.50e-02
-          Residual: 2.49e-03
-          Residual: 2.65e-05
-          Residual: 1.24e-05
-          Residual: 2.10e-06
-          Residual: 1.20e-06
-          Residual: 2.55e-07
-          Residual: 1.50e-07
-          Residual: 3.27e-08
-          Residual: 1.94e-08
-          Residual: 9.92e-09
-        Iteration 2: Residual Norm = 9.9199e-09
-          Residual: 4.62e+00
-          Residual: 1.58e+00
-          Residual: 3.86e-01
-          Residual: 5.01e-02
-          Residual: 2.40e-03
-          Residual: 1.15e-04
-          Residual: 2.55e-05
-          Residual: 6.66e-06
-          Residual: 1.66e-06
-          Residual: 1.27e-06
-          Residual: 5.47e-07
-          Residual: 5.42e-07
-          Residual: 1.92e-07
-          Residual: 1.61e-07
-          Residual: 7.13e-08
-          Residual: 5.92e-08
-          Residual: 2.48e-08
-          Residual: 2.02e-08
-          Residual: 9.94e-09
-          Residual: 4.75e+00
-          Residual: 1.63e+00
-          Residual: 3.94e-01
-          Residual: 4.58e-02
-          Residual: 1.65e-03
-          Residual: 2.08e-05
-          Residual: 1.05e-05
-          Residual: 1.47e-06
-          Residual: 9.42e-07
-          Residual: 1.65e-07
-          Residual: 1.11e-07
-          Residual: 2.09e-08
-          Residual: 9.80e-09
-        Iteration 3: Residual Norm = 9.8020e-09
-          Residual: 4.37e+00
-          Residual: 1.48e+00
-          Residual: 3.52e-01
-          Residual: 4.17e-02
-          Residual: 1.65e-03
-          Residual: 1.06e-04
-          Residual: 1.93e-05
-          Residual: 6.44e-06
-          Residual: 1.87e-06
-          Residual: 1.50e-06
-          Residual: 6.37e-07
-          Residual: 3.64e-07
-          Residual: 2.82e-07
-          Residual: 1.27e-07
-          Residual: 1.81e-07
-          Residual: 3.75e-08
-          Residual: 4.14e-08
-          Residual: 1.32e-08
-          Residual: 9.93e-09
-          Residual: 4.53e+00
-          Residual: 1.54e+00
-          Residual: 3.63e-01
-          Residual: 3.91e-02
-          Residual: 1.17e-03
-          Residual: 1.82e-05
-          Residual: 9.53e-06
-          Residual: 1.97e-06
-          Residual: 1.09e-06
-          Residual: 2.32e-07
-          Residual: 1.31e-07
+          Residual: 4.89e-15
+        Iteration 4: Residual Norm = 4.8948e-15
+          Residual: 2.67e-01
+          Residual: 2.35e-02
+          Residual: 2.36e-04
+          Residual: 3.40e-08
+          Residual: 5.13e-15
+        Iteration 5: Residual Norm = 5.1254e-15
+          Residual: 2.66e-01
+          Residual: 2.33e-02
+          Residual: 2.31e-04
+          Residual: 3.24e-08
+          Residual: 5.24e-15
+        Iteration 6: Residual Norm = 5.2382e-15
+          Residual: 2.64e-01
+          Residual: 2.30e-02
+          Residual: 2.26e-04
+          Residual: 3.08e-08
+          Residual: 5.46e-15
+        Iteration 7: Residual Norm = 5.4569e-15
+          Residual: 2.62e-01
+          Residual: 2.28e-02
+          Residual: 2.21e-04
+          Residual: 2.94e-08
+          Residual: 6.04e-15
+        Iteration 8: Residual Norm = 6.0375e-15
+          Residual: 2.60e-01
+          Residual: 2.26e-02
+          Residual: 2.17e-04
           Residual: 2.80e-08
-          Residual: 1.60e-08
-          Residual: 9.93e-09
-        Iteration 4: Residual Norm = 9.9264e-09
-          Residual: 4.16e+00
-          Residual: 1.40e+00
-          Residual: 3.24e-01
-          Residual: 3.60e-02
-          Residual: 1.22e-03
-          Residual: 9.00e-05
-          Residual: 1.98e-05
-          Residual: 8.42e-06
-          Residual: 6.56e-06
-          Residual: 2.26e-06
-          Residual: 2.42e-06
-          Residual: 7.32e-07
-          Residual: 6.03e-07
-          Residual: 3.73e-07
-          Residual: 1.85e-07
-          Residual: 1.88e-07
-          Residual: 5.67e-08
-          Residual: 7.50e-08
-          Residual: 1.81e-08
-          Residual: 9.90e-09
-          Residual: 4.33e+00
-          Residual: 1.46e+00
-          Residual: 3.37e-01
-          Residual: 3.39e-02
-          Residual: 8.48e-04
-          Residual: 1.76e-05
-          Residual: 8.26e-06
-          Residual: 2.69e-06
-          Residual: 1.40e-06
-          Residual: 4.75e-07
-          Residual: 2.56e-07
-          Residual: 8.83e-08
-          Residual: 4.83e-08
-          Residual: 1.68e-08
-          Residual: 9.90e-09
-        Iteration 5: Residual Norm = 9.8963e-09
-          Residual: 3.98e+00
-          Residual: 1.32e+00
-          Residual: 3.00e-01
-          Residual: 3.18e-02
-          Residual: 9.63e-04
-          Residual: 1.01e-04
-          Residual: 1.74e-05
-          Residual: 1.07e-05
-          Residual: 5.55e-06
-          Residual: 2.76e-06
-          Residual: 1.75e-06
-          Residual: 1.45e-06
-          Residual: 5.88e-07
-          Residual: 4.97e-07
-          Residual: 2.08e-07
-          Residual: 2.75e-07
-          Residual: 6.68e-08
-          Residual: 5.17e-08
-          Residual: 3.18e-08
-          Residual: 1.85e-08
-          Residual: 9.82e-09
-          Residual: 4.15e+00
-          Residual: 1.39e+00
-          Residual: 3.13e-01
-          Residual: 2.98e-02
-          Residual: 6.46e-04
-          Residual: 1.83e-05
-          Residual: 5.11e-06
-          Residual: 2.41e-06
-          Residual: 7.39e-07
-          Residual: 3.70e-07
-          Residual: 1.17e-07
-          Residual: 6.00e-08
-          Residual: 1.92e-08
-          Residual: 9.92e-09
-        Iteration 6: Residual Norm = 9.9163e-09
-          Residual: 3.82e+00
-          Residual: 1.26e+00
-          Residual: 2.81e-01
-          Residual: 2.89e-02
-          Residual: 8.16e-04
-          Residual: 1.02e-04
-          Residual: 1.75e-05
-          Residual: 1.06e-05
-          Residual: 6.05e-06
-          Residual: 3.32e-06
-          Residual: 2.21e-06
-          Residual: 2.26e-06
-          Residual: 5.37e-07
-          Residual: 9.66e-07
-          Residual: 1.71e-07
-          Residual: 3.64e-07
-          Residual: 5.60e-08
-          Residual: 1.10e-07
-          Residual: 2.04e-08
-          Residual: 3.06e-08
-          Residual: 9.82e-09
-          Residual: 4.00e+00
-          Residual: 1.32e+00
-          Residual: 2.94e-01
-          Residual: 2.67e-02
-          Residual: 5.25e-04
-          Residual: 1.89e-05
-          Residual: 2.20e-06
-          Residual: 8.73e-07
-          Residual: 3.89e-07
-          Residual: 1.75e-07
-          Residual: 7.71e-08
-          Residual: 3.46e-08
-          Residual: 9.91e-09
-        Iteration 7: Residual Norm = 9.9063e-09
-          Residual: 3.68e+00
-          Residual: 1.20e+00
-          Residual: 2.65e-01
-          Residual: 2.68e-02
-          Residual: 7.20e-04
-          Residual: 8.41e-05
-          Residual: 1.82e-05
-          Residual: 9.59e-06
-          Residual: 7.77e-06
-          Residual: 3.45e-06
-          Residual: 1.91e-06
-          Residual: 1.30e-06
-          Residual: 6.56e-07
-          Residual: 7.28e-07
-          Residual: 2.12e-07
-          Residual: 3.02e-07
-          Residual: 7.21e-08
-          Residual: 9.49e-08
-          Residual: 2.54e-08
-          Residual: 3.32e-08
-          Residual: 9.97e-09
-          Residual: 3.86e+00
-          Residual: 1.27e+00
-          Residual: 2.78e-01
-          Residual: 2.44e-02
-          Residual: 4.49e-04
-          Residual: 2.13e-05
-          Residual: 2.08e-06
-          Residual: 6.23e-07
-          Residual: 2.89e-07
-          Residual: 1.01e-07
-          Residual: 7.28e-08
-          Residual: 1.47e-08
-          Residual: 9.97e-09
-        Iteration 8: Residual Norm = 9.9738e-09
-          Residual: 3.54e+00
-          Residual: 1.15e+00
+          Residual: 6.35e-15
+        Iteration 9: Residual Norm = 6.3468e-15
+          Residual: 2.58e-01
+          Residual: 2.23e-02
+          Residual: 2.13e-04
+          Residual: 2.68e-08
+          Residual: 6.69e-15
+        Iteration 10: Residual Norm = 6.6873e-15
+          Residual: 2.57e-01
+          Residual: 2.21e-02
+          Residual: 2.09e-04
+          Residual: 2.56e-08
+          Residual: 7.21e-15
+        Iteration 11: Residual Norm = 7.2092e-15
+          Residual: 2.55e-01
+          Residual: 2.19e-02
+          Residual: 2.05e-04
+          Residual: 2.45e-08
+          Residual: 7.30e-15
+        Iteration 12: Residual Norm = 7.2986e-15
+          Residual: 2.53e-01
+          Residual: 2.17e-02
+          Residual: 2.01e-04
+          Residual: 2.35e-08
+          Residual: 7.33e-15
+        Iteration 13: Residual Norm = 7.3292e-15
+          Residual: 2.52e-01
+          Residual: 2.14e-02
+          Residual: 1.97e-04
+          Residual: 2.26e-08
+          Residual: 7.98e-15
+        Iteration 14: Residual Norm = 7.9768e-15
           Residual: 2.50e-01
-          Residual: 2.50e-02
-          Residual: 6.42e-04
-          Residual: 8.69e-05
-          Residual: 1.68e-05
-          Residual: 1.54e-05
-          Residual: 4.86e-06
-          Residual: 5.69e-06
-          Residual: 1.56e-06
-          Residual: 1.20e-06
-          Residual: 5.53e-07
-          Residual: 7.42e-07
-          Residual: 1.72e-07
-          Residual: 3.25e-07
-          Residual: 5.81e-08
-          Residual: 1.05e-07
-          Residual: 1.99e-08
-          Residual: 4.48e-08
-          Residual: 9.99e-09
-          Residual: 3.73e+00
-          Residual: 1.22e+00
-          Residual: 2.63e-01
-          Residual: 2.29e-02
-          Residual: 4.06e-04
-          Residual: 2.24e-05
-          Residual: 3.32e-06
-          Residual: 1.35e-06
-          Residual: 6.90e-07
-          Residual: 3.08e-07
-          Residual: 1.46e-07
-          Residual: 6.38e-08
-          Residual: 3.16e-08
+          Residual: 2.12e-02
+          Residual: 1.94e-04
+          Residual: 2.17e-08
+          Residual: 8.71e-15
+        Iteration 15: Residual Norm = 8.7135e-15
+          Residual: 2.49e-01
+          Residual: 2.10e-02
+          Residual: 1.90e-04
+          Residual: 2.08e-08
+          Residual: 9.19e-15
+        Iteration 16: Residual Norm = 9.1940e-15
+          Residual: 2.47e-01
+          Residual: 2.08e-02
+          Residual: 1.87e-04
+          Residual: 2.01e-08
+          Residual: 9.96e-15
+        Iteration 17: Residual Norm = 9.9569e-15
+          Residual: 2.45e-01
+          Residual: 2.06e-02
+          Residual: 1.84e-04
+          Residual: 1.93e-08
+          Residual: 1.02e-14
+        Iteration 18: Residual Norm = 1.0230e-14
+          Residual: 2.44e-01
+          Residual: 2.04e-02
+          Residual: 1.81e-04
+          Residual: 1.86e-08
+          Residual: 1.04e-14
+        Iteration 19: Residual Norm = 1.0381e-14
+          Residual: 2.42e-01
+          Residual: 2.02e-02
+          Residual: 1.78e-04
+          Residual: 1.80e-08
+          Residual: 1.07e-14
+        Iteration 20: Residual Norm = 1.0665e-14
+          Residual: 2.41e-01
+          Residual: 2.01e-02
+          Residual: 1.75e-04
+          Residual: 1.74e-08
+          Residual: 1.13e-14
+        Iteration 21: Residual Norm = 1.1253e-14
+          Residual: 2.40e-01
+          Residual: 1.99e-02
+          Residual: 1.72e-04
+          Residual: 1.68e-08
+          Residual: 1.08e-14
+        Iteration 22: Residual Norm = 1.0810e-14
+          Residual: 2.38e-01
+          Residual: 1.97e-02
+          Residual: 1.69e-04
+          Residual: 1.63e-08
+          Residual: 1.24e-14
+        Iteration 23: Residual Norm = 1.2413e-14
+          Residual: 2.37e-01
+          Residual: 1.95e-02
+          Residual: 1.67e-04
+          Residual: 1.58e-08
+          Residual: 1.20e-14
+        Iteration 24: Residual Norm = 1.1975e-14
+          Residual: 2.35e-01
+          Residual: 1.93e-02
+          Residual: 1.64e-04
+          Residual: 1.53e-08
+          Residual: 1.34e-14
+        Iteration 25: Residual Norm = 1.3373e-14
+          Residual: 2.34e-01
+          Residual: 1.92e-02
+          Residual: 1.62e-04
+          Residual: 1.48e-08
+          Residual: 1.32e-14
+        Iteration 26: Residual Norm = 1.3175e-14
+          Residual: 2.33e-01
+          Residual: 1.90e-02
+          Residual: 1.59e-04
+          Residual: 1.44e-08
+          Residual: 1.29e-14
+        Iteration 27: Residual Norm = 1.2864e-14
+          Residual: 2.31e-01
+          Residual: 1.88e-02
+          Residual: 1.57e-04
+          Residual: 1.40e-08
+          Residual: 1.29e-14
+        Iteration 28: Residual Norm = 1.2860e-14
+          Residual: 2.30e-01
+          Residual: 1.87e-02
+          Residual: 1.55e-04
           Residual: 1.36e-08
-          Residual: 9.78e-09
-        Iteration 9: Residual Norm = 9.7800e-09
+          Residual: 1.37e-14
+        Iteration 29: Residual Norm = 1.3660e-14
+          Residual: 2.29e-01
+          Residual: 1.85e-02
+          Residual: 1.52e-04
+          Residual: 1.33e-08
+          Residual: 1.35e-14
+        Iteration 30: Residual Norm = 1.3472e-14
+          Residual: 2.27e-01
+          Residual: 1.84e-02
+          Residual: 1.50e-04
+          Residual: 1.30e-08
+          Residual: 1.39e-14
+        Iteration 31: Residual Norm = 1.3900e-14
+          Residual: 2.26e-01
+          Residual: 1.82e-02
+          Residual: 1.48e-04
+          Residual: 1.27e-08
+          Residual: 1.56e-14
+        Iteration 32: Residual Norm = 1.5554e-14
+          Residual: 2.25e-01
+          Residual: 1.81e-02
+          Residual: 1.46e-04
+          Residual: 1.24e-08
+          Residual: 1.63e-14
+        Iteration 33: Residual Norm = 1.6259e-14
+          Residual: 2.24e-01
+          Residual: 1.79e-02
+          Residual: 1.44e-04
+          Residual: 1.21e-08
+          Residual: 1.60e-14
+        Iteration 34: Residual Norm = 1.5969e-14
+          Residual: 2.23e-01
+          Residual: 1.78e-02
+          Residual: 1.43e-04
+          Residual: 1.19e-08
+          Residual: 1.75e-14
+        Iteration 35: Residual Norm = 1.7458e-14
+          Residual: 2.21e-01
+          Residual: 1.77e-02
+          Residual: 1.41e-04
+          Residual: 1.16e-08
+          Residual: 1.71e-14
+        Iteration 36: Residual Norm = 1.7066e-14
+          Residual: 2.20e-01
+          Residual: 1.75e-02
+          Residual: 1.39e-04
+          Residual: 1.14e-08
+          Residual: 1.77e-14
+        Iteration 37: Residual Norm = 1.7716e-14
+          Residual: 2.19e-01
+          Residual: 1.74e-02
+          Residual: 1.38e-04
+          Residual: 1.12e-08
+          Residual: 1.76e-14
+        Iteration 38: Residual Norm = 1.7566e-14
+          Residual: 2.18e-01
+          Residual: 1.72e-02
+          Residual: 1.36e-04
+          Residual: 1.10e-08
+          Residual: 1.82e-14
+        Iteration 39: Residual Norm = 1.8217e-14
+          Residual: 2.17e-01
+          Residual: 1.71e-02
+          Residual: 1.34e-04
+          Residual: 1.09e-08
+          Residual: 1.95e-14
+        Iteration 40: Residual Norm = 1.9522e-14
+          Residual: 2.16e-01
+          Residual: 1.70e-02
+          Residual: 1.33e-04
+          Residual: 1.07e-08
+          Residual: 1.97e-14
+        Iteration 41: Residual Norm = 1.9704e-14
+          Residual: 2.15e-01
+          Residual: 1.69e-02
+          Residual: 1.32e-04
+          Residual: 1.06e-08
+          Residual: 1.99e-14
+        Iteration 42: Residual Norm = 1.9866e-14
+          Residual: 2.14e-01
+          Residual: 1.68e-02
+          Residual: 1.30e-04
+          Residual: 1.05e-08
+          Residual: 2.04e-14
+        Iteration 43: Residual Norm = 2.0404e-14
+          Residual: 2.12e-01
+          Residual: 1.66e-02
+          Residual: 1.29e-04
+          Residual: 1.04e-08
+          Residual: 2.01e-14
+        Iteration 44: Residual Norm = 2.0149e-14
+          Residual: 2.11e-01
+          Residual: 1.65e-02
+          Residual: 1.28e-04
+          Residual: 1.03e-08
+          Residual: 2.08e-14
+        Iteration 45: Residual Norm = 2.0827e-14
+          Residual: 2.10e-01
+          Residual: 1.64e-02
+          Residual: 1.27e-04
+          Residual: 1.02e-08
+          Residual: 2.14e-14
+        Iteration 46: Residual Norm = 2.1355e-14
+          Residual: 2.09e-01
+          Residual: 1.63e-02
+          Residual: 1.26e-04
+          Residual: 1.02e-08
+          Residual: 2.42e-14
+        Iteration 47: Residual Norm = 2.4154e-14
+          Residual: 2.08e-01
+          Residual: 1.62e-02
+          Residual: 1.25e-04
+          Residual: 1.02e-08
+          Residual: 2.29e-14
+        Iteration 48: Residual Norm = 2.2869e-14
+          Residual: 2.07e-01
+          Residual: 1.61e-02
+          Residual: 1.24e-04
+          Residual: 1.02e-08
+          Residual: 2.35e-14
+        Iteration 49: Residual Norm = 2.3507e-14
 
 
 ```python
@@ -1125,10 +908,7 @@ We now visualize the deformation of the bulk material and the embedded fibres.
 ??? example "Post-processing and Visualization"
     ```python
     
-    import matplotlib.patches as patches
-    import matplotlib.tri as tri_mat
     import pyvista as pv
-    from matplotlib.collections import LineCollection
     
     
     def set_size(fraction=1, height_ratio="golden", width="two-column", subplots=(1, 1)):
@@ -1172,217 +952,184 @@ We now visualize the deformation of the bulk material and the embedded fibres.
     
     
     def find_domain_boundary(elements):
+        # 1. Get all edges (3 per triangle)
         edges = np.concatenate(
             [elements[:, [0, 1]], elements[:, [1, 2]], elements[:, [2, 0]]], axis=0
         )
     
+        # 2. Sort node IDs within each edge to handle directionality
         edges_sorted = np.sort(edges, axis=1)
     
+        # 3. Find unique edges and their counts
         unique_edges, indices, counts = np.unique(
             edges_sorted, axis=0, return_index=True, return_counts=True
         )
     
+        # 4. Boundary edges are those that appear only once
         boundary_edges = edges[indices[counts == 1]]
     
         return boundary_edges
     
     
-    grad_u = op_plate.grad(u_sol)
-    F = jnp.eye(2) + grad_u.squeeze()
+    def get_pv_line_grid(mesh: Mesh) -> pv.PolyData:
+        """Convert a Line2 (segment) Tatva mesh to a PyVista PolyData of lines."""
+        coords = np.asarray(mesh.coords)
+        if coords.shape[1] == 2:
+            pv_points = np.hstack((coords, np.zeros((coords.shape[0], 1))))
+        else:
+            pv_points = coords
+        elems = np.asarray(mesh.elements, dtype=np.int64)
+        # VTK line connectivity: [n_points_in_cell, id0, id1, ...] per cell
+        lines = np.hstack([np.full((elems.shape[0], 1), 2, dtype=np.int64), elems])
+        return pv.PolyData(pv_points, lines=lines)
     
-    grad_u_wo_fiber = op_plate.grad(u_sol_wo_fiber)
-    F_wo_fiber = jnp.eye(2) + grad_u_wo_fiber.squeeze()
+    
+    def _pad3(u: Array) -> np.ndarray:
+        """Pad a 2D nodal (n, 2) field to (n, 3) so it can warp PyVista points."""
+        u = np.asarray(u)
+        return np.hstack([u, np.zeros((u.shape[0], 1))])
     
     
-    def add_bounding_box(ax):
-        rect = patches.Rectangle(
-            (x_min, y_min),
-            Lx,
-            Ly,
-            linewidth=0.5,
-            edgecolor="black",
-            facecolor="none",
+    def _neo_hookean_energy(F: Array) -> Array:
+        """Scalar strain-energy density for a single 2x2 deformation gradient."""
+        C = F.T @ F
+        I1 = jnp.trace(C)
+        J = jnp.linalg.det(F)
+        return (
+            0.5 * mat.mu * (I1 - 2 - 2 * jnp.log(J)) + (mat.lmbda / 2) * (jnp.log(J)) ** 2
         )
-        ax.add_patch(rect)
     
     
-    def compute_strain_energy_flattened(F_flat):
-        F_mat = F_flat.reshape(-1, 2, 2)
-        return jnp.sum(strain_energy(F_mat, mat.mu, mat.lmbda))
+    @autovmap(F=2)
+    def von_mises_from_F(F: Array) -> Array:
+        """In-plane von Mises stress from the Cauchy stress sigma = J^-1 P F^T."""
+        P = jax.grad(_neo_hookean_energy)(F)  # 1st Piola-Kirchhoff (2, 2)
+        J = jnp.linalg.det(F)
+        sigma = (P @ F.T) / J  # Cauchy stress (2, 2)
+        sxx, syy, sxy = sigma[0, 0], sigma[1, 1], sigma[0, 1]
+        return jnp.sqrt(sxx**2 - sxx * syy + syy**2 + 3 * sxy**2)
     
     
-    compute_piola_kirchoff = jax.jacrev(compute_strain_energy_flattened, argnums=0)
-    P = compute_piola_kirchoff(F.flatten()).reshape(-1, 2, 2)
-    P_wo_fiber = compute_piola_kirchoff(F_wo_fiber.flatten()).reshape(-1, 2, 2)
-    
-    grid = get_pv_grid(plate_mesh)
-    grid["sig_xx"] = P[:, 0, 0] / P_wo_fiber[:, 0, 0]
-    grid["sig_yy"] = P[:, 1, 1] / P_wo_fiber[:, 1, 1]
-    grid["sig_xy"] = P[:, 0, 1] / P_wo_fiber[:, 0, 1]
-    grid["sig_xx_wo_fiber"] = P_wo_fiber[:, 0, 0]
-    grid["sig_yy_wo_fiber"] = P_wo_fiber[:, 1, 1]
-    grid["sig_xy_wo_fiber"] = P_wo_fiber[:, 0, 1]
-    
-    grid: pv.UnstructuredGrid = grid.cell_data_to_point_data()
-    sample = grid.sample_over_line(
-        pointa=(x_min, y_max / 2, 0),
-        pointb=(x_min + Lx, y_max / 2, 0),
-        resolution=200,
-    )
-    
-    u_quad = op_plate.eval(u_sol).squeeze()
-    u_fiber = u_quad[host_indices]  # (N_seg, 2)
-    grad_u_fiber = op_line.grad(u_fiber)  # (N_seg, 1, 2)
-    
-    triang = tri_mat.Triangulation(
-        plate_mesh.coords[:, 0] + u_sol[:, 0],
-        plate_mesh.coords[:, 1] + u_sol[:, 1],
-        plate_mesh.elements,
-    )
+    def plate_von_mises(u2d: Array) -> np.ndarray:
+        """Per-element (per quadrature point) von Mises stress for a nodal field."""
+        grad_u = op_plate.grad(u2d)
+        F = compute_deformation_gradient(grad_u)
+        return np.asarray(von_mises_from_F(F)).reshape(-1)
     
     
-    plt.style.use("./latex_sans_serif.mplstyle")
-    fig = plt.figure(
-        figsize=set_size(height_ratio=0.7, subplots=(2, 4)),
-        layout="constrained",
-    )
-    gs = fig.add_gridspec(
-        1,
-        4,
-        width_ratios=[0.8, 0.4, 0.9, 0.7],
-        wspace=0.075,
-    )
-    ax = fig.add_subplot(gs[0, 0])
-    bx = fig.add_subplot(gs[0, 2])
-    ex = fig.add_subplot(gs[0, 3])
-    
-    cb = ax.tripcolor(
-        *plate_mesh.coords.T,
-        plate_mesh.elements,
-        facecolors=jnp.ones(plate_mesh.elements.shape[0]),
-        edgecolors="gray",
-        lw=0.2,
-        alpha=0.8,
-        cmap="managua",
-    )
-    
-    add_bounding_box(ax)
-    
-    axins = fig.add_subplot(gs[0, 1])
-    axins.tripcolor(
-        *plate_mesh.coords.T,
-        plate_mesh.elements,
-        facecolors=jnp.ones(plate_mesh.elements.shape[0]),
-        edgecolors="gray",
-        lw=0.2,
-        alpha=1.0,
-        cmap="managua",
-    )
-    axins.set(xticks=[], yticks=[])
-    axins.set_xlim(1.35, 1.5)
-    axins.set_ylim(1.35, 1.5)
-    axins.set_aspect("equal", adjustable="box")
-    axins.grid(True)
-    ax.indicate_inset_zoom(axins, edgecolor="black", linewidth=0.7)
-    
-    
-    cb = bx.tripcolor(
-        triang,
-        grid["sig_yy"].flatten(),
-        cmap="managua_r",
-        shading="gouraud",
-    )
-    
-    
-    cax = fig.add_axes((0.73, 0.375, 0.005, 0.275))
-    cb = plt.colorbar(
-        cb,
-        cax=cax,
-        label=r"$P_{yy}/P_{yy}^{o}$",
-        shrink=0.7,
-        pad=0.01,
-        orientation="vertical",
-    )
-    cb.ax.xaxis.set_label_position("top")
-    
-    edge_elems = find_domain_boundary(plate_mesh.elements)
-    
-    segments = plate_mesh.coords[edge_elems][:, :, :2]
-    coll_boundary = LineCollection(
-        segments + u_sol[edge_elems][:, :, :2], colors="k", linewidths=0.7
-    )
-    bx.add_collection(coll_boundary)
-    
-    for coords, disp in zip(
-        fiber_mesh.coords[fiber_mesh.elements], u_fiber[fiber_mesh.elements]
+    def animate_deformation(
+        save_gif: str | None = None,
+        plate_cmap: str = "viridis",
+        fiber_cmap: str = "magma",
     ):
-        axins.plot(
-            coords[:, 0],
-            coords[:, 1],
-            color="k",
-            linewidth=1.5,
-            markersize=5,
-            marker="o",
+        """Step through ``u_sol_per_step``, warping the plate and fibers.
+    
+        With ``save_gif`` a GIF is written; otherwise an interactive window opens
+        with a slider to scrub through the load steps. Colour limits are fixed to
+        the global range so steps are directly comparable.
+        """
+        plate_grid = get_pv_grid(plate_mesh)
+        fiber_grid = get_pv_line_grid(fiber_mesh)
+        plate_pts0 = plate_grid.points.copy()
+        fiber_pts0 = fiber_grid.points.copy()
+    
+        # lift_from_zeros returns a flat DOF vector; reshape to (n_nodes, 2).
+        u2d_steps = [
+            jnp.asarray(u).reshape(plate_mesh.coords.shape[0], 2) for u in u_sol_per_step
+        ]
+    
+        # Precompute per-step warp fields and scalars.
+        plate_disp = [_pad3(u) for u in u2d_steps]
+        plate_vm = [plate_von_mises(u) for u in u2d_steps]  # per-element von Mises
+        fiber_disp = [_pad3(interpolater(u)) for u in u2d_steps]
+        fiber_strain = [
+            np.asarray(op_line.grad(interpolater(u)).flatten()) for u in u2d_steps
+        ]
+    
+        plate_clim = [0.0, float(max(s.max() for s in plate_vm))]
+        fiber_clim = [
+            float(min(s.min() for s in fiber_strain)),
+            float(max(s.max() for s in fiber_strain)),
+        ]
+    
+        def set_step(i):
+            i = int(round(i))
+            plate_grid.points = plate_pts0 + plate_disp[i]
+            plate_grid["von Mises"] = plate_vm[i]
+            fiber_grid.points = fiber_pts0 + fiber_disp[i]
+            fiber_grid["strain"] = fiber_strain[i]
+    
+        pl = pv.Plotter(off_screen=save_gif is not None)
+        set_step(0)
+        pl.add_mesh(
+            plate_grid,
+            scalars="von Mises",
+            cmap=plate_cmap,
+            clim=plate_clim,
+            show_edges=False,
+            edge_color="gray",
+            line_width=0.0,
+            scalar_bar_args={
+                "title": "von Mises",
+                "vertical": False,
+                "position_x": 0.05,
+                "position_y": 0.05,
+                "width": 0.4,
+                "height": 0.05,
+            },
         )
-        ax.plot(
-            coords[:, 0],
-            coords[:, 1],
-            color="k",
-            marker="o",
-            markersize=1,
+        pl.add_mesh(
+            fiber_grid,
+            scalars="strain",
+            cmap=fiber_cmap,
+            clim=fiber_clim,
+            line_width=6,
+            render_lines_as_tubes=True,
+            scalar_bar_args={
+                "title": "fiber strain",
+                "vertical": False,
+                "position_x": 0.55,
+                "position_y": 0.05,
+                "width": 0.4,
+                "height": 0.05,
+            },
         )
-        bx.plot(
-            coords[:, 0] + disp[:, 0],
-            coords[:, 1] + disp[:, 1],
-            color="white",
-            linewidth=0.5,
-        )
+        pl.view_xy()
+        pl.enable_parallel_projection()
     
-    segments = fiber_mesh.coords[fiber_mesh.elements] + u_fiber[fiber_mesh.elements]
-    lc = LineCollection(segments, linewidth=1.5, cmap="magma")
-    lc.set_array(grad_u_fiber.flatten())
-    
-    lines = ex.add_collection(lc)
-    cax = fig.add_axes((0.835, 0.15, 0.1, 0.01))
-    cb = plt.colorbar(
-        lines,
-        cax=cax,
-        label=r"$\varepsilon_S$",
-        shrink=0.7,
-        pad=0.01,
-        orientation="horizontal",
-    )
-    cb.ax.xaxis.set_label_position("top")
-    
-    
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    
-    # ax.set_xlim([x_min - 0.1, x_min + Lx + 0.1])
-    # ax.set_ylim([y_min - 0.1, y_min + Ly + 0.1])
-    ex.set_xlim([x_min + 0.35, x_min + Lx - 0.35])
-    ex.set_ylim([y_min + 0.35, y_min + Ly - 0.35])
-    ax.set_aspect("equal", adjustable="box")
-    bx.set_aspect("equal", adjustable="box")
-    ex.set_aspect("equal", adjustable="box")
-    
-    ax.grid(True)
-    ax.set(xlabel=r"$x$", ylabel=r"$y$")
-    bx.set(xlabel=r"$x$")
-    ex.set(xlabel=r"$x$")
-    bx.set_yticklabels([])
-    bx.set_yticks([])
-    bx.set_axis_off()
-    ex.set_yticklabels([])
-    ex.set_yticks([])
-    ex.set_axis_off()
-    ex.margins(0.01, 0.01)
-    plt.show()
+        n = len(u_sol_per_step)
+        if save_gif is not None:
+            pl.open_gif(save_gif)
+            for i in range(n):
+                set_step(i)
+                pl.write_frame()
+            pl.close()
+        else:
+            pl.add_slider_widget(
+                set_step,
+                [0, n - 1],
+                value=0,
+                title="load step",
+                fmt="%.0f",
+            )
+            pl.show()
+        return pl
     ```
 
-![png](soft_hydrogel_files/soft_hydrogel_31_0.png)
+
 
 
 ```python
-
+animate_deformation(
+    save_gif="soft_hydrogel.gif", plate_cmap="Spectral", fiber_cmap="coolwarm"
+)
 ```
+
+
+
+
+    <pyvista.plotting.plotter.Plotter at 0x7391e4604350>
+
+
+
+![Deformation of plate embedded with springs](../assets/images/soft_hydrogel.gif)

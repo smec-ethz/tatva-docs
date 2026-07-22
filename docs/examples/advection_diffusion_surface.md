@@ -341,7 +341,7 @@ def total_virtual_work(
 
 ```
 
-We define the residual function using `virtual_work_to_residual`, which converts the total virtual work function into a residual function. We use sparse differentiation to compute the Jacobian of the residual function. The sparisty pattern needed is automatically computed from the virtual work function.
+We define the residual function using `virtual_work_to_residual`, which converts the total virtual work function into a residual function. We use sparse differentiation to compute the Jacobian of the residual function using `sparse.jacfwd`. The sparisty pattern needed is automatically computed from the virtual work function using  `sparse.pattern_from_virtual_work`. 
 
 
 ```python

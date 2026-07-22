@@ -63,6 +63,21 @@ way.
   </div>
 </div>
 
+<div class="swiper-slide">
+  <img src="assets/images/coupling_3d_1d_energy_wo_labels.gif" alt="Diffusion in 3D-1D Pore Network">
+  <div class="slide-caption">
+    <h3>Diffusion in 3D-1D Pore Network</h3>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <img src="assets/images/neural_operator_deformation.gif" alt="Neural Operator Deformation">
+  <div class="slide-caption">
+    <h3>Neural Operator Domain + FEM Domain</h3>
+  </div>
+</div>
+
+
 </div>
 
 <div class="swiper-pagination"></div>
