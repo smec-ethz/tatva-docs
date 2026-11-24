@@ -147,6 +147,9 @@ nav:
           - "examples/linear_elasticity.md"
       - Hyperelasticity:
           - "examples/hyperelastic_3d.md"
+      - Viscoelasticity:
+          - "examples/standard_linear_solid_model.md"
+          - "examples/generalized_maxwell_model.md"
       - Transient Problems:
           - "examples/elastodynamics_3d.md"
           - "examples/heat_exchange.md"
